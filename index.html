@@ -2,16 +2,16 @@
 
 <style>
   :root {
-    --bg:        #0C0E12;
-    --card:      #14181F;
-    --card-2:    #1B212A;
-    --line:      #262E3A;
-    --text:      #EEF1F6;
-    --dim:       #8E99AA;
-    --accent:    #22D3EE;
-    --stop:      #FF5C63;
-    --go:        #3DDC97;
-    --wait:      #FFC53D;
+    --bg:      #0B0D11;
+    --card:    #13171E;
+    --card2:   #1A1F28;
+    --line:    #252C37;
+    --text:    #EDF1F6;
+    --dim:     #8B96A6;
+    --you:     #4DD4F0;
+    --them:    #FF6B4A;
+    --ok:      #3DDC97;
+    --wait:    #FFC53D;
 
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
@@ -19,308 +19,194 @@
 
   @media (prefers-color-scheme: light) {
     :root {
-      --bg:     #F4F6F9;
-      --card:   #FFFFFF;
-      --card-2: #EDF1F6;
-      --line:   #DDE3EB;
-      --text:   #10151C;
-      --dim:    #5F6B7C;
-      --accent: #0E7C8C;
-      --stop:   #C7343B;
-      --go:     #16855C;
-      --wait:   #9A6A00;
+      --bg:    #F3F5F8; --card: #FFFFFF; --card2: #EBEFF4; --line: #DCE2EA;
+      --text:  #0F141B; --dim: #5C687A;
+      --you:   #0B7C93; --them: #C4442A; --ok: #14805A; --wait: #8F6200;
     }
   }
-
   :root[data-theme="light"] {
-    --bg:     #F4F6F9;
-    --card:   #FFFFFF;
-    --card-2: #EDF1F6;
-    --line:   #DDE3EB;
-    --text:   #10151C;
-    --dim:    #5F6B7C;
-    --accent: #0E7C8C;
-    --stop:   #C7343B;
-    --go:     #16855C;
-    --wait:   #9A6A00;
+    --bg:    #F3F5F8; --card: #FFFFFF; --card2: #EBEFF4; --line: #DCE2EA;
+    --text:  #0F141B; --dim: #5C687A;
+    --you:   #0B7C93; --them: #C4442A; --ok: #14805A; --wait: #8F6200;
   }
-
   :root[data-theme="dark"] {
-    --bg:     #0C0E12;
-    --card:   #14181F;
-    --card-2: #1B212A;
-    --line:   #262E3A;
-    --text:   #EEF1F6;
-    --dim:    #8E99AA;
-    --accent: #22D3EE;
-    --stop:   #FF5C63;
-    --go:     #3DDC97;
-    --wait:   #FFC53D;
+    --bg:    #0B0D11; --card: #13171E; --card2: #1A1F28; --line: #252C37;
+    --text:  #EDF1F6; --dim: #8B96A6;
+    --you:   #4DD4F0; --them: #FF6B4A; --ok: #3DDC97; --wait: #FFC53D;
   }
 
   * { box-sizing: border-box; }
 
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.5;
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--sans); font-size: 16px; line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
 
-  .wrap {
-    max-width: 60rem;
-    margin: 0 auto;
-    padding: 1.5rem 1rem 5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-  }
-
-  /* ===== testata ===== */
-
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1rem;
-    flex-wrap: wrap;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .logo {
-    margin: 0;
-    font-size: clamp(1.6rem, 6vw, 2.1rem);
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    line-height: 1;
-  }
-
-  .logo b { color: var(--accent); font-weight: 800; }
+  .wrap { max-width: 64rem; margin: 0 auto; padding: 1.25rem 1rem 5rem; }
 
   .lab {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--dim);
-    font-variant-numeric: tabular-nums;
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--dim); font-variant-numeric: tabular-nums;
   }
 
-  /* ===== striscia prossimo voto ===== */
+  /* testata */
+  .head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 1rem; flex-wrap: wrap; padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line); margin-bottom: 1.25rem;
+  }
+  .logo {
+    margin: 0; font-size: clamp(1.5rem, 6vw, 2rem); font-weight: 800;
+    letter-spacing: -0.035em; line-height: 1;
+  }
+  .logo b { color: var(--you); font-weight: 800; }
 
-  .now {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.85rem 1.25rem;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-left: 4px solid var(--accent);
-    border-radius: 10px;
-    padding: 1rem 1.15rem;
+  /* striscia live */
+  .live {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.1rem;
+    background: var(--card); border: 1px solid var(--line);
+    border-left: 4px solid var(--wait); border-radius: 10px;
+    padding: 0.9rem 1.1rem; margin-bottom: 2.5rem;
+  }
+  .live p { flex: 1 1 18rem; margin: 0; font-weight: 600; line-height: 1.4; }
+  .pill {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; font-weight: 700; color: var(--bg);
+    background: var(--wait); border-radius: 999px; padding: 0.35rem 0.75rem;
+    white-space: nowrap; font-variant-numeric: tabular-nums;
   }
 
-  .now-txt {
-    flex: 1 1 18rem;
-    margin: 0;
-    font-size: 1.02rem;
-    font-weight: 600;
-    line-height: 1.4;
+  /* schermo */
+  .screen { margin-bottom: 3rem; }
+  .screen > h2 {
+    margin: 0 0 0.35rem; font-size: clamp(1.35rem, 5vw, 1.85rem);
+    font-weight: 800; letter-spacing: -0.025em; text-wrap: balance;
+  }
+  .screen > .sub { margin: 0 0 1.25rem; color: var(--dim); font-size: 0.95rem; }
+
+  /* ---- diagramma confronto ---- */
+  .vs { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .cmp {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 1rem 1.1rem;
+    display: flex; flex-direction: column; gap: 0.85rem;
+  }
+  .cmp h3 {
+    margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
   }
 
-  .count {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--bg);
-    background: var(--accent);
-    border-radius: 999px;
-    padding: 0.35rem 0.8rem;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-    font-weight: 700;
+  .side { display: flex; flex-direction: column; gap: 0.3rem; }
+  .side .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 0.75rem; font-size: 0.9rem;
   }
-
-  /* ===== numeri ===== */
-
-  .figs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-    gap: 0.75rem;
+  .side .top b {
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 700;
   }
+  .side .val { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-  .fig {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 1rem 1.1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+  .track { height: 10px; border-radius: 5px; background: var(--card2); overflow: hidden; display: flex; }
+  .track i { display: block; height: 100%; }
+
+  .you  { color: var(--you); }
+  .them { color: var(--them); }
+  .track i.b-you  { background: var(--you); }
+  .track i.b-them { background: var(--them); }
+  .track i.b-them2 { background: var(--them); opacity: 0.62; }
+  .track i.b-them3 { background: var(--them); opacity: 0.38; }
+  .track i.b-them4 { background: var(--them); opacity: 0.2; }
+
+  .note { margin: 0; font-size: 0.85rem; color: var(--dim); }
+  .note a { color: var(--dim); }
+  .note a:hover { color: var(--text); }
+  a:focus-visible { outline: 2px solid var(--you); outline-offset: 2px; border-radius: 3px; }
+
+  .keyrow { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+  .key { display: flex; align-items: center; gap: 0.35rem; }
+  .key i { width: 10px; height: 10px; border-radius: 2px; display: block; }
+
+  /* ---- catena fatto -> conseguenza ---- */
+  .chains { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.75rem; }
+
+  .chain {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.9rem;
   }
-
-  .fig .n {
-    font-size: clamp(1.9rem, 7vw, 2.5rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
+  .chain header { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+  .chain h3 { margin: 0; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.015em; }
+  .chain h3 span {
+    display: block; font-family: var(--mono); font-size: 0.62rem;
+    letter-spacing: 0.1em; color: var(--dim); font-weight: 400; margin-top: 0.2rem;
   }
-
-  .fig .n.win { color: var(--accent); }
-
-  .bar {
-    height: 5px;
-    border-radius: 3px;
-    background: var(--card-2);
-    overflow: hidden;
-    margin-top: 0.5rem;
+  .tag {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+    text-transform: uppercase; font-weight: 700; padding: 0.28rem 0.5rem;
+    border-radius: 999px; border: 1px solid currentColor; white-space: nowrap;
   }
+  .tag.stop { color: var(--them); }
+  .tag.ok   { color: var(--ok); }
+  .tag.wait { color: var(--wait); }
 
-  .bar i {
-    display: block;
-    height: 100%;
-    background: var(--accent);
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .steps li {
+    position: relative; padding: 0 0 0.9rem 1.4rem; font-size: 0.9rem;
   }
-
-  .bar i.mute { background: var(--dim); }
-
-  .cap {
-    margin: 0;
-    color: var(--dim);
-    font-size: 0.92rem;
+  .steps li:last-child { padding-bottom: 0; }
+  .steps li::before {
+    content: ""; position: absolute; left: 0; top: 0.45rem;
+    width: 8px; height: 8px; border-radius: 50%; background: var(--dim);
   }
-
-  /* ===== sezioni ===== */
-
-  section { display: flex; flex-direction: column; gap: 1rem; }
-
-  h2 {
-    margin: 0;
-    font-size: clamp(1.2rem, 4.5vw, 1.5rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    text-wrap: balance;
+  .steps li:last-child::before { background: var(--them); }
+  .steps li:not(:last-child)::after {
+    content: ""; position: absolute; left: 3.5px; top: 1.05rem; bottom: 0.15rem;
+    width: 1px; background: var(--line);
   }
+  .steps li em { font-style: normal; font-family: var(--mono); font-size: 0.62rem;
+    letter-spacing: 0.08em; color: var(--dim); display: block; margin-bottom: 0.15rem;
+    font-variant-numeric: tabular-nums; }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 0.75rem;
+  .srcline {
+    margin: 0; padding-top: 0.6rem; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.05em; color: var(--dim);
   }
+  .srcline a { color: var(--dim); text-underline-offset: 3px; }
+  .srcline a:hover { color: var(--you); }
 
-  .card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 1.1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
+  /* ---- detto / poi ---- */
+  .said { display: flex; flex-direction: column; gap: 0.6rem; }
+  .say {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    display: grid; grid-template-columns: 1fr; gap: 0;
   }
+  @media (min-width: 46rem) { .say { grid-template-columns: 1.15fr 1fr; } }
 
-  .row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.6rem;
+  .say .q { padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .say .q p { margin: 0; font-size: 1.02rem; font-weight: 600; line-height: 1.4; }
+  .say .who {
+    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--dim); font-variant-numeric: tabular-nums;
   }
-
-  .who {
-    font-size: 1.05rem;
-    font-weight: 800;
-    letter-spacing: -0.015em;
-    margin: 0;
-  }
-
-  .who span {
-    display: block;
-    font-family: var(--mono);
-    font-size: 0.64rem;
-    letter-spacing: 0.1em;
-    color: var(--dim);
-    font-weight: 400;
-    margin-top: 0.2rem;
-  }
-
-  .badge {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 0.3rem 0.55rem;
-    border-radius: 999px;
-    white-space: nowrap;
-    border: 1px solid currentColor;
-  }
-
-  .badge.stop { color: var(--stop); }
-  .badge.go   { color: var(--go); }
-  .badge.wait { color: var(--wait); }
-
-  .card p {
-    margin: 0;
-    font-size: 0.94rem;
-    color: var(--text);
-  }
-
-  .card p.twist {
-    background: var(--card-2);
-    border-radius: 7px;
-    padding: 0.6rem 0.7rem;
-    font-size: 0.88rem;
-  }
-
-  .foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    margin-top: auto;
-    padding-top: 0.4rem;
+  .say .a {
+    padding: 1rem 1.1rem; background: var(--card2); display: flex;
+    flex-direction: column; gap: 0.4rem; justify-content: center;
     border-top: 1px solid var(--line);
-    font-family: var(--mono);
-    font-size: 0.64rem;
-    letter-spacing: 0.06em;
-    color: var(--dim);
-    font-variant-numeric: tabular-nums;
   }
+  @media (min-width: 46rem) { .say .a { border-top: 0; border-left: 1px solid var(--line); } }
+  .say .a p { margin: 0; font-size: 0.92rem; }
+  .say .a .lab { color: var(--them); }
 
-  .foot a { color: var(--dim); text-underline-offset: 3px; }
-  .foot a:hover { color: var(--accent); }
-  .foot a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
-
-  footer.legal {
-    border-top: 1px solid var(--line);
-    padding-top: 1rem;
-    color: var(--dim);
-    font-size: 0.82rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+  footer {
+    border-top: 1px solid var(--line); padding-top: 1rem; margin-top: 1rem;
+    color: var(--dim); font-size: 0.82rem; display: flex; flex-direction: column; gap: 0.35rem;
   }
+  footer p { margin: 0; }
 
-  footer.legal p { margin: 0; }
-
-  .card, .fig, .now { animation: up 320ms ease both; }
-  .grid .card:nth-child(2) { animation-delay: 60ms; }
-  .grid .card:nth-child(3) { animation-delay: 120ms; }
-
-  @keyframes up {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .card, .fig, .now { animation: none; }
-  }
+  .cmp, .chain, .say, .live { animation: up 300ms ease both; }
+  @keyframes up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .cmp, .chain, .say, .live { animation: none; } }
 </style>
 
 <div class="wrap">
@@ -330,115 +216,198 @@
     <p class="lab">Aggiornato 28.07.2026</p>
   </header>
 
-  <div class="now">
-    <p class="now-txt">Il 30 luglio l&rsquo;aula della Camera decide se i pm possono usare le chat di Delmastro.</p>
-    <span class="count" id="count">30 luglio</span>
+  <div class="live">
+    <p>Il 30 luglio l&rsquo;aula della Camera vota se i pm possono usare le chat di Andrea Delmastro.</p>
+    <span class="pill" id="count">30 luglio</span>
   </div>
 
-  <section>
-    <h2>Referendum sulla giustizia &mdash; 22 e 23 marzo</h2>
-    <div class="figs">
-      <div class="fig">
-        <span class="lab">No</span>
-        <span class="n win">53,74%</span>
-        <span class="bar"><i style="width:53.74%"></i></span>
+  <!-- ============ SCHERMO 1 ============ -->
+  <section class="screen">
+    <h2>Le stesse regole, applicate a te e a loro</h2>
+    <p class="sub">Stessi anni, stesso paese, stessa legge. Cambia solo chi sei.</p>
+
+    <div class="vs">
+
+      <div class="cmp">
+        <h3>Se un pm vuole le tue chat</h3>
+        <div class="side">
+          <div class="top"><b class="you">Tu</b><span class="val">Le prende</span></div>
+          <div class="track"><i class="b-you" style="width:100%"></i></div>
+        </div>
+        <div class="side">
+          <div class="top"><b class="them">Un parlamentare</b><span class="val">Decide la Camera</span></div>
+          <div class="track"><i class="b-them" style="width:100%"></i></div>
+        </div>
+        <p class="note">A te basta il decreto di un giudice. Per un deputato o un senatore l&rsquo;articolo 68 della Costituzione impone l&rsquo;autorizzazione della sua Camera: a votare sono gli altri parlamentari. &mdash; <a href="https://www.senato.it/istituzione/la-costituzione/parte-ii/titolo-i/sezione-i/articolo-68" target="_blank" rel="noopener noreferrer">Costituzione, art. 68</a></p>
       </div>
-      <div class="fig">
-        <span class="lab">S&igrave;</span>
-        <span class="n">46,26%</span>
-        <span class="bar"><i class="mute" style="width:46.26%"></i></span>
+
+      <div class="cmp">
+        <h3>Quanto entra ogni mese</h3>
+        <div class="side">
+          <div class="top"><b class="you">Dipendente privato, media</b><span class="val">2.749 &euro;</span></div>
+          <div class="track"><i class="b-you" style="width:13.9%"></i></div>
+        </div>
+        <div class="side">
+          <div class="top"><b class="them">Deputato</b><span class="val">19.765 &euro;</span></div>
+          <div class="track">
+            <i class="b-them"  style="width:52.8%"></i>
+            <i class="b-them2" style="width:17.7%"></i>
+            <i class="b-them3" style="width:21.2%"></i>
+            <i class="b-them4" style="width:8.3%"></i>
+          </div>
+        </div>
+        <div class="keyrow lab">
+          <span class="key"><i style="background:var(--them)"></i> Indennit&agrave; 10.435</span>
+          <span class="key"><i style="background:var(--them);opacity:.62"></i> Diaria 3.500</span>
+          <span class="key"><i style="background:var(--them);opacity:.38"></i> Spese di mandato 4.180</span>
+          <span class="key"><i style="background:var(--them);opacity:.2"></i> Forfait 1.650</span>
+        </div>
+        <p class="note">La media privata &egrave; 32.991 &euro; lordi l&rsquo;anno (2025). Solo l&rsquo;indenni&agrave; del deputato &egrave; tassata come reddito: diaria e rimborsi no. &mdash; <a href="https://www.quotidiano.net/economia/quanto-guadagna-parlamentare-stipendio-senatore-deputato-87690603" target="_blank" rel="noopener noreferrer">QN</a> &middot; <a href="https://www.money.it/media-stipendi-in-italia-nel-2026-dati" target="_blank" rel="noopener noreferrer">Money.it</a></p>
       </div>
-      <div class="fig">
-        <span class="lab">Affluenza</span>
-        <span class="n">58,93%</span>
-        <span class="bar"><i class="mute" style="width:58.93%"></i></span>
+
+      <div class="cmp">
+        <h3>Quanto devi lavorare per la pensione</h3>
+        <div class="side">
+          <div class="top"><b class="you">Tu</b><span class="val">20 anni di contributi, a 67 anni</span></div>
+          <div class="track"><i class="b-you" style="width:100%"></i></div>
+        </div>
+        <div class="side">
+          <div class="top"><b class="them">Parlamentare</b><span class="val">4 anni, 6 mesi e 1 giorno</span></div>
+          <div class="track"><i class="b-them" style="width:22.5%"></i></div>
+        </div>
+        <p class="note">Con quel mandato l&rsquo;assegno parte a 65 anni, e scende a 60 con due mandati. Vale fra i 900 e i 970 &euro; al mese. In pi&ugrave;, a fine mandato, circa 9.000 &euro; per ogni anno passato in Parlamento. &mdash; <a href="https://www.pensionioggi.it/dizionario/vitalizi" target="_blank" rel="noopener noreferrer">Pensioni Oggi</a> &middot; <a href="https://fap.acli.it/pensione-di-vecchiaia-2026-i-requisiti-restano-67-anni-e-20-di-contributi/" target="_blank" rel="noopener noreferrer">Acli</a></p>
       </div>
-    </div>
-    <p class="cap">La riforma che separava le carriere di giudici e pm non passa. Il S&igrave; vince solo in Veneto, Lombardia e Friuli-Venezia Giulia. &mdash; <a class="src" href="https://www.youtrend.it/2026/03/23/referendum-giustizia-2026-risultati/" target="_blank" rel="noopener noreferrer">Youtrend</a></p>
-  </section>
-
-  <section>
-    <h2>Stessa domanda, tre volte in otto settimane: si possono usare?</h2>
-    <div class="grid">
-
-      <article class="card">
-        <div class="row">
-          <p class="who">Delmastro<span>Fratelli d&rsquo;Italia</span></p>
-          <span class="badge stop">Bloccate</span>
-        </div>
-        <p>La Giunta della Camera nega ai pm le chat con l&rsquo;ex socio Mauro Caroccia, per gli inquirenti prestanome del clan Senese. Delmastro si era gi&agrave; dimesso da sottosegretario; in questa inchiesta non &egrave; indagato.</p>
-        <p class="twist">Tre giorni dopo le stesse chat arrivano in procura lo stesso: le consegna l&rsquo;avvocato di Caroccia.</p>
-        <div class="foot">
-          <span>22.07.2026</span>
-          <a href="https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="row">
-          <p class="who">Santanch&egrave;<span>Fratelli d&rsquo;Italia</span></p>
-          <span class="badge wait">Processo fermo</span>
-        </div>
-        <p>Nel processo per truffa all&rsquo;Inps i pm usano mail e registrazioni della senatrice senza chiedere il via libera al Senato. Il Senato solleva conflitto e la Consulta lo ammette.</p>
-        <p class="twist">Il processo resta fermo finch&eacute; la Corte non decide chi poteva usare quel materiale.</p>
-        <div class="foot">
-          <span>03.06.2026</span>
-          <a href="https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/" target="_blank" rel="noopener noreferrer">Il Fatto</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="row">
-          <p class="who">Scarpinato<span>Movimento 5 Stelle</span></p>
-          <span class="badge go">Non bloccate</span>
-        </div>
-        <p>La commissione Antimafia si fa mandare da Caltanissetta intercettazioni che lo riguardano, senza passare dal Senato. Lui chiede lo stesso conflitto ottenuto per Santanch&egrave;: la maggioranza dice no.</p>
-        <p class="twist">Ricorre da solo. La Consulta lo dichiara inammissibile: serve la sua Camera, non basta il singolo.</p>
-        <div class="foot">
-          <span>16.06.2026</span>
-          <a href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio</a>
-        </div>
-      </article>
 
     </div>
   </section>
 
-  <section>
-    <h2>Il resto</h2>
-    <div class="grid">
+  <!-- ============ SCHERMO 2 ============ -->
+  <section class="screen">
+    <h2>Le chat: tre volte in otto settimane, cosa &egrave; successo dopo</h2>
+    <p class="sub">Stessa richiesta, tre partiti diversi, tre finali diversi.</p>
 
-      <article class="card">
-        <div class="row">
-          <p class="who">Intercettazioni a strascico<span>Maggioranza divisa</span></p>
-          <span class="badge wait">In corso</span>
-        </div>
-        <p>Due emendamenti di Fratelli d&rsquo;Italia, a firma Berrino e Sisler, vogliono riammettere l&rsquo;uso delle intercettazioni che catturano persone non indagate, nei casi di mafia, terrorismo e tratta di esseri umani.</p>
-        <p class="twist">Forza Italia &egrave; contraria. Nessun accordo dentro la maggioranza: l&rsquo;emendamento per ora non si vota.</p>
-        <div class="foot">
-          <span>27.07.2026</span>
-          <a href="https://www.ilpost.it/2026/07/27/intercettazioni-a-strascico-senato-berrino-sisler/" target="_blank" rel="noopener noreferrer">Il Post</a>
-        </div>
+    <div class="chains">
+
+      <article class="chain">
+        <header>
+          <h3>Delmastro<span>Fratelli d&rsquo;Italia</span></h3>
+          <span class="tag stop">Negate</span>
+        </header>
+        <ul class="steps">
+          <li><em>27 maggio</em>I pm di Roma chiedono alla Camera le chat con l&rsquo;ex socio Caroccia, per gli inquirenti prestanome del clan Senese.</li>
+          <li><em>22 luglio</em>La Giunta per le autorizzazioni dice no. Il M5S occupa i banchi del governo al Senato.</li>
+          <li><em>25 luglio</em>Le stesse chat arrivano in procura lo stesso: le consegna l&rsquo;avvocato di Caroccia.</li>
+        </ul>
+        <p class="srcline"><a href="https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso</a> &middot; <a href="https://gds.it/articoli/cronaca/2026/07/25/in-procura-le-chat-tra-delmastro-e-caroccia-5bd3a8a2-c726-4d8b-9e15-359181757420/" target="_blank" rel="noopener noreferrer">GdS</a></p>
       </article>
 
-      <article class="card">
-        <div class="row">
-          <p class="who">Delmastro, caso Cospito<span>Condanna non definitiva</span></p>
-          <span class="badge stop">8 mesi</span>
-        </div>
-        <p>Nel 2023 il deputato Donzelli lesse in aula conversazioni segrete registrate in carcere fra l&rsquo;anarchico Cospito e detenuti al 41 bis. Gliele aveva passate Delmastro, allora sottosegretario alla Giustizia.</p>
-        <p class="twist">In appello la Procura generale aveva chiesto l&rsquo;assoluzione. I giudici non l&rsquo;hanno seguita. Ricorso in Cassazione annunciato.</p>
-        <div class="foot">
-          <span>20.05.2026</span>
-          <a href="https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html" target="_blank" rel="noopener noreferrer">ANSA</a>
-        </div>
+      <article class="chain">
+        <header>
+          <h3>Santanch&egrave;<span>Fratelli d&rsquo;Italia</span></h3>
+          <span class="tag wait">Processo fermo</span>
+        </header>
+        <ul class="steps">
+          <li><em>Processo truffa Inps</em>I pm mettono agli atti mail e registrazioni della senatrice senza chiedere il via libera al Senato.</li>
+          <li><em>Il Senato reagisce</em>Solleva conflitto davanti alla Corte costituzionale.</li>
+          <li><em>3 giugno</em>La Corte lo dichiara ammissibile. Il processo si ferma finch&eacute; non decide.</li>
+        </ul>
+        <p class="srcline"><a href="https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/" target="_blank" rel="noopener noreferrer">Il Fatto</a> &middot; <a href="https://www.adnkronos.com/cronaca/santanche-consulta-dichiara-ammissibile-ricorso_6IUhRHGCG8VC5158k11E9W" target="_blank" rel="noopener noreferrer">Adnkronos</a></p>
+      </article>
+
+      <article class="chain">
+        <header>
+          <h3>Scarpinato<span>Movimento 5 Stelle</span></h3>
+          <span class="tag ok">Usate</span>
+        </header>
+        <ul class="steps">
+          <li><em>Commissione Antimafia</em>Si fa mandare da Caltanissetta intercettazioni che lo riguardano, senza passare dal Senato.</li>
+          <li><em>Chiede lo stesso scudo</em>Domanda alla Giunta del Senato il conflitto ottenuto per Santanch&egrave;. La maggioranza dice no.</li>
+          <li><em>16 giugno</em>Ricorre da solo. La Consulta lo dichiara inammissibile: serve la Camera, non basta il singolo.</li>
+        </ul>
+        <p class="srcline"><a href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio</a> &middot; <a href="https://www.ildubbio.news/giustizia/intercettazioni-a-scarpinato-blindate-dal-centrodestra-ed-e-rissa-col-m5s-qa48kfsx" target="_blank" rel="noopener noreferrer">Il Dubbio</a></p>
       </article>
 
     </div>
   </section>
 
-  <footer class="legal">
-    <p>Ogni scheda ha la fonte e la data dell&rsquo;atto.</p>
-    <p>Indagato non vuol dire condannato. Una condanna non definitiva pu&ograve; essere ribaltata.</p>
+  <!-- ============ SCHERMO 3 ============ -->
+  <section class="screen">
+    <h2>Detto &mdash; poi</h2>
+    <p class="sub">A sinistra la frase, con la data. A destra cosa risulta essere successo.</p>
+
+    <div class="said">
+
+      <div class="say">
+        <div class="q">
+          <p>&laquo;Se non realizzo almeno quattro punti su cinque, non mi ricandido.&raquo;</p>
+          <span class="who">Silvio Berlusconi &middot; Forza Italia &middot; 08.05.2001, in diretta a Porta a Porta</span>
+        </div>
+        <div class="a">
+          <span class="lab">Poi</span>
+          <p>Si &egrave; ricandidato alle elezioni del 2006. &mdash; <a href="https://it.wikipedia.org/wiki/Contratto_con_gli_italiani" target="_blank" rel="noopener noreferrer">Fonte</a></p>
+        </div>
+      </div>
+
+      <div class="say">
+        <div class="q">
+          <p>&laquo;Se perdo il referendum sulle riforme, smetto di fare politica.&raquo;</p>
+          <span class="who">Matteo Renzi &middot; PD &middot; gennaio 2016</span>
+        </div>
+        <div class="a">
+          <span class="lab">Poi</span>
+          <p>Ha perso il 4 dicembre 2016. Si &egrave; dimesso da premier, nel 2018 &egrave; stato eletto senatore, nel 2019 ha fondato Italia Viva. &mdash; <a href="https://st.ilsole24ore.com/art/notizie/2016-01-12/renzi-se-perdo-referendum-riforme-lascio-politica-113815.shtml?uuid=AC570M8B" target="_blank" rel="noopener noreferrer">Fonte</a></p>
+        </div>
+      </div>
+
+      <div class="say">
+        <div class="q">
+          <p>&laquo;Abbiamo abolito la povert&agrave;.&raquo;</p>
+          <span class="who">Luigi Di Maio &middot; M5S &middot; 27.09.2018, dal balcone di Palazzo Chigi</span>
+        </div>
+        <div class="a">
+          <span class="lab">Poi</span>
+          <p>Il reddito di cittadinanza &egrave; stato introdotto nel 2019 e abolito nel 2023. &mdash; <a href="https://tg24.sky.it/politica/2018/09/28/manovra-luigi-di-maio-esultanza" target="_blank" rel="noopener noreferrer">Fonte</a></p>
+        </div>
+      </div>
+
+      <div class="say">
+        <div class="q">
+          <p>&laquo;Flat tax al 15% per tutti.&raquo;</p>
+          <span class="who">Lega &middot; programma elettorale 2018</span>
+        </div>
+        <div class="a">
+          <span class="lab">Poi</span>
+          <p>Non introdotta: costerebbe circa 60 miliardi l&rsquo;anno. Il 15% per le partite IVA c&rsquo;era gi&agrave;: lo aveva introdotto il governo Renzi nel 2014. &mdash; <a href="https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva" target="_blank" rel="noopener noreferrer">Fonte</a></p>
+        </div>
+      </div>
+
+      <div class="say">
+        <div class="q">
+          <p>&laquo;La proposta pi&ugrave; seria l&rsquo;abbiamo sempre fatta noi: si chiama blocco navale.&raquo;</p>
+          <span class="who">Giorgia Meloni &middot; Fratelli d&rsquo;Italia &middot; 02.05.2022</span>
+        </div>
+        <div class="a">
+          <span class="lab">Poi</span>
+          <p>Non &egrave; stato attuato. Nel 2023, primo anno pieno di governo, gli sbarchi sono aumentati rispetto al 2022. &mdash; <a href="https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale" target="_blank" rel="noopener noreferrer">Fonte</a></p>
+        </div>
+      </div>
+
+      <div class="say">
+        <div class="q">
+          <p>&laquo;Mai alleanze con altri partiti.&raquo;</p>
+          <span class="who">Movimento 5 Stelle &middot; regola dalla fondazione</span>
+        </div>
+        <div class="a">
+          <span class="lab">Poi</span>
+          <p>2018 governo con la Lega. 2019 governo con il PD. 2021 dentro il governo Draghi con quasi tutti. &mdash; <a href="https://www.treccani.it/enciclopedia/movimento-5-stelle/" target="_blank" rel="noopener noreferrer">Fonte</a></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>Ogni riga ha la fonte e la data. Indagato non vuol dire condannato; una condanna non definitiva pu&ograve; essere ribaltata.</p>
   </footer>
 
 </div>
@@ -447,14 +416,9 @@
   (function () {
     var el = document.getElementById("count");
     if (!el) return;
-    var voto = new Date(2026, 6, 30);
-    var oggi = new Date();
+    var voto = new Date(2026, 6, 30), oggi = new Date();
     oggi.setHours(0, 0, 0, 0);
-    var giorni = Math.round((voto - oggi) / 86400000);
-
-    if (giorni > 1) el.textContent = "fra " + giorni + " giorni";
-    else if (giorni === 1) el.textContent = "domani";
-    else if (giorni === 0) el.textContent = "oggi";
-    else el.textContent = "voto del 30 luglio";
+    var g = Math.round((voto - oggi) / 86400000);
+    el.textContent = g > 1 ? "fra " + g + " giorni" : g === 1 ? "domani" : g === 0 ? "oggi" : "voto del 30 luglio";
   })();
 </script>
