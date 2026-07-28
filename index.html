@@ -2,357 +2,387 @@
 
 <style>
   :root {
-    --bg:#0B0D11; --card:#12161D; --card2:#191E27; --line:#242B36;
-    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A;
+    --bg:#0A0A0C; --sur:#141419; --sur2:#1D1D24; --line:#2A2A33;
+    --tx:#F6F6F8; --dim:#9A9AA8;
+    --c1:#7B7BFF; --c2:#FF6A55; --c3:#FFB627; --c4:#2DD4BF;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   }
   @media (prefers-color-scheme: light) {
-    :root { --bg:#F2F5F8; --card:#FFF; --card2:#E9EEF4; --line:#DAE1E9;
-            --text:#0E141B; --dim:#5B6778; --acc:#0A7488; --hot:#C4442A; }
+    :root { --bg:#EFEFF3; --sur:#FFF; --sur2:#F4F4F8; --line:#E0E0E8;
+            --tx:#0B0B0F; --dim:#63636F;
+            --c1:#4B4BE0; --c2:#E23B25; --c3:#B47500; --c4:#00897B; }
   }
-  :root[data-theme="light"] { --bg:#F2F5F8; --card:#FFF; --card2:#E9EEF4; --line:#DAE1E9;
-    --text:#0E141B; --dim:#5B6778; --acc:#0A7488; --hot:#C4442A; }
-  :root[data-theme="dark"] { --bg:#0B0D11; --card:#12161D; --card2:#191E27; --line:#242B36;
-    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A; }
+  :root[data-theme="light"] { --bg:#EFEFF3; --sur:#FFF; --sur2:#F4F4F8; --line:#E0E0E8;
+    --tx:#0B0B0F; --dim:#63636F; --c1:#4B4BE0; --c2:#E23B25; --c3:#B47500; --c4:#00897B; }
+  :root[data-theme="dark"] { --bg:#0A0A0C; --sur:#141419; --sur2:#1D1D24; --line:#2A2A33;
+    --tx:#F6F6F8; --dim:#9A9AA8; --c1:#7B7BFF; --c2:#FF6A55; --c3:#FFB627; --c4:#2DD4BF; }
 
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
-         font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased; }
-  .wrap { max-width:46rem; margin:0 auto; padding:1.25rem 1rem 5rem; }
+  body { margin:0; background:var(--bg); color:var(--tx); font-family:var(--sans);
+         font-size:17px; line-height:1.5; -webkit-font-smoothing:antialiased;
+         overscroll-behavior-y:none; }
+  .wrap { max-width:44rem; margin:0 auto; padding:1.5rem 1.1rem 6rem; }
 
-  .head { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem;
-          flex-wrap:wrap; padding-bottom:.9rem; border-bottom:1px solid var(--line);
-          margin-bottom:1.75rem; }
-  .logo { margin:0; font-size:clamp(1.45rem,6vw,1.9rem); font-weight:800;
-          letter-spacing:-.035em; line-height:1; cursor:pointer; }
-  .logo b { color:var(--acc); }
-  .lab { font-family:var(--mono); font-size:.64rem; letter-spacing:.13em;
-         text-transform:uppercase; color:var(--dim); font-variant-numeric:tabular-nums; margin:0; }
+  /* ---------- testata ---------- */
+  .top { display:flex; justify-content:space-between; align-items:center;
+         margin-bottom:2rem; }
+  .mark { margin:0; font-size:1.35rem; font-weight:900; letter-spacing:-.05em;
+          cursor:pointer; user-select:none; }
+  .mark i { font-style:normal;
+            background:linear-gradient(96deg,var(--c1),var(--c2) 55%,var(--c3));
+            -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .mark:focus-visible { outline:2px solid var(--c1); outline-offset:4px; border-radius:6px; }
+  .tag { font-family:var(--mono); font-size:.62rem; letter-spacing:.12em;
+         text-transform:uppercase; color:var(--dim); }
 
-  /* ---- elenco schede ---- */
-  .schede { display:flex; flex-direction:column; gap:.7rem; }
+  /* ---------- copertina ---------- */
+  .hero { margin-bottom:1.75rem; }
+  .hero h1 { margin:0; font-size:clamp(2.1rem,10vw,3.4rem); font-weight:900;
+             letter-spacing:-.045em; line-height:.98; text-wrap:balance; }
+  .hero h1 span { display:block; color:var(--dim); }
 
-  .scheda {
-    width:100%; text-align:left; font:inherit; color:inherit; cursor:pointer;
-    background:var(--card); border:1px solid var(--line); border-radius:12px;
-    padding:1.05rem 1.15rem; display:flex; flex-direction:column; gap:.55rem;
-    transition:border-color 130ms ease, transform 130ms ease;
-  }
-  .scheda:hover { border-color:var(--acc); transform:translateY(-1px); }
-  .scheda:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  /* ---------- schede ---------- */
+  .griglia { display:grid; gap:.9rem; }
 
-  .formato {
-    align-self:flex-start; font-family:var(--mono); font-size:.6rem; letter-spacing:.11em;
-    text-transform:uppercase; font-weight:700; color:var(--acc);
-    border:1px solid currentColor; border-radius:999px; padding:.24rem .55rem;
-  }
-  .scheda h2 { margin:0; font-size:1.15rem; font-weight:800; letter-spacing:-.02em;
-               line-height:1.3; text-wrap:balance; }
-  .scheda p { margin:0; color:var(--dim); font-size:.94rem; }
-  .quando { font-family:var(--mono); font-size:.63rem; letter-spacing:.08em;
-            color:var(--dim); font-variant-numeric:tabular-nums; }
+  .card { position:relative; width:100%; text-align:left; font:inherit; color:inherit;
+          cursor:pointer; background:var(--sur); border:1px solid var(--line);
+          border-radius:22px; padding:1.4rem 1.35rem 1.25rem; overflow:hidden;
+          display:flex; flex-direction:column; gap:.7rem;
+          transition:transform 180ms cubic-bezier(.2,.8,.3,1), border-color 180ms ease; }
+  .card::before { content:""; position:absolute; inset:0 0 auto 0; height:5px;
+                  background:var(--k); }
+  .card::after { content:""; position:absolute; width:15rem; height:15rem;
+                 right:-7rem; top:-8rem; border-radius:50%; background:var(--k);
+                 opacity:.13; filter:blur(12px); pointer-events:none; }
+  .card:hover { transform:translateY(-3px); border-color:var(--k); }
+  .card:focus-visible { outline:3px solid var(--k); outline-offset:3px; }
 
-  /* ---- scheda aperta ---- */
-  .aperta { display:none; }
-  .aperta.on { display:block; animation:up 250ms ease both; }
-  .schede.off { display:none; }
+  .pill { align-self:flex-start; font-family:var(--mono); font-size:.6rem;
+          letter-spacing:.13em; text-transform:uppercase; font-weight:700;
+          color:var(--bg); background:var(--k); border-radius:999px;
+          padding:.32rem .7rem; position:relative; z-index:1; }
+  .card h2 { margin:0; font-size:clamp(1.3rem,5.2vw,1.7rem); font-weight:900;
+             letter-spacing:-.032em; line-height:1.12; text-wrap:balance;
+             position:relative; z-index:1; }
+  .card .hook { margin:0; font-size:1rem; color:var(--dim); position:relative; z-index:1; }
+  .card .foot { display:flex; justify-content:space-between; align-items:center;
+                gap:1rem; font-family:var(--mono); font-size:.63rem; letter-spacing:.08em;
+                color:var(--dim); text-transform:uppercase; position:relative; z-index:1;
+                margin-top:.2rem; }
+  .card .foot em { font-style:normal; color:var(--k); font-weight:700; }
 
-  .indietro { font:inherit; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em;
-              text-transform:uppercase; color:var(--dim); background:none; border:0;
-              padding:.4rem 0; cursor:pointer; margin-bottom:1rem; }
-  .indietro:hover { color:var(--acc); }
-  .indietro:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  /* ---------- dettaglio ---------- */
+  .apri { display:none; }
+  .apri.on { display:block; animation:in 300ms cubic-bezier(.2,.8,.3,1) both; }
+  .griglia.off, .hero.off { display:none; }
 
-  .aperta h2 { margin:.5rem 0 1.25rem; font-size:clamp(1.4rem,5.5vw,1.9rem); font-weight:800;
-               letter-spacing:-.025em; line-height:1.2; text-wrap:balance; }
+  .back { font:inherit; font-family:var(--mono); font-size:.66rem; letter-spacing:.11em;
+          text-transform:uppercase; font-weight:700; color:var(--dim); background:var(--sur);
+          border:1px solid var(--line); border-radius:999px; padding:.5rem 1rem;
+          cursor:pointer; margin-bottom:1.5rem; }
+  .back:hover { color:var(--tx); border-color:var(--k); }
+  .back:focus-visible { outline:2px solid var(--k); outline-offset:2px; }
 
-  .livelli { display:flex; gap:.4rem; margin-bottom:1.25rem; flex-wrap:wrap; }
-  .liv { font:inherit; font-size:.8rem; color:var(--dim); background:var(--card);
-         border:1px solid var(--line); border-radius:999px; padding:.42rem .85rem;
-         cursor:pointer; transition:border-color 120ms ease,color 120ms ease; }
-  .liv:hover { border-color:var(--acc); }
-  .liv[aria-selected="true"] { color:var(--acc); border-color:var(--acc); font-weight:600; }
-  .liv:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  .apri h2 { margin:.7rem 0 1.5rem; font-size:clamp(1.85rem,8vw,2.7rem); font-weight:900;
+             letter-spacing:-.04em; line-height:1.03; text-wrap:balance; }
 
-  .pannello { display:none; }
-  .pannello.on { display:flex; flex-direction:column; gap:1rem; }
+  .seg { display:flex; gap:.25rem; background:var(--sur); border:1px solid var(--line);
+         border-radius:999px; padding:.28rem; margin-bottom:1.5rem; }
+  .seg button { flex:1; font:inherit; font-size:.82rem; font-weight:700; color:var(--dim);
+                background:none; border:0; border-radius:999px; padding:.55rem .3rem;
+                cursor:pointer; transition:background 160ms ease,color 160ms ease;
+                white-space:nowrap; }
+  .seg button[aria-selected="true"] { background:var(--k); color:var(--bg); }
+  .seg button:focus-visible { outline:2px solid var(--k); outline-offset:2px; }
 
-  .pannello p { margin:0; }
-  .pannello h3 { margin:.4rem 0 0; font-size:.95rem; font-weight:800; letter-spacing:-.01em; }
+  .pan { display:none; }
+  .pan.on { display:flex; flex-direction:column; gap:1.1rem;
+            animation:in 220ms ease both; }
 
-  .grosso { font-size:1.1rem; line-height:1.55; }
+  .lead { margin:0; font-size:clamp(1.15rem,4.4vw,1.4rem); font-weight:600;
+          line-height:1.4; letter-spacing:-.015em; }
+
+  /* confronto */
+  .conf { display:grid; gap:.6rem; }
+  .conf .r { background:var(--sur); border:1px solid var(--line); border-radius:16px;
+             padding:1rem 1.1rem; display:flex; justify-content:space-between;
+             align-items:center; gap:1rem; flex-wrap:wrap; }
+  .conf .r b { font-size:1.02rem; font-weight:800; letter-spacing:-.015em; }
+  .conf .r b i { display:block; font-style:normal; font-family:var(--mono);
+                 font-size:.62rem; letter-spacing:.09em; color:var(--dim);
+                 font-weight:400; margin-top:.2rem; text-transform:uppercase; }
+  .conf .r u { text-decoration:none; font-family:var(--mono); font-size:.66rem;
+               font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+               border:1.5px solid currentColor; border-radius:999px; padding:.34rem .7rem;
+               white-space:nowrap; }
+  .esito-no { color:var(--c2); }
+  .esito-fermo { color:var(--c3); }
+  .esito-si { color:var(--c4); }
 
   /* cronologia */
-  .crono { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
-  .crono li { position:relative; padding:0 0 1rem 1.5rem; }
-  .crono li:last-child { padding-bottom:0; }
-  .crono li::before { content:""; position:absolute; left:0; top:.5rem; width:9px; height:9px;
-                      border-radius:50%; background:var(--dim); }
-  .crono li:last-child::before { background:var(--hot); }
-  .crono li:not(:last-child)::after { content:""; position:absolute; left:4px; top:1.15rem;
-                      bottom:.1rem; width:1px; background:var(--line); }
-  .crono em { font-style:normal; display:block; font-family:var(--mono); font-size:.63rem;
-              letter-spacing:.08em; color:var(--dim); margin-bottom:.15rem;
-              font-variant-numeric:tabular-nums; }
+  .steps { list-style:none; margin:0; padding:0; }
+  .steps li { position:relative; padding:0 0 1.35rem 2.1rem; }
+  .steps li:last-child { padding-bottom:0; }
+  .steps li::before { content:""; position:absolute; left:0; top:.42rem; width:12px;
+                      height:12px; border-radius:50%; background:var(--bg);
+                      border:3px solid var(--k); }
+  .steps li:not(:last-child)::after { content:""; position:absolute; left:5px; top:1.3rem;
+                      bottom:.1rem; width:2px; background:var(--line); }
+  .steps em { font-style:normal; display:block; font-family:var(--mono); font-size:.63rem;
+              letter-spacing:.1em; text-transform:uppercase; color:var(--k);
+              font-weight:700; margin-bottom:.25rem; }
+  .steps p { margin:0; font-size:.97rem; }
 
-  /* tabella stesso metro */
-  .scroll { overflow-x:auto; }
-  table { width:100%; border-collapse:collapse; font-size:.88rem; min-width:30rem; }
-  th { text-align:left; font-family:var(--mono); font-size:.6rem; letter-spacing:.1em;
-       text-transform:uppercase; color:var(--dim); font-weight:400;
-       padding:0 .7rem .5rem 0; border-bottom:1px solid var(--line); }
-  td { padding:.65rem .7rem .65rem 0; border-bottom:1px solid var(--line); vertical-align:top; }
-  td:last-child, th:last-child { padding-right:0; }
-  td b { color:var(--hot); font-family:var(--mono); font-size:.68rem;
-         letter-spacing:.06em; text-transform:uppercase; }
-  td span { display:block; font-family:var(--mono); font-size:.62rem; color:var(--dim);
-            margin-top:.15rem; }
-
-  /* irrisolti */
-  .aperti { background:var(--card); border:1px solid var(--line); border-radius:10px;
-            padding:.9rem 1rem; }
-  .aperti ul { margin:.5rem 0 0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.35rem; }
-  .aperti li { font-size:.92rem; }
+  .open { background:var(--sur); border:1px solid var(--line); border-radius:18px;
+          padding:1.1rem 1.2rem; }
+  .open h3 { margin:0 0 .7rem; font-size:.7rem; font-family:var(--mono);
+             letter-spacing:.12em; text-transform:uppercase; color:var(--k); }
+  .open ul { margin:0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.5rem; }
+  .open li { font-size:.95rem; }
 
   /* prove */
-  .prove { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.4rem; }
-  .prove a { display:flex; flex-wrap:wrap; gap:.15rem .7rem; align-items:baseline;
-             background:var(--card); border:1px solid var(--line); border-radius:9px;
-             padding:.7rem .85rem; text-decoration:none; color:inherit;
-             transition:border-color 120ms ease; }
-  .prove a:hover { border-color:var(--acc); }
-  .prove a:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
-  .prove .d { font-family:var(--mono); font-size:.63rem; color:var(--dim);
-              font-variant-numeric:tabular-nums; }
-  .prove .t { font-size:.92rem; font-weight:600; flex:1 1 14rem; }
-  .prove .f { font-family:var(--mono); font-size:.6rem; letter-spacing:.08em;
-              text-transform:uppercase; color:var(--dim); }
+  .prove { list-style:none; margin:0; padding:0; display:grid; gap:.55rem; }
+  .prove a { display:grid; grid-template-columns:1fr auto; gap:.35rem .9rem;
+             background:var(--sur); border:1px solid var(--line); border-radius:16px;
+             padding:.95rem 1.1rem; text-decoration:none; color:inherit;
+             transition:border-color 150ms ease,transform 150ms ease; }
+  .prove a:hover { border-color:var(--k); transform:translateX(3px); }
+  .prove a:focus-visible { outline:2px solid var(--k); outline-offset:2px; }
+  .prove .t { font-size:.97rem; font-weight:700; letter-spacing:-.01em; line-height:1.35; }
+  .prove .arr { color:var(--k); font-weight:900; align-self:center; }
+  .prove .m { grid-column:1/-1; font-family:var(--mono); font-size:.62rem;
+              letter-spacing:.09em; text-transform:uppercase; color:var(--dim); }
 
-  footer { border-top:1px solid var(--line); padding-top:1rem; margin-top:2.5rem;
-           color:var(--dim); font-size:.8rem; display:flex; flex-direction:column; gap:.35rem; }
+  footer { margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line);
+           color:var(--dim); font-size:.78rem; display:flex; flex-direction:column; gap:.4rem; }
   footer p { margin:0; }
   footer a { color:var(--dim); }
-  footer a:hover { color:var(--acc); }
+  footer a:hover { color:var(--tx); }
 
-  @keyframes up { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
-  @media (prefers-reduced-motion: reduce) { .aperta.on { animation:none; } .scheda:hover { transform:none; } }
+  @keyframes in { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .apri.on, .pan.on { animation:none; }
+    .card:hover, .prove a:hover { transform:none; }
+  }
 </style>
 
 <div class="wrap">
 
-  <header class="head">
-    <h1 class="logo" id="home" tabindex="0" role="button">Politico<b>metro</b></h1>
-    <p class="lab">4 schede &middot; 28.07.2026</p>
+  <header class="top">
+    <h1 class="mark" id="home" tabindex="0" role="button">Politico<i>metro</i></h1>
+    <span class="tag">28.07.26</span>
   </header>
 
-  <div class="schede" id="elenco"></div>
-  <div class="aperta" id="dettaglio"></div>
+  <div class="hero" id="hero">
+    <h1>Quattro storie.<span>Zero opinioni.</span></h1>
+  </div>
+
+  <div class="griglia" id="lista"></div>
+  <div class="apri" id="det"></div>
 
   <footer>
-    <p>Ogni scheda si legge a tre livelli: venti secondi, due minuti, tutte le prove.</p>
-    <p>Un&rsquo;indagine non &egrave; una condanna. Una condanna non definitiva pu&ograve; essere ribaltata. Un rapporto societario non &egrave; un illecito.</p>
+    <p>Ogni scheda si legge in venti secondi, o in due minuti, o fino all&rsquo;ultima fonte.</p>
+    <p>Indagato non vuol dire condannato. Una condanna non definitiva pu&ograve; essere ribaltata. Essere soci di qualcuno non &egrave; un reato.</p>
     <p><a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice</a></p>
   </footer>
 
 </div>
 
 <script>
-const SCHEDE = [
+const S = [
   {
+    k: "var(--c1)",
     formato: "Stesso metro",
-    titolo: "Quando i pm chiedono le chat di un parlamentare",
-    quando: "Maggio - luglio 2026",
-    breve: "Tre richieste in otto settimane, tre partiti, tre risposte diverse.",
-    venti: "Per prendere le chat di un cittadino basta il decreto di un giudice. Per quelle di un parlamentare serve il permesso della sua Camera: a votare sono gli altri parlamentari. In otto settimane la domanda si &egrave; posta tre volte, su Fratelli d&rsquo;Italia e sul Movimento 5 Stelle, ed &egrave; finita in tre modi diversi.",
-    tabella: {
-      teste: ["Di chi", "Chi doveva decidere", "Esito"],
-      righe: [
-        ["Le chat<span>Andrea Delmastro &mdash; FdI</span>", "Giunta della Camera", "<b>Negate</b>"],
-        ["Mail e audio<span>Daniela Santanch&egrave; &mdash; FdI</span>", "Senato, poi Corte costituzionale", "<b>Processo fermo</b>"],
-        ["Le intercettazioni<span>Roberto Scarpinato &mdash; M5S</span>", "Giunta del Senato, poi Corte costituzionale", "<b>Restano usabili</b>"]
-      ]
-    },
-    crono: [
-      ["27 maggio 2026", "La procura di Roma chiede alla Camera le chat fra Delmastro e Mauro Caroccia, imprenditore che per gli inquirenti fa da prestanome al clan Senese. I due erano soci in un ristorante; Delmastro si era gi&agrave; dimesso da sottosegretario alla Giustizia dicendo di non sapere chi fosse il socio. In quell&rsquo;inchiesta non &egrave; indagato."],
-      ["3 giugno 2026", "Caso Santanch&egrave;: nel processo per truffa all&rsquo;Inps i pm avevano messo agli atti mail e registrazioni della senatrice senza chiedere il permesso al Senato. Il Senato solleva conflitto e la Corte costituzionale lo dichiara ammissibile. Il processo si ferma in attesa della decisione."],
-      ["16 giugno 2026", "Caso Scarpinato: la commissione Antimafia si era fatta mandare da Caltanissetta intercettazioni che lo riguardano, senza passare dal Senato. Lui chiede alla Giunta lo stesso conflitto ottenuto per Santanch&egrave;: la maggioranza dice no. Ricorre da solo e la Corte lo dichiara inammissibile, perch&eacute; un singolo parlamentare non pu&ograve; farlo."],
-      ["22 luglio 2026", "La Giunta della Camera nega ai pm le chat di Delmastro. Al Senato i parlamentari del M5S occupano i banchi del governo."],
-      ["25 luglio 2026", "Le stesse chat arrivano comunque in procura: le consegna l&rsquo;avvocato di Caroccia."]
+    titolo: "Le chat che il Parlamento non consegna",
+    meta: "3 casi &middot; 8 settimane",
+    hook: "Stessa richiesta, due partiti diversi, tre finali diversi.",
+    lead: "Le tue chat un pm se le prende con la firma di un giudice. Quelle di un parlamentare no: decide la sua Camera, cio&egrave; gli altri parlamentari. In otto settimane &egrave; successo tre volte.",
+    conf: [
+      ["Delmastro", "Fratelli d&rsquo;Italia", "Negate", "esito-no"],
+      ["Santanch&egrave;", "Fratelli d&rsquo;Italia", "Processo fermo", "esito-fermo"],
+      ["Scarpinato", "Movimento 5 Stelle", "Restano usabili", "esito-si"]
     ],
-    irrisolti: [
-      "La Corte costituzionale non ha ancora deciso nel merito sul caso Santanch&egrave;.",
-      "Non &egrave; noto cosa contengano le chat fra Delmastro e Caroccia.",
-      "Il voto dell&rsquo;aula della Camera sulle chat era atteso per il 30 luglio 2026."
+    steps: [
+      ["27 mag 2026", "I pm di Roma chiedono alla Camera le chat fra Delmastro e Mauro Caroccia. Per gli inquirenti Caroccia &egrave; un prestanome del clan Senese. I due erano soci in un ristorante. Delmastro si era gi&agrave; dimesso da sottosegretario: dice che non sapeva chi fosse. In quell&rsquo;inchiesta non &egrave; indagato."],
+      ["3 giu 2026", "Santanch&egrave;: nel processo per truffa all&rsquo;Inps i pm avevano usato sue mail e registrazioni senza chiedere niente al Senato. Il Senato protesta davanti alla Consulta, che gli d&agrave; udienza. Il processo si ferma."],
+      ["16 giu 2026", "Scarpinato: l&rsquo;Antimafia si era fatta mandare intercettazioni che lo riguardano saltando il Senato. Lui chiede la stessa protezione data a Santanch&egrave;. La maggioranza dice no. Ricorre da solo, la Consulta lo respinge: da solo non pu&ograve;."],
+      ["22 lug 2026", "La Camera nega le chat di Delmastro. Al Senato il M5S occupa i banchi del governo."],
+      ["25 lug 2026", "Le chat arrivano in procura lo stesso. Gliele porta l&rsquo;avvocato di Caroccia."]
+    ],
+    aperti: [
+      "La Consulta non ha ancora deciso sul caso Santanch&egrave;.",
+      "Cosa ci sia nelle chat di Delmastro non lo sa nessuno.",
+      "Il voto dell&rsquo;aula era atteso per il 30 luglio."
     ],
     prove: [
-      ["22.07.2026", "La Giunta nega l&rsquo;acquisizione delle chat, il M5S occupa i banchi", "L&rsquo;Espresso", "https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611"],
-      ["25.07.2026", "Le chat arrivano in procura per un&rsquo;altra strada", "Giornale di Sicilia", "https://gds.it/articoli/cronaca/2026/07/25/in-procura-le-chat-tra-delmastro-e-caroccia-5bd3a8a2-c726-4d8b-9e15-359181757420/"],
-      ["03.06.2026", "La Consulta ammette il ricorso del Senato su mail e audio", "Il Fatto Quotidiano", "https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/"],
-      ["16.06.2026", "La Consulta respinge il ricorso di Scarpinato", "Il Foglio", "https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700"],
-      ["&mdash;", "Articolo 68: serve l&rsquo;autorizzazione della Camera di appartenenza", "Costituzione", "https://www.senato.it/istituzione/la-costituzione/parte-ii/titolo-i/sezione-i/articolo-68"]
+      ["La Giunta nega le chat, il M5S occupa i banchi", "L&rsquo;Espresso", "22.07.2026", "https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611"],
+      ["Le chat arrivano in procura per un&rsquo;altra strada", "Giornale di Sicilia", "25.07.2026", "https://gds.it/articoli/cronaca/2026/07/25/in-procura-le-chat-tra-delmastro-e-caroccia-5bd3a8a2-c726-4d8b-9e15-359181757420/"],
+      ["La Consulta ammette il ricorso del Senato", "Il Fatto Quotidiano", "03.06.2026", "https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/"],
+      ["La Consulta respinge il ricorso di Scarpinato", "Il Foglio", "16.06.2026", "https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700"],
+      ["Serve l&rsquo;autorizzazione della Camera", "Costituzione, art. 68", "Testo", "https://www.senato.it/istituzione/la-costituzione/parte-ii/titolo-i/sezione-i/articolo-68"]
     ]
   },
 
   {
+    k: "var(--c2)",
     formato: "Detto contro fatto",
     titolo: "Il blocco navale",
-    quando: "2022 - oggi",
-    breve: "Misura principale in campagna elettorale. Non &egrave; mai stata attuata.",
-    venti: "Nella campagna del 2022 il blocco navale viene indicato da Fratelli d&rsquo;Italia come la proposta principale per fermare gli sbarchi. Dopo l&rsquo;insediamento non viene attuato, e nel 2023 gli sbarchi aumentano rispetto all&rsquo;anno prima.",
-    crono: [
-      ["2 maggio 2022", "Alla conferenza programmatica di Fratelli d&rsquo;Italia: &laquo;La proposta pi&ugrave; seria l&rsquo;abbiamo sempre fatta noi: si chiama blocco navale&raquo;."],
-      ["Documenti del partito", "Il blocco navale viene descritto non come operazione militare ma come missione europea concordata con le autorit&agrave; libiche per impedire le partenze."],
-      ["Ottobre 2022", "Il governo si insedia."],
-      ["2023", "Primo anno pieno di governo: gli sbarchi aumentano rispetto al 2022. La misura non viene attuata e smette di comparire nel dibattito."]
+    meta: "2022 &rarr; oggi",
+    hook: "La misura numero uno della campagna. Non &egrave; mai partita.",
+    lead: "Nel 2022 era la proposta principale per fermare gli sbarchi. Dal governo in poi non se n&rsquo;&egrave; pi&ugrave; parlato, e nel 2023 gli sbarchi sono aumentati.",
+    steps: [
+      ["2 mag 2022", "Conferenza programmatica di Fratelli d&rsquo;Italia: &laquo;La proposta pi&ugrave; seria l&rsquo;abbiamo sempre fatta noi: si chiama blocco navale&raquo;."],
+      ["Nei documenti", "Non &egrave; un&rsquo;operazione militare: sarebbe una missione europea, d&rsquo;accordo con la Libia, per impedire le partenze."],
+      ["Ott 2022", "Il governo si insedia."],
+      ["2023", "Primo anno pieno. Gli sbarchi aumentano rispetto al 2022. Il blocco navale non parte e sparisce dal discorso."]
     ],
-    irrisolti: [
-      "Non &egrave; mai stata presentata una proposta operativa alle istituzioni europee.",
-      "Nessuna spiegazione pubblica sul perch&eacute; la misura sia stata abbandonata."
+    aperti: [
+      "Nessuna proposta operativa &egrave; mai stata presentata all&rsquo;Unione europea.",
+      "Non c&rsquo;&egrave; mai stata una spiegazione pubblica sul perch&eacute; sia stato lasciato cadere."
     ],
     prove: [
-      ["&mdash;", "I fatti dietro la promessa: il blocco navale di Fratelli d&rsquo;Italia", "Pagella Politica", "https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale"],
-      ["&mdash;", "Che cos&rsquo;&egrave; il blocco navale e quali limiti ha", "Pagella Politica", "https://pagellapolitica.it/dizionario/blocco-navale"],
-      ["11.08.2022", "Il blocco navale non &egrave; mai stato proposto dall&rsquo;Unione europea", "Eunews", "https://www.eunews.it/2022/08/11/blocco-navale-migrazione-meloni-mai-proposto-commissione-ue/"]
+      ["I fatti dietro la promessa del blocco navale", "Pagella Politica", "Scheda", "https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale"],
+      ["Che cos&rsquo;&egrave; un blocco navale e quali limiti ha", "Pagella Politica", "Voce", "https://pagellapolitica.it/dizionario/blocco-navale"],
+      ["L&rsquo;Unione europea non l&rsquo;ha mai proposto", "Eunews", "11.08.2022", "https://www.eunews.it/2022/08/11/blocco-navale-migrazione-meloni-mai-proposto-commissione-ue/"]
     ]
   },
 
   {
+    k: "var(--c3)",
     formato: "Che fine ha fatto",
-    titolo: "Le carte lette in aula sul caso Cospito",
-    quando: "2023 - 2026",
-    breve: "Tre anni dopo, condanna confermata in appello. Non &egrave; definitiva.",
-    venti: "Nel 2023 un deputato lesse in aula il contenuto di conversazioni registrate in carcere, coperte da segreto. Gliele aveva passate l&rsquo;allora sottosegretario alla Giustizia. Nel maggio 2026 la condanna a otto mesi &egrave; stata confermata in appello, con la Procura generale che aveva chiesto l&rsquo;assoluzione.",
-    crono: [
-      ["Febbraio 2023", "Il deputato Giovanni Donzelli (FdI), vicepresidente del Copasir, legge alla Camera il contenuto di conversazioni avvenute nel carcere di Sassari fra l&rsquo;anarchico Alfredo Cospito e detenuti al 41 bis."],
-      ["Le carte", "Le informazioni erano coperte da segreto d&rsquo;ufficio ed erano arrivate a Donzelli da Andrea Delmastro, allora sottosegretario alla Giustizia."],
-      ["Primo grado", "Delmastro viene condannato per rivelazione di segreto d&rsquo;ufficio."],
-      ["20 maggio 2026", "La Corte d&rsquo;appello di Roma conferma la condanna a otto mesi. In quell&rsquo;udienza la Procura generale aveva chiesto l&rsquo;assoluzione perch&eacute; il fatto non costituisce reato: i giudici non l&rsquo;hanno seguita. Delmastro annuncia ricorso in Cassazione."]
+    titolo: "Le carte lette in aula tre anni fa",
+    meta: "2023 &rarr; 2026",
+    hook: "Condanna confermata in appello. Non &egrave; ancora finita.",
+    lead: "Nel 2023 un deputato lesse in aula conversazioni segrete registrate in carcere. Gliele aveva passate il sottosegretario alla Giustizia. Tre anni dopo: otto mesi, confermati in appello.",
+    steps: [
+      ["Feb 2023", "Giovanni Donzelli (FdI) legge alla Camera il contenuto di conversazioni avvenute nel carcere di Sassari fra l&rsquo;anarchico Alfredo Cospito e detenuti al 41 bis."],
+      ["Le carte", "Erano coperte da segreto. Gliele aveva date Andrea Delmastro, allora sottosegretario alla Giustizia."],
+      ["Primo grado", "Delmastro condannato per rivelazione di segreto d&rsquo;ufficio."],
+      ["20 mag 2026", "L&rsquo;appello conferma: otto mesi. In quell&rsquo;udienza la Procura generale aveva chiesto di assolverlo. I giudici non l&rsquo;hanno seguita. Delmastro annuncia ricorso in Cassazione."]
     ],
-    irrisolti: [
-      "La sentenza non &egrave; definitiva: manca il giudizio della Cassazione.",
-      "Nessun procedimento a carico di chi ha letto le carte in aula, coperto dall&rsquo;insindacabilit&agrave; delle opinioni espresse in Parlamento."
+    aperti: [
+      "Manca la Cassazione: la condanna non &egrave; definitiva.",
+      "Chi ha letto le carte in aula non risponde di niente: quello che si dice in Parlamento non &egrave; perseguibile."
     ],
     prove: [
-      ["20.05.2026", "Confermata in appello la condanna a Delmastro", "ANSA", "https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html"],
-      ["20.05.2026", "Otto mesi per rivelazione del segreto d&rsquo;ufficio", "Sky TG24", "https://tg24.sky.it/cronaca/2026/05/20/caso-cospito-andrea-delmastro-condanna-appello"],
-      ["20.05.2026", "La Procura generale aveva chiesto l&rsquo;assoluzione", "Il Fatto Quotidiano", "https://www.ilfattoquotidiano.it/2026/05/20/caso-cospito-in-appello-confermata-la-condanna-a-8-mesi-per-andrea-delmastro/8393409/"]
+      ["Confermata in appello la condanna", "ANSA", "20.05.2026", "https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html"],
+      ["Otto mesi per rivelazione di segreto d&rsquo;ufficio", "Sky TG24", "20.05.2026", "https://tg24.sky.it/cronaca/2026/05/20/caso-cospito-andrea-delmastro-condanna-appello"],
+      ["La Procura generale aveva chiesto l&rsquo;assoluzione", "Il Fatto Quotidiano", "20.05.2026", "https://www.ilfattoquotidiano.it/2026/05/20/caso-cospito-in-appello-confermata-la-condanna-a-8-mesi-per-andrea-delmastro/8393409/"]
     ]
   },
 
   {
+    k: "var(--c4)",
     formato: "Nebbia",
-    titolo: "Le intercettazioni che pescano anche chi non &egrave; indagato",
-    quando: "Luglio 2026",
-    breve: "Due emendamenti fermi: la maggioranza non trova l&rsquo;accordo, l&rsquo;esito non si sa.",
-    venti: "Due emendamenti di Fratelli d&rsquo;Italia vogliono riammettere le intercettazioni cosiddette &laquo;a strascico&raquo;, quelle che registrano anche persone non indagate, per mafia, terrorismo e tratta di esseri umani. Forza Italia &egrave; contraria. Al momento non si vota e non si sa come finir&agrave;.",
-    crono: [
-      ["Che cosa sono", "Sono intercettazioni che catturano conversazioni di persone non direttamente coinvolte in un&rsquo;indagine."],
-      ["La proposta", "Gli emendamenti dei senatori Gianni Berrino e Sandro Sisler (FdI) ne consentirebbero l&rsquo;uso per reati di criminalit&agrave; organizzata, terrorismo e tratta."],
-      ["14 luglio 2026", "Nessun accordo dentro la maggioranza: l&rsquo;emendamento non viene messo in votazione."],
-      ["27 luglio 2026", "Lo scontro fra Fratelli d&rsquo;Italia e Forza Italia continua, intrecciato alla discussione sulla legge elettorale."]
+    titolo: "Intercettare anche chi non &egrave; indagato",
+    meta: "In corso",
+    hook: "Due emendamenti fermi. Come finisce non lo sa nessuno.",
+    lead: "Fratelli d&rsquo;Italia vuole riammettere le intercettazioni che registrano anche persone che non sono sotto indagine. Forza Italia dice no. La maggioranza &egrave; bloccata.",
+    steps: [
+      ["Cosa sono", "Intercettazioni che finiscono per registrare gente che con l&rsquo;indagine non c&rsquo;entra."],
+      ["La proposta", "Due emendamenti dei senatori Gianni Berrino e Sandro Sisler (FdI): via libera per mafia, terrorismo e tratta di esseri umani."],
+      ["14 lug 2026", "Nessun accordo dentro la maggioranza. L&rsquo;emendamento non va al voto."],
+      ["27 lug 2026", "Lo scontro fra FdI e Forza Italia continua, incrociato con la legge elettorale."]
     ],
-    irrisolti: [
-      "Non si sa se e quando gli emendamenti andranno al voto.",
-      "Non &egrave; noto il testo finale su cui la maggioranza potrebbe accordarsi.",
-      "Questa scheda resta aperta: non ci sono ancora fatti definitivi da riportare."
+    aperti: [
+      "Non si sa se e quando si voter&agrave;.",
+      "Non si sa su quale testo la maggioranza potrebbe accordarsi.",
+      "Questa scheda resta aperta: qui non ci sono ancora fatti chiusi."
     ],
     prove: [
-      ["27.07.2026", "Cosa sono le intercettazioni a strascico che stanno facendo litigare la destra", "Il Post", "https://www.ilpost.it/2026/07/27/intercettazioni-a-strascico-senato-berrino-sisler/"],
-      ["14.07.2026", "Niente accordo fra FdI e Forza Italia, l&rsquo;emendamento non si vota", "Il Fatto Quotidiano", "https://www.ilfattoquotidiano.it/2026/07/14/intercettazioni-emendamento-melillo-maggioranza-notizie/8448228/"],
-      ["&mdash;", "Forza Italia: no alle intercettazioni a strascico", "Il Messaggero", "https://www.ilmessaggero.it/politica/antimafia_forza_italia_sfida_fdi_no_alle_intercettazioni_strascico-9657409.html"]
+      ["Cosa sono le intercettazioni a strascico", "Il Post", "27.07.2026", "https://www.ilpost.it/2026/07/27/intercettazioni-a-strascico-senato-berrino-sisler/"],
+      ["Niente accordo, l&rsquo;emendamento non si vota", "Il Fatto Quotidiano", "14.07.2026", "https://www.ilfattoquotidiano.it/2026/07/14/intercettazioni-emendamento-melillo-maggioranza-notizie/8448228/"],
+      ["Forza Italia: no alle intercettazioni a strascico", "Il Messaggero", "Luglio 2026", "https://www.ilmessaggero.it/politica/antimafia_forza_italia_sfida_fdi_no_alle_intercettazioni_strascico-9657409.html"]
     ]
   }
 ];
 
-const elenco = document.getElementById("elenco");
-const dettaglio = document.getElementById("dettaglio");
+const lista = document.getElementById("lista");
+const det = document.getElementById("det");
+const hero = document.getElementById("hero");
 
-SCHEDE.forEach((s, i) => {
+S.forEach((s, i) => {
   const b = document.createElement("button");
-  b.className = "scheda";
+  b.className = "card";
   b.type = "button";
+  b.style.setProperty("--k", s.k);
   b.innerHTML =
-    '<span class="formato">' + s.formato + "</span>" +
+    '<span class="pill">' + s.formato + "</span>" +
     "<h2>" + s.titolo + "</h2>" +
-    "<p>" + s.breve + "</p>" +
-    '<span class="quando">' + s.quando + "</span>";
+    '<p class="hook">' + s.hook + "</p>" +
+    '<span class="foot">' + s.meta + "<em>Apri &rarr;</em></span>";
   b.addEventListener("click", () => apri(i));
-  elenco.appendChild(b);
+  lista.appendChild(b);
 });
 
-function tabella(t) {
-  if (!t) return "";
-  return '<div class="scroll"><table><thead><tr>' +
-    t.teste.map(h => '<th scope="col">' + h + "</th>").join("") +
-    "</tr></thead><tbody>" +
-    t.righe.map(r => "<tr>" + r.map(c => "<td>" + c + "</td>").join("") + "</tr>").join("") +
-    "</tbody></table></div>";
+function conf(rows) {
+  if (!rows) return "";
+  return '<div class="conf">' + rows.map(r =>
+    '<div class="r"><b>' + r[0] + "<i>" + r[1] + "</i></b>" +
+    '<u class="' + r[3] + '">' + r[2] + "</u></div>"
+  ).join("") + "</div>";
 }
 
 function apri(i) {
-  const s = SCHEDE[i];
+  const s = S[i];
+  det.style.setProperty("--k", s.k);
 
-  dettaglio.innerHTML =
-    '<button class="indietro" type="button">&larr; Tutte le schede</button>' +
-    '<span class="formato">' + s.formato + "</span>" +
+  det.innerHTML =
+    '<button class="back" type="button">&larr; Tutte</button>' +
+    '<span class="pill">' + s.formato + "</span>" +
     "<h2>" + s.titolo + "</h2>" +
-    '<div class="livelli" role="tablist">' +
-      '<button class="liv" role="tab" aria-selected="true"  data-p="0">20 secondi</button>' +
-      '<button class="liv" role="tab" aria-selected="false" data-p="1">2 minuti</button>' +
-      '<button class="liv" role="tab" aria-selected="false" data-p="2">Tutte le prove</button>' +
+    '<div class="seg" role="tablist">' +
+      '<button role="tab" aria-selected="true"  data-p="0">20 secondi</button>' +
+      '<button role="tab" aria-selected="false" data-p="1">2 minuti</button>' +
+      '<button role="tab" aria-selected="false" data-p="2">Le prove</button>' +
     "</div>" +
 
-    '<div class="pannello on" data-p="0">' +
-      '<p class="grosso">' + s.venti + "</p>" +
-      tabella(s.tabella) +
-    "</div>" +
+    '<div class="pan on" data-p="0"><p class="lead">' + s.lead + "</p>" + conf(s.conf) + "</div>" +
 
-    '<div class="pannello" data-p="1">' +
-      "<h3>Come &egrave; andata</h3>" +
-      '<ul class="crono">' +
-        s.crono.map(c => "<li><em>" + c[0] + "</em>" + c[1] + "</li>").join("") +
-      "</ul>" +
-      '<div class="aperti"><h3>Punti ancora aperti</h3><ul>' +
-        s.irrisolti.map(x => "<li>" + x + "</li>").join("") +
-      "</ul></div>" +
-    "</div>" +
+    '<div class="pan" data-p="1"><ul class="steps">' +
+      s.steps.map(x => "<li><em>" + x[0] + "</em><p>" + x[1] + "</p></li>").join("") +
+    '</ul><div class="open"><h3>Ancora aperto</h3><ul>' +
+      s.aperti.map(x => "<li>" + x + "</li>").join("") +
+    "</ul></div></div>" +
 
-    '<div class="pannello" data-p="2">' +
-      '<ul class="prove">' +
-        s.prove.map(p =>
-          '<li><a href="' + p[3] + '" target="_blank" rel="noopener noreferrer">' +
-          '<span class="d">' + p[0] + "</span>" +
-          '<span class="t">' + p[1] + "</span>" +
-          '<span class="f">' + p[2] + "</span></a></li>"
-        ).join("") +
-      "</ul>" +
-    "</div>";
+    '<div class="pan" data-p="2"><ul class="prove">' +
+      s.prove.map(p =>
+        '<li><a href="' + p[2 + 1] + '" target="_blank" rel="noopener noreferrer">' +
+        '<span class="t">' + p[0] + '</span><span class="arr">&rarr;</span>' +
+        '<span class="m">' + p[1] + " &middot; " + p[2] + "</span></a></li>"
+      ).join("") +
+    "</ul></div>";
 
-  dettaglio.querySelector(".indietro").addEventListener("click", chiudi);
+  det.querySelector(".back").addEventListener("click", chiudi);
 
-  dettaglio.querySelectorAll(".liv").forEach(b => {
+  det.querySelectorAll(".seg button").forEach(b => {
     b.addEventListener("click", () => {
-      dettaglio.querySelectorAll(".liv").forEach(x =>
+      det.querySelectorAll(".seg button").forEach(x =>
         x.setAttribute("aria-selected", x === b ? "true" : "false"));
-      dettaglio.querySelectorAll(".pannello").forEach(p =>
-        p.classList.toggle("on", p.dataset.p === b.dataset.p));
+      det.querySelectorAll(".pan").forEach(p => {
+        const on = p.dataset.p === b.dataset.p;
+        p.classList.toggle("on", on);
+      });
     });
   });
 
-  elenco.classList.add("off");
-  dettaglio.classList.add("on");
+  lista.classList.add("off");
+  hero.classList.add("off");
+  det.classList.add("on");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function chiudi() {
-  dettaglio.classList.remove("on");
-  elenco.classList.remove("off");
+  det.classList.remove("on");
+  lista.classList.remove("off");
+  hero.classList.remove("off");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-document.getElementById("home").addEventListener("click", chiudi);
-document.getElementById("home").addEventListener("keydown", e => {
+const h = document.getElementById("home");
+h.addEventListener("click", chiudi);
+h.addEventListener("keydown", e => {
   if (e.key === "Enter" || e.key === " ") { e.preventDefault(); chiudi(); }
 });
 </script>
