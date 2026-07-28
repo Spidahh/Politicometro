@@ -1,0 +1,35 @@
+publication_rules:
+  allegations_of_crime:
+    human_review: mandatory
+    legal_review: recommended
+    minimum_independent_origins: 2
+    require_reply_search: true
+
+  court_updates:
+    human_review: mandatory
+    require_proceeding_stage: true
+    require_outcome_visibility: true
+
+  official_document_metadata:
+    human_review: sampled
+    automatic_publication_allowed: true
+
+  relationship_graph:
+    human_review: mandatory
+    generic_connected_to_edge_forbidden: true
+
+forbidden_features:
+  - politician_morality_score
+  - political_ads
+  - pay_to_remove
+  - paid_editorial_verdict
+  - sale_of_user_political_profiles
+  - automatic_criminal_accusation
+
+required_public_pages:
+  - method
+  - corrections
+  - funding
+  - ownership
+  - privacy
+  - right_of_reply

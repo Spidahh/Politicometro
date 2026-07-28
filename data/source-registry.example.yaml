@@ -1,0 +1,22 @@
+sources:
+  - id: example-investigative
+    name: Testata investigativa dimostrativa
+    kind: investigative
+    ownership: editore dichiarato
+    territory: national
+    access: rss
+    original_reporting: true
+    corrections_policy: present
+    known_dependencies: []
+    notes: Valutare ogni inchiesta singolarmente.
+
+  - id: example-official
+    name: Ente pubblico dimostrativo
+    kind: official
+    ownership: public
+    territory: national
+    access: api
+    original_reporting: false
+    corrections_policy: unknown
+    known_dependencies: []
+    notes: Fonte documentale, non arbitro dell'agenda editoriale.

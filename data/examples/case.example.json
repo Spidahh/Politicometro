@@ -1,0 +1,48 @@
+{
+  "id": "demo-finanziamento-incompleto",
+  "title": "Annuncio di finanziamento senza elenco completo dei beneficiari",
+  "summary": "Un'amministrazione ha annunciato un finanziamento rilevante, ma al momento della scheda non risultano disponibili tutti i criteri e i beneficiari necessari per valutarne la distribuzione.",
+  "why_it_matters": "Senza criteri e beneficiari non è possibile controllare equità, conflitti d'interesse e stato reale della spesa.",
+  "status": "needs_update",
+  "evidence_strength": 3,
+  "impact": 4,
+  "responsibility": 3,
+  "actors": [
+    {
+      "name": "Amministrazione dimostrativa",
+      "role_in_case": "annuncia e gestisce la misura",
+      "entity_type": "public_body"
+    }
+  ],
+  "claims": [
+    {
+      "text": "Il finanziamento è già pienamente operativo.",
+      "claim_type": "fact",
+      "verification_status": "unverifiable"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Comunicato dimostrativo",
+      "url": "https://example.org/comunicato",
+      "source_type": "official",
+      "published_at": "2026-07-01T10:00:00Z",
+      "is_original_reporting": false,
+      "supports": ["esistenza dell'annuncio", "importo dichiarato"],
+      "limitations": "Non contiene l'elenco completo dei beneficiari."
+    }
+  ],
+  "reply": null,
+  "open_questions": [
+    "Quali sono i beneficiari?",
+    "Quali criteri sono stati applicati?",
+    "Quante risorse sono state effettivamente impegnate e pagate?"
+  ],
+  "human_review": {
+    "required": true,
+    "completed": true,
+    "reviewer": "redazione-demo",
+    "notes": "Caso completamente fittizio usato per mostrare lo schema."
+  },
+  "updated_at": "2026-07-28T12:00:00Z"
+}
