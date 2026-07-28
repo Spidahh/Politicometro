@@ -2,86 +2,84 @@
 
 <style>
   :root {
-    --bg:#0B0D11; --card:#13171E; --card2:#1A1F28; --line:#252C37;
-    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A;
+    --bg:#0A0C10; --card:#12161D; --card2:#191E27; --line:#242B36;
+    --text:#EDF1F6; --dim:#8A96A7; --acc:#4DD4F0; --hot:#FF6B4A;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   }
   @media (prefers-color-scheme: light) {
-    :root { --bg:#F3F5F8; --card:#FFF; --card2:#EBEFF4; --line:#DCE2EA;
-            --text:#0F141B; --dim:#5C687A; --acc:#0B7C93; --hot:#C4442A; }
+    :root { --bg:#F2F5F8; --card:#FFF; --card2:#E9EEF4; --line:#DAE1E9;
+            --text:#0E141B; --dim:#5B6778; --acc:#0A7488; --hot:#C4442A; }
   }
-  :root[data-theme="light"] { --bg:#F3F5F8; --card:#FFF; --card2:#EBEFF4; --line:#DCE2EA;
-    --text:#0F141B; --dim:#5C687A; --acc:#0B7C93; --hot:#C4442A; }
-  :root[data-theme="dark"] { --bg:#0B0D11; --card:#13171E; --card2:#1A1F28; --line:#252C37;
-    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A; }
+  :root[data-theme="light"] { --bg:#F2F5F8; --card:#FFF; --card2:#E9EEF4; --line:#DAE1E9;
+    --text:#0E141B; --dim:#5B6778; --acc:#0A7488; --hot:#C4442A; }
+  :root[data-theme="dark"] { --bg:#0A0C10; --card:#12161D; --card2:#191E27; --line:#242B36;
+    --text:#EDF1F6; --dim:#8A96A7; --acc:#4DD4F0; --hot:#FF6B4A; }
 
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
-         font-size:16px; line-height:1.45; -webkit-font-smoothing:antialiased; }
-  .wrap { max-width:58rem; margin:0 auto; padding:1.25rem 1rem 5rem; }
+         font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:52rem; margin:0 auto; padding:1.25rem 1rem 5rem; }
 
   .head { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem;
-          flex-wrap:wrap; padding-bottom:.9rem; border-bottom:1px solid var(--line); }
+          flex-wrap:wrap; padding-bottom:.9rem; border-bottom:1px solid var(--line);
+          margin-bottom:2rem; }
   .logo { margin:0; font-size:clamp(1.5rem,6vw,2rem); font-weight:800;
           letter-spacing:-.035em; line-height:1; }
   .logo b { color:var(--acc); }
-  .lab { font-family:var(--mono); font-size:.66rem; letter-spacing:.13em;
+  .lab { font-family:var(--mono); font-size:.65rem; letter-spacing:.13em;
          text-transform:uppercase; color:var(--dim); font-variant-numeric:tabular-nums; margin:0; }
 
-  .live { display:flex; flex-wrap:wrap; align-items:center; gap:.7rem 1.1rem;
-          background:var(--card); border:1px solid var(--line); border-left:4px solid var(--hot);
-          border-radius:10px; padding:.85rem 1.05rem; margin:1.25rem 0 1.5rem; }
-  .live p { flex:1 1 17rem; margin:0; font-weight:600; }
-  .pill { font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
-          font-weight:700; color:var(--bg); background:var(--hot); border-radius:999px;
-          padding:.32rem .72rem; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  /* apertura */
+  .apri { margin-bottom:2.75rem; }
+  .apri .kick { color:var(--hot); margin-bottom:.6rem; }
+  .apri h2 { margin:0 0 .9rem; font-size:clamp(1.5rem,6.5vw,2.35rem); font-weight:800;
+             letter-spacing:-.03em; line-height:1.15; text-wrap:balance; }
+  .apri .big { color:var(--acc); }
+  .apri p { margin:0; color:var(--dim); font-size:1rem; max-width:34rem; }
 
-  .conta { display:grid; grid-template-columns:repeat(auto-fit,minmax(7rem,1fr)); gap:.6rem;
-           margin-bottom:1.25rem; }
-  .box { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:.8rem .9rem; }
-  .box .n { font-size:1.7rem; font-weight:800; line-height:1; letter-spacing:-.03em;
-            font-variant-numeric:tabular-nums; display:block; margin-bottom:.2rem; }
+  .conta { display:grid; grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));
+           gap:.6rem; margin:1.4rem 0 0; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:10px;
+         padding:.85rem .95rem; }
+  .box .n { font-size:1.75rem; font-weight:800; line-height:1; letter-spacing:-.03em;
+            font-variant-numeric:tabular-nums; display:block; margin-bottom:.25rem; }
   .box .n.acc { color:var(--acc); }
+  .box .n.hot { color:var(--hot); }
 
-  .filtri { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.5rem; }
-  .chip { font:inherit; font-size:.82rem; color:var(--text); background:var(--card);
-          border:1px solid var(--line); border-radius:999px; padding:.4rem .8rem;
-          cursor:pointer; display:inline-flex; align-items:center; gap:.45rem;
-          transition:border-color 120ms ease,color 120ms ease; }
-  .chip b { font-family:var(--mono); font-size:.66rem; color:var(--dim);
-            font-variant-numeric:tabular-nums; }
-  .chip:hover { border-color:var(--acc); }
-  .chip[aria-pressed="true"] { border-color:var(--acc); color:var(--acc); }
-  .chip[aria-pressed="true"] b { color:var(--acc); }
-  .chip:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  /* blocchi grafici */
+  .blocco { margin-bottom:2.75rem; }
+  .blocco h3 { margin:0 0 .3rem; font-size:clamp(1.15rem,4.5vw,1.4rem); font-weight:800;
+               letter-spacing:-.02em; text-wrap:balance; }
+  .blocco .dice { margin:0 0 1.1rem; color:var(--dim); font-size:.94rem; max-width:36rem; }
 
-  .giorno { font-family:var(--mono); font-size:.68rem; letter-spacing:.14em;
-            text-transform:uppercase; color:var(--dim); margin:1.6rem 0 .6rem;
-            padding-bottom:.4rem; border-bottom:1px solid var(--line); }
-  .giorno:first-of-type { margin-top:0; }
+  .grafico { background:var(--card); border:1px solid var(--line); border-radius:12px;
+             padding:1.1rem 1.15rem; display:flex; flex-direction:column; gap:.7rem; }
 
-  .lista { display:flex; flex-direction:column; gap:.35rem; }
+  .riga { display:grid; grid-template-columns:7.5rem 1fr 3.2rem; gap:.75rem;
+          align-items:center; }
+  @media (max-width:30rem) { .riga { grid-template-columns:5.5rem 1fr 2.8rem; gap:.5rem; } }
 
-  .voce { display:grid; grid-template-columns:auto 1fr; gap:.2rem .8rem; align-items:baseline;
-          background:var(--card); border:1px solid var(--line); border-radius:9px;
-          padding:.7rem .85rem; text-decoration:none; color:inherit;
-          transition:border-color 120ms ease, background 120ms ease; }
-  .voce:hover { border-color:var(--acc); background:var(--card2); }
-  .voce:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
-  .ora { font-family:var(--mono); font-size:.7rem; color:var(--dim);
-         font-variant-numeric:tabular-nums; grid-row:1; }
-  .tit { font-size:.97rem; font-weight:600; line-height:1.35; grid-row:1; }
-  .meta { grid-column:2; display:flex; flex-wrap:wrap; gap:.3rem .5rem; margin-top:.3rem; }
-  .meta b { font-family:var(--mono); font-size:.6rem; letter-spacing:.09em;
-            text-transform:uppercase; font-weight:700; padding:.18rem .45rem;
-            border-radius:999px; border:1px solid var(--line); color:var(--dim); }
-  .meta .tema { color:var(--acc); border-color:currentColor; }
+  .et { font-family:var(--mono); font-size:.68rem; letter-spacing:.05em; color:var(--dim);
+        font-variant-numeric:tabular-nums; line-height:1.3; }
+  .et b { display:block; font-weight:400; font-size:.6rem; opacity:.7; margin-top:.1rem; }
+  .pista { height:14px; background:var(--card2); border-radius:4px; overflow:hidden; }
+  .pista i { display:block; height:100%; background:var(--dim); border-radius:4px;
+             opacity:.55; transition:width 500ms ease; }
+  .vl { font-weight:800; font-size:.92rem; text-align:right; font-variant-numeric:tabular-nums; }
 
-  .vuoto { color:var(--dim); font-size:.9rem; padding:1.5rem 0; display:none; }
+  .riga.ora .et { color:var(--text); }
+  .riga.ora .pista i { background:var(--hot); opacity:1; }
+  .riga.ora .vl { color:var(--hot); }
 
-  footer { border-top:1px solid var(--line); padding-top:1rem; margin-top:2.5rem;
-           color:var(--dim); font-size:.8rem; display:flex; flex-direction:column; gap:.35rem; }
+  .sotto { margin:.85rem 0 0; padding-top:.85rem; border-top:1px solid var(--line);
+           font-size:.86rem; color:var(--dim); }
+  .sotto a { color:var(--dim); text-underline-offset:3px; }
+  .sotto a:hover { color:var(--acc); }
+  a:focus-visible { outline:2px solid var(--acc); outline-offset:2px; border-radius:3px; }
+
+  footer { border-top:1px solid var(--line); padding-top:1rem; color:var(--dim);
+           font-size:.8rem; display:flex; flex-direction:column; gap:.4rem; }
   footer p { margin:0; }
   footer a { color:var(--dim); }
   footer a:hover { color:var(--acc); }
@@ -91,81 +89,52 @@
 
   <header class="head">
     <h1 class="logo">Politico<b>metro</b></h1>
-    <p class="lab">Aggiornato {{AGGIORNATO}}</p>
+    <p class="lab">Dati Camera &middot; {{AGGIORNATO}}</p>
   </header>
 
-  <div class="live">
-    <p>Il 30 luglio l&rsquo;aula della Camera vota se i pm possono usare le chat di Andrea Delmastro.</p>
-    <span class="pill" id="count">30 luglio</span>
-  </div>
+  <section class="apri">
+    <p class="lab kick">Legislatura {{LEG}} &middot; dal {{DAL}} al {{ULTIMA}}</p>
+    <h2>In questa legislatura il governo ha messo la fiducia <span class="big">{{N_FIDUCIE}} volte</span>.</h2>
+    <p>Quando il governo mette la fiducia, la discussione si chiude e decadono tutte le proposte di modifica. Si vota una volta sola: o passa il testo del governo, o cade il governo.</p>
 
-  <div class="conta">
-    <div class="box"><span class="lab">Notizie</span><span class="n acc">{{TOTALE}}</span></div>
-    <div class="box"><span class="lab">Fonti</span><span class="n">{{FONTI}}</span></div>
-    <div class="box"><span class="lab">Giorni</span><span class="n">{{GIORNI}}</span></div>
-  </div>
+    <div class="conta">
+      <div class="box"><span class="lab">Fiducie all&rsquo;anno, ora</span><span class="n hot">{{RITMO_ORA}}</span></div>
+      <div class="box"><span class="lab">Media delle 5 precedenti</span><span class="n">{{RITMO_PRIMA}}</span></div>
+      <div class="box"><span class="lab">Votazioni in aula</span><span class="n">{{N_VOTAZIONI}}</span></div>
+      <div class="box"><span class="lab">Voti segreti</span><span class="n">{{N_SEGRETE}}</span></div>
+    </div>
+  </section>
 
-  <div class="filtri" id="filtri">
-    <button class="chip" type="button" data-tema="" aria-pressed="true">Tutto</button>
-{{CHIPS}}
-  </div>
+  <section class="blocco">
+    <h3>Quante volte all&rsquo;anno il Parlamento vota senza poter cambiare niente</h3>
+    <p class="dice">Fiducie ogni dodici mesi, per legislatura. Le legislature durano diverso, quindi il totale grezzo non si puo&rsquo; confrontare: qui c&rsquo;e&rsquo; il ritmo.</p>
+    <div class="grafico">
+{{FIDUCIE}}
+      <p class="sotto">Governi di centrodestra, di centrosinistra, tecnici e di larghe intese. &mdash; <a href="https://dati.camera.it/sparql" target="_blank" rel="noopener noreferrer">dati.camera.it</a></p>
+    </div>
+  </section>
 
-  <main id="flusso">
-{{VOCI}}
-  </main>
+  <section class="blocco">
+    <h3>Quando i deputati votano senza far sapere come hanno votato</h3>
+    <p class="dice">Voti segreti all&rsquo;anno. Nel voto segreto il singolo deputato puo&rsquo; votare contro il proprio gruppo senza che nessuno lo sappia.</p>
+    <div class="grafico">
+{{SEGRETE}}
+      <p class="sotto"><a href="https://dati.camera.it/sparql" target="_blank" rel="noopener noreferrer">dati.camera.it</a></p>
+    </div>
+  </section>
 
-  <p class="vuoto" id="vuoto">Niente in questo tema negli ultimi giorni.</p>
+  <section class="blocco">
+    <h3>Quanto passa, di tutto quello che si vota</h3>
+    <p class="dice">Quota di votazioni che finiscono in approvazione, sul totale delle votazioni in aula.</p>
+    <div class="grafico">
+{{APPROVATE}}
+      <p class="sotto"><a href="https://dati.camera.it/sparql" target="_blank" rel="noopener noreferrer">dati.camera.it</a></p>
+    </div>
+  </section>
 
   <footer>
-    <p>Raccolta automatica dai feed di ANSA, Il Post, Adnkronos, Corriere e Open. Ogni titolo porta all&rsquo;articolo originale.</p>
-    <p>I titoli sono di chi li ha scritti. Indagato non vuol dire condannato.</p>
-    <p><a href="dati.json">dati.json</a> &middot; <a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice</a></p>
+    <p>Numeri presi dall&rsquo;archivio ufficiale della Camera dei deputati, contando ogni votazione una volta sola. Si aggiornano da soli.</p>
+    <p><a href="dati.json">dati.json</a> &middot; <a href="https://dati.camera.it/sparql" target="_blank" rel="noopener noreferrer">fonte</a> &middot; <a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice</a></p>
   </footer>
 
 </div>
-
-<script>
-  (function () {
-    var el = document.getElementById("count");
-    if (el) {
-      var voto = new Date(2026, 6, 30), oggi = new Date();
-      oggi.setHours(0, 0, 0, 0);
-      var g = Math.round((voto - oggi) / 86400000);
-      el.textContent = g > 1 ? "fra " + g + " giorni" : g === 1 ? "domani"
-                     : g === 0 ? "oggi" : "voto del 30 luglio";
-    }
-
-    var filtri = document.getElementById("filtri");
-    var vuoto = document.getElementById("vuoto");
-    if (!filtri) return;
-
-    filtri.addEventListener("click", function (e) {
-      var b = e.target.closest(".chip");
-      if (!b) return;
-
-      Array.prototype.forEach.call(filtri.querySelectorAll(".chip"), function (c) {
-        c.setAttribute("aria-pressed", c === b ? "true" : "false");
-      });
-
-      var t = b.dataset.tema;
-      var visibili = 0;
-
-      Array.prototype.forEach.call(document.querySelectorAll(".voce"), function (v) {
-        var ok = !t || v.dataset.tema === t;
-        v.style.display = ok ? "" : "none";
-        if (ok) visibili++;
-      });
-
-      Array.prototype.forEach.call(document.querySelectorAll(".lista"), function (l) {
-        var pieno = l.querySelector('.voce:not([style*="none"])');
-        l.style.display = pieno ? "" : "none";
-        var titolo = l.previousElementSibling;
-        if (titolo && titolo.classList.contains("giorno")) {
-          titolo.style.display = pieno ? "" : "none";
-        }
-      });
-
-      vuoto.style.display = visibili ? "none" : "block";
-    });
-  })();
-</script>

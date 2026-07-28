@@ -1,282 +1,212 @@
 #!/usr/bin/env python3
-"""Raccoglie i feed di politica italiana e rigenera index.html.
+"""Interroga i dati aperti della Camera e rigenera index.html.
 
-Nessuna dipendenza esterna: solo libreria standard, cosi' gira ovunque
-(GitHub Actions incluso) senza installare niente.
+Fonte: https://dati.camera.it/sparql (endpoint ufficiale della Camera
+dei deputati). Nessuna dipendenza esterna: solo libreria standard.
 """
 
-import html
 import json
-import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
-from datetime import datetime, timedelta, timezone
-from email.utils import parsedate_to_datetime
+from datetime import date, datetime, timezone
 from pathlib import Path
-from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parent.parent
-USER_AGENT = "Mozilla/5.0 (compatible; Politicometro/1.0; +https://github.com/Spidahh/Politicometro)"
-GIORNI = 5
-GENERALISTI = {"Open"}  # feed non solo politici: vanno filtrati per parole chiave
+EP = "https://dati.camera.it/sparql"
+OCD = "http://dati.camera.it/ocd"
+DC = "http://purl.org/dc/elements/1.1"
 
-FONTI = [
-    ("ANSA",      "https://www.ansa.it/sito/notizie/politica/politica_rss.xml"),
-    ("Il Post",   "https://www.ilpost.it/politica/feed/"),
-    ("Adnkronos", "https://www.adnkronos.com/RSS_Politica.xml"),
-    ("Il Sole",   "https://www.ilsole24ore.com/rss/italia--politica.xml"),
-    ("Repubblica", "https://www.repubblica.it/rss/politica/rss2.0.xml"),
-    ("Rainews",   "https://www.rainews.it/rss/politica"),
-    ("Open",      "https://www.open.online/feed/"),
-]
-
-TEMI = [
-    ("Giustizia", [
-        "magistrat\\w*", "procur\\w*", "tribunal\\w*", "process\\w*", "indagat\\w*",
-        "condann\\w*", "assolt\\w*", "intercettazion\\w*", "chat", "csm", "consulta",
-        "corte costituzionale", "cassazione", "giudic\\w*", "inchiest\\w*", "reato",
-        "carcer\\w*", "giustizia", "toghe", "separazione delle carriere", "nordio",
-    ]),
-    ("Soldi pubblici", [
-        "manovra", "bilancio", "tass\\w*", "irpef", "fisco", "pnrr", "appalt\\w*",
-        "miliard\\w*", "milion\\w*", "deficit", "debito", "pension\\w*", "salari\\w*",
-        "stipend\\w*", "bonus", "cuneo", "spending review", "conti pubblici",
-    ]),
-    ("Parlamento", [
-        "camera", "senato", "aula", "fiducia", "emendament\\w*", "ddl", "decreto",
-        "giunta", "commissione", "legge elettorale", "parlament\\w*", "deputat\\w*",
-        "senator\\w*", "maggioranza", "opposizion\\w*", "voto",
-    ]),
-    ("Immigrazione", [
-        "migrant\\w*", "sbarch\\w*", "hotspot", "albania", "rimpatri\\w*", "cpr",
-        "profugh\\w*", "richiedenti asilo", "flussi", "immigrazion\\w*",
-    ]),
-    ("Territori", [
-        "region\\w*", "comune", "sindac\\w*", "governator\\w*", "consiglio regionale",
-        "autonomia differenziata", "elezioni regionali",
-    ]),
-    ("Estero e difesa", [
-        "ucraina", "gaza", "israele", "nato", "unione europea", "bruxelles",
-        "dazi", "trump", "iran", "difesa", "riarmo", "guerra", "putin", "zelensky",
-    ]),
-]
-
-POLITICO = [
-    "governo", "meloni", "schlein", "conte", "salvini", "tajani", "renzi",
-    "calenda", "parlament\\w*", "camera", "senato", "ministr\\w*", "partito",
-    "m5s", "lega", "forza italia", "fratelli d'italia", "avs", "opposizion\\w*",
-    "maggioranza", "premier", "quirinale", "consiglio dei ministri", "mattarella",
-    "pd", "onorevole", "coalizione", "elezioni",
-]
+# Legislature repubblicane: numero -> (inizio, fine o None se in corso)
+LEGISLATURE = {
+    19: (date(2022, 10, 13), None),
+    18: (date(2018, 3, 23), date(2022, 10, 12)),
+    17: (date(2013, 3, 15), date(2018, 3, 22)),
+    16: (date(2008, 4, 29), date(2013, 3, 14)),
+    15: (date(2006, 4, 28), date(2008, 4, 28)),
+    14: (date(2001, 5, 30), date(2006, 4, 27)),
+}
 
 
-def _regex(parole):
-    return re.compile(r"\b(?:" + "|".join(parole) + r")\b", re.IGNORECASE)
-
-
-TEMI_RE = [(nome, _regex(parole)) for nome, parole in TEMI]
-POLITICO_RE = _regex(POLITICO)
-
-
-def scarica(url, timeout=20):
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return r.read()
-
-
-def testo(nodo, *nomi):
-    for n in nomi:
-        el = nodo.find(n)
-        if el is not None and el.text:
-            return el.text.strip()
-    return ""
-
-
-def quando(grezzo):
-    if not grezzo:
-        return None
-    try:
-        d = parsedate_to_datetime(grezzo)
-    except (TypeError, ValueError):
+def chiedi(query, tentativi=3):
+    url = EP + "?" + urllib.parse.urlencode({"query": query})
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Accept": "application/sparql-results+json",
+            "User-Agent": "Politicometro/1.0 (+https://github.com/Spidahh/Politicometro)",
+        },
+    )
+    for n in range(tentativi):
         try:
-            d = datetime.fromisoformat(grezzo.replace("Z", "+00:00"))
+            with urllib.request.urlopen(req, timeout=180) as r:
+                return json.load(r)["results"]["bindings"]
+        except (urllib.error.URLError, TimeoutError, OSError, ValueError) as e:
+            if n == tentativi - 1:
+                raise
+            print(f"    ritento ({e})", file=sys.stderr)
+    return []
+
+
+def per_legislatura(filtro=""):
+    """Conta le votazioni d'assemblea per legislatura, senza doppioni.
+
+    COUNT(DISTINCT) e' obbligatorio: alcune votazioni hanno piu' valori
+    per la stessa proprieta' e un COUNT(*) raddoppierebbe i totali.
+    """
+    q = f"""SELECT ?leg (COUNT(DISTINCT ?s) AS ?n) WHERE {{
+      ?s a <{OCD}/votazione> ; <{OCD}/rif_leg> ?leg . {filtro}
+    }} GROUP BY ?leg ORDER BY DESC(?leg) LIMIT 8"""
+    fuori = {}
+    for b in chiedi(q):
+        try:
+            fuori[int(b["leg"]["value"].rsplit("_", 1)[-1])] = int(b["n"]["value"])
         except ValueError:
-            return None
-    if d.tzinfo is None:
-        d = d.replace(tzinfo=timezone.utc)
-    return d.astimezone(timezone.utc)
-
-
-def pulisci(s):
-    s = re.sub(r"<[^>]+>", " ", s or "")
-    s = html.unescape(s)
-    return re.sub(r"\s+", " ", s).strip()
-
-
-def chiave(titolo):
-    return re.sub(r"[^a-z0-9]+", "", titolo.lower())[:70]
-
-
-def tema(titolo):
-    for nome, rx in TEMI_RE:
-        if rx.search(titolo):
-            return nome
-    return "Altro"
-
-
-def e_politica(titolo):
-    return bool(POLITICO_RE.search(titolo)) or tema(titolo) != "Altro"
-
-
-def locale(tag):
-    return tag.rsplit("}", 1)[-1]
-
-
-def figlio(nodo, *nomi):
-    """Testo del primo figlio con quel nome, ignorando i namespace."""
-    for el in nodo:
-        if locale(el.tag) in nomi:
-            if el.text and el.text.strip():
-                return el.text.strip()
-            href = el.get("href")
-            if href:
-                return href.strip()
-    return ""
-
-
-def leggi_feed(nome, url):
-    try:
-        raw = scarica(url)
-    except (urllib.error.URLError, TimeoutError, OSError) as e:
-        print(f"  ! {nome}: {e}", file=sys.stderr)
-        return []
-
-    # alcuni feed hanno BOM o righe vuote prima della dichiarazione xml
-    raw = raw.lstrip(b"\xef\xbb\xbf").lstrip()
-
-    try:
-        radice = ElementTree.fromstring(raw)
-    except ElementTree.ParseError as e:
-        print(f"  ! {nome}: xml illeggibile ({e})", file=sys.stderr)
-        return []
-
-    voci = []
-    for item in radice.iter():
-        if locale(item.tag) not in ("item", "entry"):
             continue
-        titolo = pulisci(figlio(item, "title"))
-        link = figlio(item, "link", "guid", "id")
-        data = quando(figlio(item, "pubDate", "published", "updated", "date"))
-        if not titolo or not link.startswith("http") or not data:
-            continue
-        voci.append({"titolo": titolo, "link": link, "data": data, "fonte": nome})
-
-    print(f"  {nome}: {len(voci)}")
-    return voci
-
-
-def raccogli():
-    limite = datetime.now(timezone.utc) - timedelta(days=GIORNI)
-    viste, fuori = set(), []
-
-    for nome, url in FONTI:
-        for v in leggi_feed(nome, url):
-            if v["data"] < limite:
-                continue
-            if nome in GENERALISTI and not e_politica(v["titolo"]):
-                continue
-            k = chiave(v["titolo"])
-            if not k or k in viste:
-                continue
-            viste.add(k)
-            v["tema"] = tema(v["titolo"])
-            fuori.append(v)
-
-    fuori.sort(key=lambda v: v["data"], reverse=True)
     return fuori
 
 
-# ---------------------------------------------------------------- html
-
-GIORNI_IT = ["lunedì", "martedì", "mercoledì", "giovedì",
-             "venerdì", "sabato", "domenica"]
-MESI_IT = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio",
-           "agosto", "settembre", "ottobre", "novembre", "dicembre"]
-
-
-def data_lunga(d):
-    return f"{GIORNI_IT[d.weekday()]} {d.day} {MESI_IT[d.month - 1]}"
-
-
-def esc(s):
-    return html.escape(s, quote=True)
+def ultima_seduta():
+    q = f"""SELECT (MAX(?d) AS ?d) WHERE {{
+      ?s a <{OCD}/votazione> ; <{DC}/date> ?d
+    }}"""
+    r = chiedi(q)
+    grezzo = r[0]["d"]["value"] if r and "d" in r[0] else ""
+    if len(grezzo) >= 8 and grezzo[:8].isdigit():
+        return date(int(grezzo[:4]), int(grezzo[4:6]), int(grezzo[6:8]))
+    return None
 
 
-def rendi(voci, template):
-    adesso = datetime.now(timezone.utc)
+def anni(n, fine_dati):
+    inizio, fine = LEGISLATURE[n]
+    fine = fine or fine_dati or date.today()
+    return max((fine - inizio).days / 365.25, 0.1)
 
-    conteggi = {}
-    for v in voci:
-        conteggi[v["tema"]] = conteggi.get(v["tema"], 0) + 1
-    ordinati = sorted(conteggi.items(), key=lambda kv: kv[1], reverse=True)
 
-    chips = "\n".join(
-        f'        <button class="chip" type="button" data-tema="{esc(t)}">'
-        f'{esc(t)}<b>{n}</b></button>'
-        for t, n in ordinati
-    )
+# ------------------------------------------------------------------ html
 
-    blocchi, giorno_corrente = [], None
-    for v in voci:
-        locale = v["data"] + timedelta(hours=2)  # ora italiana, estate
-        g = locale.date()
-        if g != giorno_corrente:
-            if giorno_corrente is not None:
-                blocchi.append("      </div>")
-            etichetta = "oggi" if g == (adesso + timedelta(hours=2)).date() else data_lunga(locale)
-            blocchi.append(f'      <h3 class="giorno">{esc(etichetta)}</h3>')
-            blocchi.append('      <div class="lista">')
-            giorno_corrente = g
+MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno",
+        "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
 
-        blocchi.append(
-            f'        <a class="voce" data-tema="{esc(v["tema"])}" href="{esc(v["link"])}"'
-            f' target="_blank" rel="noopener noreferrer">\n'
-            f'          <span class="ora">{locale.strftime("%H:%M")}</span>\n'
-            f'          <span class="tit">{esc(v["titolo"])}</span>\n'
-            f'          <span class="meta"><b class="tema">{esc(v["tema"])}</b>'
-            f'<b class="fonte">{esc(v["fonte"])}</b></span>\n'
-            f"        </a>"
+
+def data_it(d):
+    return f"{d.day} {MESI[d.month - 1]} {d.year}"
+
+
+def num(n):
+    return f"{n:,}".replace(",", ".")
+
+
+def barre(righe, corrente, suffisso=""):
+    """righe: [(etichetta, valore_mostrato, valore_barra, nota)]"""
+    massimo = max((r[2] for r in righe), default=1) or 1
+    out = []
+    for etichetta, mostrato, valore, nota in righe:
+        largo = max(valore / massimo * 100, 1.2)
+        cls = " ora" if etichetta == corrente else ""
+        out.append(
+            f'      <div class="riga{cls}">\n'
+            f'        <span class="et">{etichetta}<b>{nota}</b></span>\n'
+            f'        <span class="pista"><i style="width:{largo:.1f}%"></i></span>\n'
+            f'        <span class="vl">{mostrato}{suffisso}</span>\n'
+            f"      </div>"
         )
-    if giorno_corrente is not None:
-        blocchi.append("      </div>")
-
-    aggiornato = (adesso + timedelta(hours=2)).strftime("%d.%m.%Y ore %H:%M")
-
-    return (template
-            .replace("{{CHIPS}}", chips)
-            .replace("{{VOCI}}", "\n".join(blocchi))
-            .replace("{{TOTALE}}", str(len(voci)))
-            .replace("{{FONTI}}", str(len(FONTI)))
-            .replace("{{GIORNI}}", str(GIORNI))
-            .replace("{{AGGIORNATO}}", aggiornato))
+    return "\n".join(out)
 
 
 def main():
-    print("Raccolta feed:")
-    voci = raccogli()
-    print(f"Totale utilizzabili: {len(voci)}")
+    print("Interrogo dati.camera.it")
 
-    if not voci:
-        print("Nessuna voce: index.html lasciato com'e'.", file=sys.stderr)
+    fine_dati = ultima_seduta()
+    print(f"  ultima votazione in archivio: {fine_dati}")
+
+    tot = per_legislatura()
+    print("  totali ok")
+    fid = per_legislatura(f'?s <{OCD}/richiestaFiducia> ?f . FILTER(str(?f)="1")')
+    print("  fiducie ok")
+    seg = per_legislatura(f'?s <{OCD}/votazioneSegreta> ?g . FILTER(str(?g)="1")')
+    print("  segrete ok")
+    app = per_legislatura(f'?s <{OCD}/approvato> ?a . FILTER(str(?a)="1")')
+    print("  approvate ok")
+
+    legs = [n for n in sorted(LEGISLATURE, reverse=True) if tot.get(n)]
+    if not legs:
+        print("Nessun dato: index.html lasciato com'e'.", file=sys.stderr)
         return 1
 
+    ora = legs[0]
+
+    def et(n):
+        i, f = LEGISLATURE[n]
+        f = f or fine_dati or date.today()
+        return f"{i.year}-{f.year}"
+
+    corrente = et(ora)
+
+    # 1. fiducie all'anno
+    r_fid = []
+    for n in legs:
+        a = anni(n, fine_dati)
+        v = fid.get(n, 0)
+        r_fid.append((et(n), f"{v / a:.1f}", v / a, f"{v} in {a:.1f} anni"))
+
+    # 2. voti segreti all'anno
+    r_seg = []
+    for n in legs:
+        a = anni(n, fine_dati)
+        v = seg.get(n, 0)
+        r_seg.append((et(n), f"{v / a:.1f}", v / a, f"{v} in tutto"))
+
+    # 3. quota di votazioni approvate
+    r_app = []
+    for n in legs:
+        t, v = tot[n], app.get(n, 0)
+        q = 100 * v / t if t else 0
+        r_app.append((et(n), f"{q:.0f}%", q, f"{num(v)} su {num(t)}"))
+
+    fid_ora = fid.get(ora, 0)
+    anni_ora = anni(ora, fine_dati)
+    ritmo_ora = fid_ora / anni_ora
+    ritmo_prima = sum(fid.get(n, 0) for n in legs[1:]) / sum(anni(n, fine_dati) for n in legs[1:])
+
     template = (ROOT / "scripts" / "template.html").read_text(encoding="utf-8")
-    (ROOT / "index.html").write_text(rendi(voci, template), encoding="utf-8")
+    pagina = (
+        template
+        .replace("{{FIDUCIE}}", barre(r_fid, corrente))
+        .replace("{{SEGRETE}}", barre(r_seg, corrente))
+        .replace("{{APPROVATE}}", barre(r_app, corrente))
+        .replace("{{N_FIDUCIE}}", str(fid_ora))
+        .replace("{{RITMO_ORA}}", f"{ritmo_ora:.1f}")
+        .replace("{{RITMO_PRIMA}}", f"{ritmo_prima:.1f}")
+        .replace("{{N_VOTAZIONI}}", num(tot[ora]))
+        .replace("{{N_SEGRETE}}", str(seg.get(ora, 0)))
+        .replace("{{LEG}}", str(ora))
+        .replace("{{DAL}}", data_it(LEGISLATURE[ora][0]))
+        .replace("{{ULTIMA}}", data_it(fine_dati) if fine_dati else "-")
+        .replace("{{AGGIORNATO}}", datetime.now(timezone.utc).strftime("%d.%m.%Y"))
+    )
+
+    (ROOT / "index.html").write_text(pagina, encoding="utf-8")
     (ROOT / "dati.json").write_text(
         json.dumps(
-            [{**v, "data": v["data"].isoformat()} for v in voci],
-            ensure_ascii=False, indent=1,
+            {
+                "fonte": EP,
+                "ultima_votazione": str(fine_dati),
+                "legislature": {
+                    str(n): {
+                        "dal": str(LEGISLATURE[n][0]),
+                        "al": str(LEGISLATURE[n][1] or fine_dati),
+                        "votazioni": tot[n],
+                        "fiducie": fid.get(n, 0),
+                        "segrete": seg.get(n, 0),
+                        "approvate": app.get(n, 0),
+                    }
+                    for n in legs
+                },
+            },
+            ensure_ascii=False,
+            indent=1,
         ),
         encoding="utf-8",
     )

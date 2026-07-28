@@ -2,7 +2,8 @@ name: Aggiorna il sito
 
 on:
   schedule:
-    - cron: "17 */2 * * *"   # ogni due ore
+    - cron: "40 5 * * *"     # ogni mattina: l'archivio della Camera
+                             # si muove solo nei giorni di seduta
   workflow_dispatch:          # e a mano, dal tasto "Run workflow"
 
 permissions:
