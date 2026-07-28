@@ -2,8 +2,8 @@
 
 <style>
   :root {
-    --bg:#0A0C10; --card:#12161D; --card2:#191E27; --line:#242B36;
-    --text:#EDF1F6; --dim:#8A96A7; --acc:#4DD4F0; --hot:#FF6B4A;
+    --bg:#0B0D11; --card:#12161D; --card2:#191E27; --line:#242B36;
+    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   }
@@ -13,215 +13,346 @@
   }
   :root[data-theme="light"] { --bg:#F2F5F8; --card:#FFF; --card2:#E9EEF4; --line:#DAE1E9;
     --text:#0E141B; --dim:#5B6778; --acc:#0A7488; --hot:#C4442A; }
-  :root[data-theme="dark"] { --bg:#0A0C10; --card:#12161D; --card2:#191E27; --line:#242B36;
-    --text:#EDF1F6; --dim:#8A96A7; --acc:#4DD4F0; --hot:#FF6B4A; }
+  :root[data-theme="dark"] { --bg:#0B0D11; --card:#12161D; --card2:#191E27; --line:#242B36;
+    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A; }
 
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
-         font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased; }
-  .wrap { max-width:52rem; margin:0 auto; padding:1.25rem 1rem 5rem; }
+         font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:46rem; margin:0 auto; padding:1.25rem 1rem 5rem; }
 
   .head { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem;
           flex-wrap:wrap; padding-bottom:.9rem; border-bottom:1px solid var(--line);
-          margin-bottom:2rem; }
-  .logo { margin:0; font-size:clamp(1.5rem,6vw,2rem); font-weight:800;
-          letter-spacing:-.035em; line-height:1; }
+          margin-bottom:1.75rem; }
+  .logo { margin:0; font-size:clamp(1.45rem,6vw,1.9rem); font-weight:800;
+          letter-spacing:-.035em; line-height:1; cursor:pointer; }
   .logo b { color:var(--acc); }
-  .lab { font-family:var(--mono); font-size:.65rem; letter-spacing:.13em;
+  .lab { font-family:var(--mono); font-size:.64rem; letter-spacing:.13em;
          text-transform:uppercase; color:var(--dim); font-variant-numeric:tabular-nums; margin:0; }
 
-  /* apertura */
-  .apri { margin-bottom:2.75rem; }
-  .apri .kick { color:var(--hot); margin-bottom:.6rem; }
-  .apri h2 { margin:0 0 .9rem; font-size:clamp(1.5rem,6.5vw,2.35rem); font-weight:800;
-             letter-spacing:-.03em; line-height:1.15; text-wrap:balance; }
-  .apri .big { color:var(--acc); }
-  .apri p { margin:0; color:var(--dim); font-size:1rem; max-width:34rem; }
+  /* ---- elenco schede ---- */
+  .schede { display:flex; flex-direction:column; gap:.7rem; }
 
-  .conta { display:grid; grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));
-           gap:.6rem; margin:1.4rem 0 0; }
-  .box { background:var(--card); border:1px solid var(--line); border-radius:10px;
-         padding:.85rem .95rem; }
-  .box .n { font-size:1.75rem; font-weight:800; line-height:1; letter-spacing:-.03em;
-            font-variant-numeric:tabular-nums; display:block; margin-bottom:.25rem; }
-  .box .n.acc { color:var(--acc); }
-  .box .n.hot { color:var(--hot); }
+  .scheda {
+    width:100%; text-align:left; font:inherit; color:inherit; cursor:pointer;
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:1.05rem 1.15rem; display:flex; flex-direction:column; gap:.55rem;
+    transition:border-color 130ms ease, transform 130ms ease;
+  }
+  .scheda:hover { border-color:var(--acc); transform:translateY(-1px); }
+  .scheda:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
 
-  /* blocchi grafici */
-  .blocco { margin-bottom:2.75rem; }
-  .blocco h3 { margin:0 0 .3rem; font-size:clamp(1.15rem,4.5vw,1.4rem); font-weight:800;
-               letter-spacing:-.02em; text-wrap:balance; }
-  .blocco .dice { margin:0 0 1.1rem; color:var(--dim); font-size:.94rem; max-width:36rem; }
+  .formato {
+    align-self:flex-start; font-family:var(--mono); font-size:.6rem; letter-spacing:.11em;
+    text-transform:uppercase; font-weight:700; color:var(--acc);
+    border:1px solid currentColor; border-radius:999px; padding:.24rem .55rem;
+  }
+  .scheda h2 { margin:0; font-size:1.15rem; font-weight:800; letter-spacing:-.02em;
+               line-height:1.3; text-wrap:balance; }
+  .scheda p { margin:0; color:var(--dim); font-size:.94rem; }
+  .quando { font-family:var(--mono); font-size:.63rem; letter-spacing:.08em;
+            color:var(--dim); font-variant-numeric:tabular-nums; }
 
-  .grafico { background:var(--card); border:1px solid var(--line); border-radius:12px;
-             padding:1.1rem 1.15rem; display:flex; flex-direction:column; gap:.7rem; }
+  /* ---- scheda aperta ---- */
+  .aperta { display:none; }
+  .aperta.on { display:block; animation:up 250ms ease both; }
+  .schede.off { display:none; }
 
-  .riga { display:grid; grid-template-columns:7.5rem 1fr 3.2rem; gap:.75rem;
-          align-items:center; }
-  @media (max-width:30rem) { .riga { grid-template-columns:5.5rem 1fr 2.8rem; gap:.5rem; } }
+  .indietro { font:inherit; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em;
+              text-transform:uppercase; color:var(--dim); background:none; border:0;
+              padding:.4rem 0; cursor:pointer; margin-bottom:1rem; }
+  .indietro:hover { color:var(--acc); }
+  .indietro:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
 
-  .et { font-family:var(--mono); font-size:.68rem; letter-spacing:.05em; color:var(--dim);
-        font-variant-numeric:tabular-nums; line-height:1.3; }
-  .et b { display:block; font-weight:400; font-size:.6rem; opacity:.7; margin-top:.1rem; }
-  .pista { height:14px; background:var(--card2); border-radius:4px; overflow:hidden; }
-  .pista i { display:block; height:100%; background:var(--dim); border-radius:4px;
-             opacity:.55; transition:width 500ms ease; }
-  .vl { font-weight:800; font-size:.92rem; text-align:right; font-variant-numeric:tabular-nums; }
+  .aperta h2 { margin:.5rem 0 1.25rem; font-size:clamp(1.4rem,5.5vw,1.9rem); font-weight:800;
+               letter-spacing:-.025em; line-height:1.2; text-wrap:balance; }
 
-  .riga.ora .et { color:var(--text); }
-  .riga.ora .pista i { background:var(--hot); opacity:1; }
-  .riga.ora .vl { color:var(--hot); }
+  .livelli { display:flex; gap:.4rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+  .liv { font:inherit; font-size:.8rem; color:var(--dim); background:var(--card);
+         border:1px solid var(--line); border-radius:999px; padding:.42rem .85rem;
+         cursor:pointer; transition:border-color 120ms ease,color 120ms ease; }
+  .liv:hover { border-color:var(--acc); }
+  .liv[aria-selected="true"] { color:var(--acc); border-color:var(--acc); font-weight:600; }
+  .liv:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
 
-  .sotto { margin:.85rem 0 0; padding-top:.85rem; border-top:1px solid var(--line);
-           font-size:.86rem; color:var(--dim); }
-  .sotto a { color:var(--dim); text-underline-offset:3px; }
-  .sotto a:hover { color:var(--acc); }
-  a:focus-visible { outline:2px solid var(--acc); outline-offset:2px; border-radius:3px; }
+  .pannello { display:none; }
+  .pannello.on { display:flex; flex-direction:column; gap:1rem; }
 
-  footer { border-top:1px solid var(--line); padding-top:1rem; color:var(--dim);
-           font-size:.8rem; display:flex; flex-direction:column; gap:.4rem; }
+  .pannello p { margin:0; }
+  .pannello h3 { margin:.4rem 0 0; font-size:.95rem; font-weight:800; letter-spacing:-.01em; }
+
+  .grosso { font-size:1.1rem; line-height:1.55; }
+
+  /* cronologia */
+  .crono { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
+  .crono li { position:relative; padding:0 0 1rem 1.5rem; }
+  .crono li:last-child { padding-bottom:0; }
+  .crono li::before { content:""; position:absolute; left:0; top:.5rem; width:9px; height:9px;
+                      border-radius:50%; background:var(--dim); }
+  .crono li:last-child::before { background:var(--hot); }
+  .crono li:not(:last-child)::after { content:""; position:absolute; left:4px; top:1.15rem;
+                      bottom:.1rem; width:1px; background:var(--line); }
+  .crono em { font-style:normal; display:block; font-family:var(--mono); font-size:.63rem;
+              letter-spacing:.08em; color:var(--dim); margin-bottom:.15rem;
+              font-variant-numeric:tabular-nums; }
+
+  /* tabella stesso metro */
+  .scroll { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:.88rem; min-width:30rem; }
+  th { text-align:left; font-family:var(--mono); font-size:.6rem; letter-spacing:.1em;
+       text-transform:uppercase; color:var(--dim); font-weight:400;
+       padding:0 .7rem .5rem 0; border-bottom:1px solid var(--line); }
+  td { padding:.65rem .7rem .65rem 0; border-bottom:1px solid var(--line); vertical-align:top; }
+  td:last-child, th:last-child { padding-right:0; }
+  td b { color:var(--hot); font-family:var(--mono); font-size:.68rem;
+         letter-spacing:.06em; text-transform:uppercase; }
+  td span { display:block; font-family:var(--mono); font-size:.62rem; color:var(--dim);
+            margin-top:.15rem; }
+
+  /* irrisolti */
+  .aperti { background:var(--card); border:1px solid var(--line); border-radius:10px;
+            padding:.9rem 1rem; }
+  .aperti ul { margin:.5rem 0 0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.35rem; }
+  .aperti li { font-size:.92rem; }
+
+  /* prove */
+  .prove { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.4rem; }
+  .prove a { display:flex; flex-wrap:wrap; gap:.15rem .7rem; align-items:baseline;
+             background:var(--card); border:1px solid var(--line); border-radius:9px;
+             padding:.7rem .85rem; text-decoration:none; color:inherit;
+             transition:border-color 120ms ease; }
+  .prove a:hover { border-color:var(--acc); }
+  .prove a:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  .prove .d { font-family:var(--mono); font-size:.63rem; color:var(--dim);
+              font-variant-numeric:tabular-nums; }
+  .prove .t { font-size:.92rem; font-weight:600; flex:1 1 14rem; }
+  .prove .f { font-family:var(--mono); font-size:.6rem; letter-spacing:.08em;
+              text-transform:uppercase; color:var(--dim); }
+
+  footer { border-top:1px solid var(--line); padding-top:1rem; margin-top:2.5rem;
+           color:var(--dim); font-size:.8rem; display:flex; flex-direction:column; gap:.35rem; }
   footer p { margin:0; }
   footer a { color:var(--dim); }
   footer a:hover { color:var(--acc); }
+
+  @keyframes up { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { .aperta.on { animation:none; } .scheda:hover { transform:none; } }
 </style>
 
 <div class="wrap">
 
   <header class="head">
-    <h1 class="logo">Politico<b>metro</b></h1>
-    <p class="lab">Dati Camera &middot; 28.07.2026</p>
+    <h1 class="logo" id="home" tabindex="0" role="button">Politico<b>metro</b></h1>
+    <p class="lab">4 schede &middot; 28.07.2026</p>
   </header>
 
-  <section class="apri">
-    <p class="lab kick">Legislatura 19 &middot; dal 13 ottobre 2022 al 23 luglio 2026</p>
-    <h2>In questa legislatura il governo ha messo la fiducia <span class="big">70 volte</span>.</h2>
-    <p>Quando il governo mette la fiducia, la discussione si chiude e decadono tutte le proposte di modifica. Si vota una volta sola: o passa il testo del governo, o cade il governo.</p>
-
-    <div class="conta">
-      <div class="box"><span class="lab">Fiducie all&rsquo;anno, ora</span><span class="n hot">18.5</span></div>
-      <div class="box"><span class="lab">Media delle 5 precedenti</span><span class="n">10.9</span></div>
-      <div class="box"><span class="lab">Votazioni in aula</span><span class="n">18.989</span></div>
-      <div class="box"><span class="lab">Voti segreti</span><span class="n">49</span></div>
-    </div>
-  </section>
-
-  <section class="blocco">
-    <h3>Quante volte all&rsquo;anno il Parlamento vota senza poter cambiare niente</h3>
-    <p class="dice">Fiducie ogni dodici mesi, per legislatura. Le legislature durano diverso, quindi il totale grezzo non si puo&rsquo; confrontare: qui c&rsquo;e&rsquo; il ritmo.</p>
-    <div class="grafico">
-      <div class="riga ora">
-        <span class="et">2022-2026<b>70 in 3.8 anni</b></span>
-        <span class="pista"><i style="width:100.0%"></i></span>
-        <span class="vl">18.5</span>
-      </div>
-      <div class="riga">
-        <span class="et">2018-2022<b>54 in 4.6 anni</b></span>
-        <span class="pista"><i style="width:63.9%"></i></span>
-        <span class="vl">11.9</span>
-      </div>
-      <div class="riga">
-        <span class="et">2013-2018<b>58 in 5.0 anni</b></span>
-        <span class="pista"><i style="width:62.3%"></i></span>
-        <span class="vl">11.6</span>
-      </div>
-      <div class="riga">
-        <span class="et">2008-2013<b>69 in 4.9 anni</b></span>
-        <span class="pista"><i style="width:76.4%"></i></span>
-        <span class="vl">14.2</span>
-      </div>
-      <div class="riga">
-        <span class="et">2006-2008<b>19 in 2.0 anni</b></span>
-        <span class="pista"><i style="width:51.2%"></i></span>
-        <span class="vl">9.5</span>
-      </div>
-      <div class="riga">
-        <span class="et">2001-2006<b>32 in 4.9 anni</b></span>
-        <span class="pista"><i style="width:35.2%"></i></span>
-        <span class="vl">6.5</span>
-      </div>
-      <p class="sotto">Governi di centrodestra, di centrosinistra, tecnici e di larghe intese. &mdash; <a href="https://dati.camera.it/sparql" target="_blank" rel="noopener noreferrer">dati.camera.it</a></p>
-    </div>
-  </section>
-
-  <section class="blocco">
-    <h3>Quando i deputati votano senza far sapere come hanno votato</h3>
-    <p class="dice">Voti segreti all&rsquo;anno. Nel voto segreto il singolo deputato puo&rsquo; votare contro il proprio gruppo senza che nessuno lo sappia.</p>
-    <div class="grafico">
-      <div class="riga ora">
-        <span class="et">2022-2026<b>49 in tutto</b></span>
-        <span class="pista"><i style="width:8.6%"></i></span>
-        <span class="vl">13.0</span>
-      </div>
-      <div class="riga">
-        <span class="et">2018-2022<b>113 in tutto</b></span>
-        <span class="pista"><i style="width:16.4%"></i></span>
-        <span class="vl">24.8</span>
-      </div>
-      <div class="riga">
-        <span class="et">2013-2018<b>261 in tutto</b></span>
-        <span class="pista"><i style="width:34.5%"></i></span>
-        <span class="vl">52.0</span>
-      </div>
-      <div class="riga">
-        <span class="et">2008-2013<b>234 in tutto</b></span>
-        <span class="pista"><i style="width:31.8%"></i></span>
-        <span class="vl">48.0</span>
-      </div>
-      <div class="riga">
-        <span class="et">2006-2008<b>26 in tutto</b></span>
-        <span class="pista"><i style="width:8.6%"></i></span>
-        <span class="vl">13.0</span>
-      </div>
-      <div class="riga">
-        <span class="et">2001-2006<b>741 in tutto</b></span>
-        <span class="pista"><i style="width:100.0%"></i></span>
-        <span class="vl">150.9</span>
-      </div>
-      <p class="sotto"><a href="https://dati.camera.it/sparql" target="_blank" rel="noopener noreferrer">dati.camera.it</a></p>
-    </div>
-  </section>
-
-  <section class="blocco">
-    <h3>Quanto passa, di tutto quello che si vota</h3>
-    <p class="dice">Quota di votazioni che finiscono in approvazione, sul totale delle votazioni in aula.</p>
-    <div class="grafico">
-      <div class="riga ora">
-        <span class="et">2022-2026<b>4.504 su 18.989</b></span>
-        <span class="pista"><i style="width:54.7%"></i></span>
-        <span class="vl">24%</span>
-      </div>
-      <div class="riga">
-        <span class="et">2018-2022<b>3.137 su 10.724</b></span>
-        <span class="pista"><i style="width:67.4%"></i></span>
-        <span class="vl">29%</span>
-      </div>
-      <div class="riga">
-        <span class="et">2013-2018<b>7.002 su 24.930</b></span>
-        <span class="pista"><i style="width:64.7%"></i></span>
-        <span class="vl">28%</span>
-      </div>
-      <div class="riga">
-        <span class="et">2008-2013<b>5.073 su 11.689</b></span>
-        <span class="pista"><i style="width:100.0%"></i></span>
-        <span class="vl">43%</span>
-      </div>
-      <div class="riga">
-        <span class="et">2006-2008<b>2.014 su 5.912</b></span>
-        <span class="pista"><i style="width:78.5%"></i></span>
-        <span class="vl">34%</span>
-      </div>
-      <div class="riga">
-        <span class="et">2001-2006<b>7.354 su 27.034</b></span>
-        <span class="pista"><i style="width:62.7%"></i></span>
-        <span class="vl">27%</span>
-      </div>
-      <p class="sotto"><a href="https://dati.camera.it/sparql" target="_blank" rel="noopener noreferrer">dati.camera.it</a></p>
-    </div>
-  </section>
+  <div class="schede" id="elenco"></div>
+  <div class="aperta" id="dettaglio"></div>
 
   <footer>
-    <p>Numeri presi dall&rsquo;archivio ufficiale della Camera dei deputati, contando ogni votazione una volta sola. Si aggiornano da soli.</p>
-    <p><a href="dati.json">dati.json</a> &middot; <a href="https://dati.camera.it/sparql" target="_blank" rel="noopener noreferrer">fonte</a> &middot; <a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice</a></p>
+    <p>Ogni scheda si legge a tre livelli: venti secondi, due minuti, tutte le prove.</p>
+    <p>Un&rsquo;indagine non &egrave; una condanna. Una condanna non definitiva pu&ograve; essere ribaltata. Un rapporto societario non &egrave; un illecito.</p>
+    <p><a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice</a></p>
   </footer>
 
 </div>
+
+<script>
+const SCHEDE = [
+  {
+    formato: "Stesso metro",
+    titolo: "Quando i pm chiedono le chat di un parlamentare",
+    quando: "Maggio - luglio 2026",
+    breve: "Tre richieste in otto settimane, tre partiti, tre risposte diverse.",
+    venti: "Per prendere le chat di un cittadino basta il decreto di un giudice. Per quelle di un parlamentare serve il permesso della sua Camera: a votare sono gli altri parlamentari. In otto settimane la domanda si &egrave; posta tre volte, su Fratelli d&rsquo;Italia e sul Movimento 5 Stelle, ed &egrave; finita in tre modi diversi.",
+    tabella: {
+      teste: ["Di chi", "Chi doveva decidere", "Esito"],
+      righe: [
+        ["Le chat<span>Andrea Delmastro &mdash; FdI</span>", "Giunta della Camera", "<b>Negate</b>"],
+        ["Mail e audio<span>Daniela Santanch&egrave; &mdash; FdI</span>", "Senato, poi Corte costituzionale", "<b>Processo fermo</b>"],
+        ["Le intercettazioni<span>Roberto Scarpinato &mdash; M5S</span>", "Giunta del Senato, poi Corte costituzionale", "<b>Restano usabili</b>"]
+      ]
+    },
+    crono: [
+      ["27 maggio 2026", "La procura di Roma chiede alla Camera le chat fra Delmastro e Mauro Caroccia, imprenditore che per gli inquirenti fa da prestanome al clan Senese. I due erano soci in un ristorante; Delmastro si era gi&agrave; dimesso da sottosegretario alla Giustizia dicendo di non sapere chi fosse il socio. In quell&rsquo;inchiesta non &egrave; indagato."],
+      ["3 giugno 2026", "Caso Santanch&egrave;: nel processo per truffa all&rsquo;Inps i pm avevano messo agli atti mail e registrazioni della senatrice senza chiedere il permesso al Senato. Il Senato solleva conflitto e la Corte costituzionale lo dichiara ammissibile. Il processo si ferma in attesa della decisione."],
+      ["16 giugno 2026", "Caso Scarpinato: la commissione Antimafia si era fatta mandare da Caltanissetta intercettazioni che lo riguardano, senza passare dal Senato. Lui chiede alla Giunta lo stesso conflitto ottenuto per Santanch&egrave;: la maggioranza dice no. Ricorre da solo e la Corte lo dichiara inammissibile, perch&eacute; un singolo parlamentare non pu&ograve; farlo."],
+      ["22 luglio 2026", "La Giunta della Camera nega ai pm le chat di Delmastro. Al Senato i parlamentari del M5S occupano i banchi del governo."],
+      ["25 luglio 2026", "Le stesse chat arrivano comunque in procura: le consegna l&rsquo;avvocato di Caroccia."]
+    ],
+    irrisolti: [
+      "La Corte costituzionale non ha ancora deciso nel merito sul caso Santanch&egrave;.",
+      "Non &egrave; noto cosa contengano le chat fra Delmastro e Caroccia.",
+      "Il voto dell&rsquo;aula della Camera sulle chat era atteso per il 30 luglio 2026."
+    ],
+    prove: [
+      ["22.07.2026", "La Giunta nega l&rsquo;acquisizione delle chat, il M5S occupa i banchi", "L&rsquo;Espresso", "https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611"],
+      ["25.07.2026", "Le chat arrivano in procura per un&rsquo;altra strada", "Giornale di Sicilia", "https://gds.it/articoli/cronaca/2026/07/25/in-procura-le-chat-tra-delmastro-e-caroccia-5bd3a8a2-c726-4d8b-9e15-359181757420/"],
+      ["03.06.2026", "La Consulta ammette il ricorso del Senato su mail e audio", "Il Fatto Quotidiano", "https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/"],
+      ["16.06.2026", "La Consulta respinge il ricorso di Scarpinato", "Il Foglio", "https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700"],
+      ["&mdash;", "Articolo 68: serve l&rsquo;autorizzazione della Camera di appartenenza", "Costituzione", "https://www.senato.it/istituzione/la-costituzione/parte-ii/titolo-i/sezione-i/articolo-68"]
+    ]
+  },
+
+  {
+    formato: "Detto contro fatto",
+    titolo: "Il blocco navale",
+    quando: "2022 - oggi",
+    breve: "Misura principale in campagna elettorale. Non &egrave; mai stata attuata.",
+    venti: "Nella campagna del 2022 il blocco navale viene indicato da Fratelli d&rsquo;Italia come la proposta principale per fermare gli sbarchi. Dopo l&rsquo;insediamento non viene attuato, e nel 2023 gli sbarchi aumentano rispetto all&rsquo;anno prima.",
+    crono: [
+      ["2 maggio 2022", "Alla conferenza programmatica di Fratelli d&rsquo;Italia: &laquo;La proposta pi&ugrave; seria l&rsquo;abbiamo sempre fatta noi: si chiama blocco navale&raquo;."],
+      ["Documenti del partito", "Il blocco navale viene descritto non come operazione militare ma come missione europea concordata con le autorit&agrave; libiche per impedire le partenze."],
+      ["Ottobre 2022", "Il governo si insedia."],
+      ["2023", "Primo anno pieno di governo: gli sbarchi aumentano rispetto al 2022. La misura non viene attuata e smette di comparire nel dibattito."]
+    ],
+    irrisolti: [
+      "Non &egrave; mai stata presentata una proposta operativa alle istituzioni europee.",
+      "Nessuna spiegazione pubblica sul perch&eacute; la misura sia stata abbandonata."
+    ],
+    prove: [
+      ["&mdash;", "I fatti dietro la promessa: il blocco navale di Fratelli d&rsquo;Italia", "Pagella Politica", "https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale"],
+      ["&mdash;", "Che cos&rsquo;&egrave; il blocco navale e quali limiti ha", "Pagella Politica", "https://pagellapolitica.it/dizionario/blocco-navale"],
+      ["11.08.2022", "Il blocco navale non &egrave; mai stato proposto dall&rsquo;Unione europea", "Eunews", "https://www.eunews.it/2022/08/11/blocco-navale-migrazione-meloni-mai-proposto-commissione-ue/"]
+    ]
+  },
+
+  {
+    formato: "Che fine ha fatto",
+    titolo: "Le carte lette in aula sul caso Cospito",
+    quando: "2023 - 2026",
+    breve: "Tre anni dopo, condanna confermata in appello. Non &egrave; definitiva.",
+    venti: "Nel 2023 un deputato lesse in aula il contenuto di conversazioni registrate in carcere, coperte da segreto. Gliele aveva passate l&rsquo;allora sottosegretario alla Giustizia. Nel maggio 2026 la condanna a otto mesi &egrave; stata confermata in appello, con la Procura generale che aveva chiesto l&rsquo;assoluzione.",
+    crono: [
+      ["Febbraio 2023", "Il deputato Giovanni Donzelli (FdI), vicepresidente del Copasir, legge alla Camera il contenuto di conversazioni avvenute nel carcere di Sassari fra l&rsquo;anarchico Alfredo Cospito e detenuti al 41 bis."],
+      ["Le carte", "Le informazioni erano coperte da segreto d&rsquo;ufficio ed erano arrivate a Donzelli da Andrea Delmastro, allora sottosegretario alla Giustizia."],
+      ["Primo grado", "Delmastro viene condannato per rivelazione di segreto d&rsquo;ufficio."],
+      ["20 maggio 2026", "La Corte d&rsquo;appello di Roma conferma la condanna a otto mesi. In quell&rsquo;udienza la Procura generale aveva chiesto l&rsquo;assoluzione perch&eacute; il fatto non costituisce reato: i giudici non l&rsquo;hanno seguita. Delmastro annuncia ricorso in Cassazione."]
+    ],
+    irrisolti: [
+      "La sentenza non &egrave; definitiva: manca il giudizio della Cassazione.",
+      "Nessun procedimento a carico di chi ha letto le carte in aula, coperto dall&rsquo;insindacabilit&agrave; delle opinioni espresse in Parlamento."
+    ],
+    prove: [
+      ["20.05.2026", "Confermata in appello la condanna a Delmastro", "ANSA", "https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html"],
+      ["20.05.2026", "Otto mesi per rivelazione del segreto d&rsquo;ufficio", "Sky TG24", "https://tg24.sky.it/cronaca/2026/05/20/caso-cospito-andrea-delmastro-condanna-appello"],
+      ["20.05.2026", "La Procura generale aveva chiesto l&rsquo;assoluzione", "Il Fatto Quotidiano", "https://www.ilfattoquotidiano.it/2026/05/20/caso-cospito-in-appello-confermata-la-condanna-a-8-mesi-per-andrea-delmastro/8393409/"]
+    ]
+  },
+
+  {
+    formato: "Nebbia",
+    titolo: "Le intercettazioni che pescano anche chi non &egrave; indagato",
+    quando: "Luglio 2026",
+    breve: "Due emendamenti fermi: la maggioranza non trova l&rsquo;accordo, l&rsquo;esito non si sa.",
+    venti: "Due emendamenti di Fratelli d&rsquo;Italia vogliono riammettere le intercettazioni cosiddette &laquo;a strascico&raquo;, quelle che registrano anche persone non indagate, per mafia, terrorismo e tratta di esseri umani. Forza Italia &egrave; contraria. Al momento non si vota e non si sa come finir&agrave;.",
+    crono: [
+      ["Che cosa sono", "Sono intercettazioni che catturano conversazioni di persone non direttamente coinvolte in un&rsquo;indagine."],
+      ["La proposta", "Gli emendamenti dei senatori Gianni Berrino e Sandro Sisler (FdI) ne consentirebbero l&rsquo;uso per reati di criminalit&agrave; organizzata, terrorismo e tratta."],
+      ["14 luglio 2026", "Nessun accordo dentro la maggioranza: l&rsquo;emendamento non viene messo in votazione."],
+      ["27 luglio 2026", "Lo scontro fra Fratelli d&rsquo;Italia e Forza Italia continua, intrecciato alla discussione sulla legge elettorale."]
+    ],
+    irrisolti: [
+      "Non si sa se e quando gli emendamenti andranno al voto.",
+      "Non &egrave; noto il testo finale su cui la maggioranza potrebbe accordarsi.",
+      "Questa scheda resta aperta: non ci sono ancora fatti definitivi da riportare."
+    ],
+    prove: [
+      ["27.07.2026", "Cosa sono le intercettazioni a strascico che stanno facendo litigare la destra", "Il Post", "https://www.ilpost.it/2026/07/27/intercettazioni-a-strascico-senato-berrino-sisler/"],
+      ["14.07.2026", "Niente accordo fra FdI e Forza Italia, l&rsquo;emendamento non si vota", "Il Fatto Quotidiano", "https://www.ilfattoquotidiano.it/2026/07/14/intercettazioni-emendamento-melillo-maggioranza-notizie/8448228/"],
+      ["&mdash;", "Forza Italia: no alle intercettazioni a strascico", "Il Messaggero", "https://www.ilmessaggero.it/politica/antimafia_forza_italia_sfida_fdi_no_alle_intercettazioni_strascico-9657409.html"]
+    ]
+  }
+];
+
+const elenco = document.getElementById("elenco");
+const dettaglio = document.getElementById("dettaglio");
+
+SCHEDE.forEach((s, i) => {
+  const b = document.createElement("button");
+  b.className = "scheda";
+  b.type = "button";
+  b.innerHTML =
+    '<span class="formato">' + s.formato + "</span>" +
+    "<h2>" + s.titolo + "</h2>" +
+    "<p>" + s.breve + "</p>" +
+    '<span class="quando">' + s.quando + "</span>";
+  b.addEventListener("click", () => apri(i));
+  elenco.appendChild(b);
+});
+
+function tabella(t) {
+  if (!t) return "";
+  return '<div class="scroll"><table><thead><tr>' +
+    t.teste.map(h => '<th scope="col">' + h + "</th>").join("") +
+    "</tr></thead><tbody>" +
+    t.righe.map(r => "<tr>" + r.map(c => "<td>" + c + "</td>").join("") + "</tr>").join("") +
+    "</tbody></table></div>";
+}
+
+function apri(i) {
+  const s = SCHEDE[i];
+
+  dettaglio.innerHTML =
+    '<button class="indietro" type="button">&larr; Tutte le schede</button>' +
+    '<span class="formato">' + s.formato + "</span>" +
+    "<h2>" + s.titolo + "</h2>" +
+    '<div class="livelli" role="tablist">' +
+      '<button class="liv" role="tab" aria-selected="true"  data-p="0">20 secondi</button>' +
+      '<button class="liv" role="tab" aria-selected="false" data-p="1">2 minuti</button>' +
+      '<button class="liv" role="tab" aria-selected="false" data-p="2">Tutte le prove</button>' +
+    "</div>" +
+
+    '<div class="pannello on" data-p="0">' +
+      '<p class="grosso">' + s.venti + "</p>" +
+      tabella(s.tabella) +
+    "</div>" +
+
+    '<div class="pannello" data-p="1">' +
+      "<h3>Come &egrave; andata</h3>" +
+      '<ul class="crono">' +
+        s.crono.map(c => "<li><em>" + c[0] + "</em>" + c[1] + "</li>").join("") +
+      "</ul>" +
+      '<div class="aperti"><h3>Punti ancora aperti</h3><ul>' +
+        s.irrisolti.map(x => "<li>" + x + "</li>").join("") +
+      "</ul></div>" +
+    "</div>" +
+
+    '<div class="pannello" data-p="2">' +
+      '<ul class="prove">' +
+        s.prove.map(p =>
+          '<li><a href="' + p[3] + '" target="_blank" rel="noopener noreferrer">' +
+          '<span class="d">' + p[0] + "</span>" +
+          '<span class="t">' + p[1] + "</span>" +
+          '<span class="f">' + p[2] + "</span></a></li>"
+        ).join("") +
+      "</ul>" +
+    "</div>";
+
+  dettaglio.querySelector(".indietro").addEventListener("click", chiudi);
+
+  dettaglio.querySelectorAll(".liv").forEach(b => {
+    b.addEventListener("click", () => {
+      dettaglio.querySelectorAll(".liv").forEach(x =>
+        x.setAttribute("aria-selected", x === b ? "true" : "false"));
+      dettaglio.querySelectorAll(".pannello").forEach(p =>
+        p.classList.toggle("on", p.dataset.p === b.dataset.p));
+    });
+  });
+
+  elenco.classList.add("off");
+  dettaglio.classList.add("on");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function chiudi() {
+  dettaglio.classList.remove("on");
+  elenco.classList.remove("off");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.getElementById("home").addEventListener("click", chiudi);
+document.getElementById("home").addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); chiudi(); }
+});
+</script>
