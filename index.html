@@ -65,6 +65,24 @@
           color:var(--bg); background:var(--k); border-radius:999px; padding:.26rem .6rem; }
   .card h2 { margin:0; font-size:1.08rem; font-weight:900; letter-spacing:-.028em;
              line-height:1.18; text-wrap:balance; }
+
+  /* bento: le schede con un numero forte occupano due colonne */
+  @media (min-width:56rem) { .card.big { grid-column:span 2; } }
+  .card.big h2 { font-size:1.35rem; }
+
+  .cifra { display:block; margin:.15rem 0 .1rem; }
+  .cifra b { display:block; font-size:clamp(2.2rem,7vw,3.1rem); font-weight:900;
+             letter-spacing:-.05em; line-height:.92; color:var(--k);
+             font-variant-numeric:tabular-nums; }
+  .cifra i { display:block; font-style:normal; font-size:.8rem; color:var(--dim);
+             margin-top:.35rem; line-height:1.35; }
+
+  /* avanzamento dentro la scheda aperta */
+  .prog { position:sticky; top:0; z-index:5; height:3px; background:var(--line);
+          margin:0 0 .9rem; border-radius:3px; overflow:hidden; }
+  .prog i { display:block; height:100%; width:0; background:var(--k); transition:width 90ms linear; }
+
+  .seg { position:sticky; top:.75rem; z-index:4; }
   .card .hook { margin:0; font-size:.88rem; color:var(--dim); line-height:1.4; }
   .card .foot { display:flex; justify-content:space-between; gap:.8rem; margin-top:.15rem;
                 font-family:var(--mono); font-size:.58rem; letter-spacing:.08em;
@@ -488,13 +506,27 @@ barra.addEventListener("click", e => {
     c.classList.toggle("via", !!b.dataset.f && c.dataset.f !== b.dataset.f));
 });
 
+/* numeri forti: chi ce l'ha diventa una scheda grande */
+const CIFRE = {
+  0:  ["14 anni e 9 mesi", "la condanna, ormai definitiva"],
+  1:  ["Feb 2026", "lascia la Lega e fonda il partito che la supera"],
+  2:  ["72%", "degli iscritti ha votato per cancellare i due mandati"],
+  7:  ["22 su 100", "le promesse del programma davvero mantenute"],
+  10: ["113,5 mld", "spesi sui 194,4 del piano, a febbraio 2026"],
+  11: ["2032", "la nuova scadenza di un&rsquo;opera senza costo definito"],
+  12: ["8 mesi", "confermati in appello, tre anni dopo"]
+};
+
 /* schede */
 S.forEach((s, i) => {
+  const c = CIFRE[i];
   const b = document.createElement("button");
-  b.className = "card"; b.type = "button"; b.dataset.f = s.f;
+  b.className = "card" + (c ? " big" : ""); b.type = "button"; b.dataset.f = s.f;
   b.style.setProperty("--k", COL[s.f]);
   b.innerHTML = '<span class="pill">' + s.f + "</span><h2>" + s.t + "</h2>" +
-    '<p class="hook">' + s.hook + '</p><span class="foot">' + s.meta + "<em>Apri &rarr;</em></span>";
+    (c ? '<span class="cifra"><b>' + c[0] + "</b><i>" + c[1] + "</i></span>"
+       : '<p class="hook">' + s.hook + "</p>") +
+    '<span class="foot">' + s.meta + "<em>Apri &rarr;</em></span>";
   b.addEventListener("click", () => apri(i));
   lista.appendChild(b);
 });
@@ -533,6 +565,7 @@ function apri(i) {
       "</ul>"]);
 
   det.innerHTML =
+    '<div class="prog"><i></i></div>' +
     '<button class="back" type="button">&larr; Tutte le schede</button>' +
     '<span class="pill">' + s.f + "</span><h2>" + s.t + "</h2>" +
     '<div class="seg" role="tablist">' +
@@ -553,6 +586,30 @@ function apri(i) {
 
   lista.classList.add("off"); barra.classList.add("off"); det.classList.add("on");
   window.scrollTo({ top: 0, behavior: "smooth" });
+  avanzamento();
+}
+
+/* riempie la barra man mano che si scorre la scheda */
+let inAscolto = false;
+function avanzamento() {
+  const barretta = det.querySelector(".prog i");
+  if (!barretta) return;
+  const calcola = () => {
+    if (!det.classList.contains("on")) return;
+    const tot = document.documentElement.scrollHeight - window.innerHeight;
+    barretta.style.width = (tot > 0 ? Math.min(window.scrollY / tot, 1) * 100 : 0) + "%";
+  };
+  calcola();
+  if (!inAscolto) {
+    window.addEventListener("scroll", () => {
+      const b = det.querySelector(".prog i");
+      if (b && det.classList.contains("on")) {
+        const tot = document.documentElement.scrollHeight - window.innerHeight;
+        b.style.width = (tot > 0 ? Math.min(window.scrollY / tot, 1) * 100 : 0) + "%";
+      }
+    }, { passive: true });
+    inAscolto = true;
+  }
 }
 
 function chiudi() {
