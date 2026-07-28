@@ -2,294 +2,459 @@
 
 <style>
   :root {
-    --paper:      #ECEAE3;
-    --surface:    #F6F5F0;
-    --ink:        #1B1A16;
-    --muted:      #6E6A60;
-    --rule:       #CFCBC0;
-    --stamp:      #5B3E9E;
+    --bg:        #0C0E12;
+    --card:      #14181F;
+    --card-2:    #1B212A;
+    --line:      #262E3A;
+    --text:      #EEF1F6;
+    --dim:       #8E99AA;
+    --accent:    #22D3EE;
+    --stop:      #FF5C63;
+    --go:        #3DDC97;
+    --wait:      #FFC53D;
 
-    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
-    --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --mono:  ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   }
 
-  @media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: light) {
     :root {
-      --paper:      #18171C;
-      --surface:    #201F26;
-      --ink:        #EAE7E0;
-      --muted:      #979289;
-      --rule:       #35333C;
-      --stamp:      #B49BF0;
+      --bg:     #F4F6F9;
+      --card:   #FFFFFF;
+      --card-2: #EDF1F6;
+      --line:   #DDE3EB;
+      --text:   #10151C;
+      --dim:    #5F6B7C;
+      --accent: #0E7C8C;
+      --stop:   #C7343B;
+      --go:     #16855C;
+      --wait:   #9A6A00;
     }
   }
 
-  :root[data-theme="dark"] {
-    --paper:      #18171C;
-    --surface:    #201F26;
-    --ink:        #EAE7E0;
-    --muted:      #979289;
-    --rule:       #35333C;
-    --stamp:      #B49BF0;
+  :root[data-theme="light"] {
+    --bg:     #F4F6F9;
+    --card:   #FFFFFF;
+    --card-2: #EDF1F6;
+    --line:   #DDE3EB;
+    --text:   #10151C;
+    --dim:    #5F6B7C;
+    --accent: #0E7C8C;
+    --stop:   #C7343B;
+    --go:     #16855C;
+    --wait:   #9A6A00;
   }
 
-  :root[data-theme="light"] {
-    --paper:      #ECEAE3;
-    --surface:    #F6F5F0;
-    --ink:        #1B1A16;
-    --muted:      #6E6A60;
-    --rule:       #CFCBC0;
-    --stamp:      #5B3E9E;
+  :root[data-theme="dark"] {
+    --bg:     #0C0E12;
+    --card:   #14181F;
+    --card-2: #1B212A;
+    --line:   #262E3A;
+    --text:   #EEF1F6;
+    --dim:    #8E99AA;
+    --accent: #22D3EE;
+    --stop:   #FF5C63;
+    --go:     #3DDC97;
+    --wait:   #FFC53D;
   }
 
   * { box-sizing: border-box; }
 
   body {
     margin: 0;
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--bg);
+    color: var(--text);
     font-family: var(--sans);
-    font-size: 17px;
-    line-height: 1.6;
+    font-size: 16px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
 
   .wrap {
-    max-width: 41rem;
+    max-width: 60rem;
     margin: 0 auto;
-    padding: 2.5rem 1.25rem 5rem;
+    padding: 1.5rem 1rem 5rem;
     display: flex;
     flex-direction: column;
-    gap: 2.75rem;
+    gap: 2.5rem;
   }
 
-  .top {
+  /* ===== testata ===== */
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    margin: 0;
+    font-size: clamp(1.6rem, 6vw, 2.1rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+
+  .logo b { color: var(--accent); font-weight: 800; }
+
+  .lab {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== striscia prossimo voto ===== */
+
+  .now {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 1rem 1.15rem;
+  }
+
+  .now-txt {
+    flex: 1 1 18rem;
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .count {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--accent);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  /* ===== numeri ===== */
+
+  .figs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 0.75rem;
+  }
+
+  .fig {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.2rem;
   }
 
-  h1 {
-    font-family: var(--serif);
-    font-size: clamp(1.8rem, 6vw, 2.4rem);
-    font-weight: 400;
+  .fig .n {
+    font-size: clamp(1.9rem, 7vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fig .n.win { color: var(--accent); }
+
+  .bar {
+    height: 5px;
+    border-radius: 3px;
+    background: var(--card-2);
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+
+  .bar i {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .bar i.mute { background: var(--dim); }
+
+  .cap {
+    margin: 0;
+    color: var(--dim);
+    font-size: 0.92rem;
+  }
+
+  /* ===== sezioni ===== */
+
+  section { display: flex; flex-direction: column; gap: 1rem; }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0.75rem;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+
+  .who {
+    font-size: 1.05rem;
+    font-weight: 800;
     letter-spacing: -0.015em;
     margin: 0;
   }
 
-  .stato {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-    margin: 0;
-  }
-
-  .caso {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    border-top: 1px solid var(--rule);
-    padding-top: 1.5rem;
-  }
-
-  .quando {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: var(--stamp);
-    font-variant-numeric: tabular-nums;
-    margin: 0;
-  }
-
-  h2 {
-    font-family: var(--serif);
-    font-size: clamp(1.25rem, 4vw, 1.55rem);
-    font-weight: 400;
-    line-height: 1.3;
-    margin: 0;
-    text-wrap: balance;
-  }
-
-  .caso p { margin: 0; }
-
-  .esito {
-    background: var(--surface);
-    border-left: 2px solid var(--stamp);
-    padding: 0.7rem 0.9rem;
-    font-size: 0.95rem;
-  }
-
-  .fonte {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  .fonte a {
-    color: var(--muted);
-    text-underline-offset: 3px;
-  }
-
-  .fonte a:hover { color: var(--ink); }
-
-  .fonte a:focus-visible,
-  footer a:focus-visible {
-    outline: 2px solid var(--stamp);
-    outline-offset: 2px;
-  }
-
-  .confronto {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-    border-top: 2px solid var(--ink);
-    padding-top: 1.5rem;
-  }
-
-  .scroller { overflow-x: auto; }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.88rem;
-    min-width: 34rem;
-  }
-
-  th {
-    text-align: left;
+  .who span {
+    display: block;
     font-family: var(--mono);
     font-size: 0.64rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
+    letter-spacing: 0.1em;
+    color: var(--dim);
     font-weight: 400;
-    padding: 0 0.7rem 0.5rem 0;
-    border-bottom: 1px solid var(--rule);
-    vertical-align: bottom;
+    margin-top: 0.2rem;
   }
 
-  td {
-    padding: 0.7rem 0.7rem 0.7rem 0;
-    border-bottom: 1px solid var(--rule);
-    vertical-align: top;
-  }
-
-  td:last-child, th:last-child { padding-right: 0; }
-
-  .chi {
+  .badge {
     font-family: var(--mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    display: block;
-    margin-top: 0.15rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.3rem 0.55rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    border: 1px solid currentColor;
   }
 
-  .esitoCella { color: var(--stamp); }
+  .badge.stop { color: var(--stop); }
+  .badge.go   { color: var(--go); }
+  .badge.wait { color: var(--wait); }
 
-  footer {
-    border-top: 1px solid var(--rule);
-    padding-top: 1.25rem;
-    font-size: 0.85rem;
-    color: var(--muted);
+  .card p {
+    margin: 0;
+    font-size: 0.94rem;
+    color: var(--text);
+  }
+
+  .card p.twist {
+    background: var(--card-2);
+    border-radius: 7px;
+    padding: 0.6rem 0.7rem;
+    font-size: 0.88rem;
+  }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-top: 0.4rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    color: var(--dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .foot a { color: var(--dim); text-underline-offset: 3px; }
+  .foot a:hover { color: var(--accent); }
+  .foot a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+  footer.legal {
+    border-top: 1px solid var(--line);
+    padding-top: 1rem;
+    color: var(--dim);
+    font-size: 0.82rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.35rem;
   }
 
-  footer p { margin: 0; }
-  footer a { color: var(--muted); }
-  footer a:hover { color: var(--ink); }
+  footer.legal p { margin: 0; }
+
+  .card, .fig, .now { animation: up 320ms ease both; }
+  .grid .card:nth-child(2) { animation-delay: 60ms; }
+  .grid .card:nth-child(3) { animation-delay: 120ms; }
+
+  @keyframes up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .fig, .now { animation: none; }
+  }
 </style>
 
 <div class="wrap">
 
-  <header class="top">
-    <h1>Politicometro</h1>
-    <p class="stato">Aggiornato al 28 luglio 2026</p>
+  <header class="head">
+    <h1 class="logo">Politico<b>metro</b></h1>
+    <p class="lab">Aggiornato 28.07.2026</p>
   </header>
 
-  <article class="caso">
-    <p class="quando">22 luglio 2026</p>
-    <h2>La Camera dice no alle chat di Delmastro</h2>
-    <p>La procura di Roma indaga su Mauro Caroccia, imprenditore che per gli inquirenti fa da prestanome al clan Senese. Caroccia era socio del deputato Andrea Delmastro (Fratelli d&rsquo;Italia) in un ristorante, la &laquo;Bisteccheria d&rsquo;Italia&raquo;. Per quella vicenda Delmastro si &egrave; dimesso da sottosegretario alla Giustizia, dicendo di non sapere chi fosse il socio. In questa inchiesta non &egrave; indagato.</p>
-    <p>I pm hanno chiesto alla Camera le chat fra i due. La Giunta per le autorizzazioni &mdash; i deputati che decidono se i magistrati possono usare le comunicazioni di un parlamentare &mdash; ha detto no. Il M5S ha occupato i banchi del governo al Senato.</p>
-    <p class="esito">Tre giorni dopo le stesse chat sono arrivate in procura per un&rsquo;altra strada: le ha consegnate l&rsquo;avvocato di Caroccia.</p>
-    <p class="fonte">Fonti: <a href="https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso, 22.07.2026</a> &middot; <a href="https://gds.it/articoli/cronaca/2026/07/25/in-procura-le-chat-tra-delmastro-e-caroccia-5bd3a8a2-c726-4d8b-9e15-359181757420/" target="_blank" rel="noopener noreferrer">Giornale di Sicilia, 25.07.2026</a></p>
-  </article>
+  <div class="now">
+    <p class="now-txt">Il 30 luglio l&rsquo;aula della Camera decide se i pm possono usare le chat di Delmastro.</p>
+    <span class="count" id="count">30 luglio</span>
+  </div>
 
-  <article class="caso">
-    <p class="quando">3 giugno 2026</p>
-    <h2>Il Senato blocca le mail e gli audio di Santanch&egrave;</h2>
-    <p>Daniela Santanch&egrave; (Fratelli d&rsquo;Italia) &egrave; imputata a Milano per truffa aggravata ai danni dell&rsquo;Inps. I pm hanno messo agli atti mail della senatrice e registrazioni di sue conversazioni, senza chiedere prima l&rsquo;autorizzazione al Senato.</p>
-    <p>Il Senato ha sollevato un conflitto davanti alla Corte costituzionale. Il 3 giugno la Corte lo ha dichiarato ammissibile: decider&agrave; se quel materiale poteva essere usato.</p>
-    <p class="esito">Il processo resta fermo fino a quella decisione. La Corte non entra nel merito delle accuse: si occupa solo di chi poteva usare mail e registrazioni.</p>
-    <p class="fonte">Fonti: <a href="https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano, 03.06.2026</a> &middot; <a href="https://www.adnkronos.com/cronaca/santanche-consulta-dichiara-ammissibile-ricorso_6IUhRHGCG8VC5158k11E9W" target="_blank" rel="noopener noreferrer">Adnkronos, 03.06.2026</a></p>
-  </article>
+  <section>
+    <h2>Referendum sulla giustizia &mdash; 22 e 23 marzo</h2>
+    <div class="figs">
+      <div class="fig">
+        <span class="lab">No</span>
+        <span class="n win">53,74%</span>
+        <span class="bar"><i style="width:53.74%"></i></span>
+      </div>
+      <div class="fig">
+        <span class="lab">S&igrave;</span>
+        <span class="n">46,26%</span>
+        <span class="bar"><i class="mute" style="width:46.26%"></i></span>
+      </div>
+      <div class="fig">
+        <span class="lab">Affluenza</span>
+        <span class="n">58,93%</span>
+        <span class="bar"><i class="mute" style="width:58.93%"></i></span>
+      </div>
+    </div>
+    <p class="cap">La riforma che separava le carriere di giudici e pm non passa. Il S&igrave; vince solo in Veneto, Lombardia e Friuli-Venezia Giulia. &mdash; <a class="src" href="https://www.youtrend.it/2026/03/23/referendum-giustizia-2026-risultati/" target="_blank" rel="noopener noreferrer">Youtrend</a></p>
+  </section>
 
-  <article class="caso">
-    <p class="quando">16 giugno 2026</p>
-    <h2>Scarpinato chiede di bloccare le sue intercettazioni</h2>
-    <p>La presidente della commissione Antimafia, Chiara Colosimo (Fratelli d&rsquo;Italia), si &egrave; fatta mandare dalla procura di Caltanissetta intercettazioni che riguardano il senatore Roberto Scarpinato (M5S), ex magistrato, senza passare dal Senato.</p>
-    <p>Scarpinato ha chiesto alla Giunta del Senato di sollevare il conflitto davanti alla Corte costituzionale, come era stato fatto per Santanch&egrave;. La maggioranza ha detto no. Ha allora fatto ricorso da solo.</p>
-    <p class="esito">Il 16 giugno la Corte costituzionale ha dichiarato il ricorso inammissibile: un singolo parlamentare non pu&ograve; presentarlo. Serve la sua Camera.</p>
-    <p class="fonte">Fonti: <a href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio, 16.06.2026</a> &middot; <a href="https://www.ildubbio.news/giustizia/intercettazioni-a-scarpinato-blindate-dal-centrodestra-ed-e-rissa-col-m5s-qa48kfsx" target="_blank" rel="noopener noreferrer">Il Dubbio</a></p>
-  </article>
+  <section>
+    <h2>Stessa domanda, tre volte in otto settimane: si possono usare?</h2>
+    <div class="grid">
 
-  <section class="confronto">
-    <h2>Tre volte in otto settimane, la stessa domanda</h2>
-    <div class="scroller">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Di chi sono</th>
-            <th scope="col">Chi ha chiesto di bloccarle</th>
-            <th scope="col">Chi ha deciso</th>
-            <th scope="col">Come &egrave; finita</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Le chat<span class="chi">Delmastro &mdash; FdI</span></td>
-            <td>La maggioranza in Giunta</td>
-            <td>Camera</td>
-            <td class="esitoCella">Bloccate</td>
-          </tr>
-          <tr>
-            <td>Le mail e gli audio<span class="chi">Santanch&egrave; &mdash; FdI</span></td>
-            <td>Il Senato</td>
-            <td>Corte costituzionale</td>
-            <td class="esitoCella">Processo sospeso</td>
-          </tr>
-          <tr>
-            <td>Le intercettazioni<span class="chi">Scarpinato &mdash; M5S</span></td>
-            <td>Scarpinato</td>
-            <td>Giunta del Senato, poi Corte costituzionale</td>
-            <td class="esitoCella">Non bloccate</td>
-          </tr>
-        </tbody>
-      </table>
+      <article class="card">
+        <div class="row">
+          <p class="who">Delmastro<span>Fratelli d&rsquo;Italia</span></p>
+          <span class="badge stop">Bloccate</span>
+        </div>
+        <p>La Giunta della Camera nega ai pm le chat con l&rsquo;ex socio Mauro Caroccia, per gli inquirenti prestanome del clan Senese. Delmastro si era gi&agrave; dimesso da sottosegretario; in questa inchiesta non &egrave; indagato.</p>
+        <p class="twist">Tre giorni dopo le stesse chat arrivano in procura lo stesso: le consegna l&rsquo;avvocato di Caroccia.</p>
+        <div class="foot">
+          <span>22.07.2026</span>
+          <a href="https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="row">
+          <p class="who">Santanch&egrave;<span>Fratelli d&rsquo;Italia</span></p>
+          <span class="badge wait">Processo fermo</span>
+        </div>
+        <p>Nel processo per truffa all&rsquo;Inps i pm usano mail e registrazioni della senatrice senza chiedere il via libera al Senato. Il Senato solleva conflitto e la Consulta lo ammette.</p>
+        <p class="twist">Il processo resta fermo finch&eacute; la Corte non decide chi poteva usare quel materiale.</p>
+        <div class="foot">
+          <span>03.06.2026</span>
+          <a href="https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/" target="_blank" rel="noopener noreferrer">Il Fatto</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="row">
+          <p class="who">Scarpinato<span>Movimento 5 Stelle</span></p>
+          <span class="badge go">Non bloccate</span>
+        </div>
+        <p>La commissione Antimafia si fa mandare da Caltanissetta intercettazioni che lo riguardano, senza passare dal Senato. Lui chiede lo stesso conflitto ottenuto per Santanch&egrave;: la maggioranza dice no.</p>
+        <p class="twist">Ricorre da solo. La Consulta lo dichiara inammissibile: serve la sua Camera, non basta il singolo.</p>
+        <div class="foot">
+          <span>16.06.2026</span>
+          <a href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio</a>
+        </div>
+      </article>
+
     </div>
   </section>
 
-  <article class="caso">
-    <p class="quando">20 maggio 2026</p>
-    <h2>Confermata in appello la condanna a Delmastro</h2>
-    <p>Nel febbraio 2023 il deputato Giovanni Donzelli (Fratelli d&rsquo;Italia) lesse in aula alla Camera il contenuto di conversazioni registrate nel carcere di Sassari fra l&rsquo;anarchico Alfredo Cospito e alcuni detenuti al 41 bis. Erano informazioni coperte da segreto, arrivate a Donzelli da Andrea Delmastro, allora sottosegretario alla Giustizia.</p>
-    <p>Il 20 maggio la Corte d&rsquo;appello di Roma ha confermato la condanna a otto mesi per rivelazione di segreto d&rsquo;ufficio. In quell&rsquo;udienza la Procura generale aveva chiesto l&rsquo;assoluzione: i giudici non l&rsquo;hanno seguita.</p>
-    <p class="esito">La sentenza non &egrave; definitiva. Delmastro ha annunciato ricorso in Cassazione.</p>
-    <p class="fonte">Fonti: <a href="https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html" target="_blank" rel="noopener noreferrer">ANSA, 20.05.2026</a> &middot; <a href="https://tg24.sky.it/cronaca/2026/05/20/caso-cospito-andrea-delmastro-condanna-appello" target="_blank" rel="noopener noreferrer">Sky TG24, 20.05.2026</a></p>
-  </article>
+  <section>
+    <h2>Il resto</h2>
+    <div class="grid">
 
-  <footer>
-    <p>Ogni riga ha la sua fonte. Le date sono quelle degli atti.</p>
+      <article class="card">
+        <div class="row">
+          <p class="who">Intercettazioni a strascico<span>Maggioranza divisa</span></p>
+          <span class="badge wait">In corso</span>
+        </div>
+        <p>Due emendamenti di Fratelli d&rsquo;Italia, a firma Berrino e Sisler, vogliono riammettere l&rsquo;uso delle intercettazioni che catturano persone non indagate, nei casi di mafia, terrorismo e tratta di esseri umani.</p>
+        <p class="twist">Forza Italia &egrave; contraria. Nessun accordo dentro la maggioranza: l&rsquo;emendamento per ora non si vota.</p>
+        <div class="foot">
+          <span>27.07.2026</span>
+          <a href="https://www.ilpost.it/2026/07/27/intercettazioni-a-strascico-senato-berrino-sisler/" target="_blank" rel="noopener noreferrer">Il Post</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="row">
+          <p class="who">Delmastro, caso Cospito<span>Condanna non definitiva</span></p>
+          <span class="badge stop">8 mesi</span>
+        </div>
+        <p>Nel 2023 il deputato Donzelli lesse in aula conversazioni segrete registrate in carcere fra l&rsquo;anarchico Cospito e detenuti al 41 bis. Gliele aveva passate Delmastro, allora sottosegretario alla Giustizia.</p>
+        <p class="twist">In appello la Procura generale aveva chiesto l&rsquo;assoluzione. I giudici non l&rsquo;hanno seguita. Ricorso in Cassazione annunciato.</p>
+        <div class="foot">
+          <span>20.05.2026</span>
+          <a href="https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html" target="_blank" rel="noopener noreferrer">ANSA</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <footer class="legal">
+    <p>Ogni scheda ha la fonte e la data dell&rsquo;atto.</p>
     <p>Indagato non vuol dire condannato. Una condanna non definitiva pu&ograve; essere ribaltata.</p>
   </footer>
 
 </div>
+
+<script>
+  (function () {
+    var el = document.getElementById("count");
+    if (!el) return;
+    var voto = new Date(2026, 6, 30);
+    var oggi = new Date();
+    oggi.setHours(0, 0, 0, 0);
+    var giorni = Math.round((voto - oggi) / 86400000);
+
+    if (giorni > 1) el.textContent = "fra " + giorni + " giorni";
+    else if (giorni === 1) el.textContent = "domani";
+    else if (giorni === 0) el.textContent = "oggi";
+    else el.textContent = "voto del 30 luglio";
+  })();
+</script>
