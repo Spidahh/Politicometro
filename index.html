@@ -1,0 +1,648 @@
+<title>Politicometro</title>
+
+<style>
+  :root {
+    --paper:      #ECEAE3;
+    --surface:    #F6F5F0;
+    --surface-2:  #E3E0D7;
+    --ink:        #1B1A16;
+    --muted:      #6E6A60;
+    --rule:       #CFCBC0;
+    --stamp:      #5B3E9E;
+    --stamp-ink:  #5B3E9E;
+    --stamp-soft: rgba(91, 62, 158, 0.09);
+    --wrong:      #8A8479;
+
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono:  ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+    --measure: 40rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #18171C;
+      --surface:    #201F26;
+      --surface-2:  #2A2831;
+      --ink:        #EAE7E0;
+      --muted:      #979289;
+      --rule:       #35333C;
+      --stamp:      #B49BF0;
+      --stamp-ink:  #B49BF0;
+      --stamp-soft: rgba(180, 155, 240, 0.12);
+      --wrong:      #6B675F;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #18171C;
+    --surface:    #201F26;
+    --surface-2:  #2A2831;
+    --ink:        #EAE7E0;
+    --muted:      #979289;
+    --rule:       #35333C;
+    --stamp:      #B49BF0;
+    --stamp-ink:  #B49BF0;
+    --stamp-soft: rgba(180, 155, 240, 0.12);
+    --wrong:      #6B675F;
+  }
+
+  :root[data-theme="light"] {
+    --paper:      #ECEAE3;
+    --surface:    #F6F5F0;
+    --surface-2:  #E3E0D7;
+    --ink:        #1B1A16;
+    --muted:      #6E6A60;
+    --rule:       #CFCBC0;
+    --stamp:      #5B3E9E;
+    --stamp-ink:  #5B3E9E;
+    --stamp-soft: rgba(91, 62, 158, 0.09);
+    --wrong:      #8A8479;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 5rem;
+  }
+
+  /* ---------- intestazione ---------- */
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .wordmark {
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 6vw, 2.4rem);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- avanzamento ---------- */
+
+  .track {
+    display: flex;
+    gap: 4px;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .tick {
+    height: 3px;
+    flex: 1;
+    background: var(--rule);
+    transition: background 220ms ease;
+  }
+
+  .tick[data-state="done"] { background: var(--stamp); }
+  .tick[data-state="now"]  { background: var(--ink); }
+
+  /* ---------- scheda ---------- */
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .prompt {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 4.4vw, 1.7rem);
+    line-height: 1.35;
+    font-weight: 400;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .prompt em {
+    font-style: italic;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .opt {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+  }
+
+  .opt:hover:not(:disabled) {
+    border-color: var(--ink);
+  }
+
+  .opt:focus-visible {
+    outline: 2px solid var(--stamp);
+    outline-offset: 2px;
+  }
+
+  .opt:disabled { cursor: default; }
+
+  .opt[data-mark="right"] {
+    border-color: var(--stamp);
+    background: var(--stamp-soft);
+    color: var(--stamp-ink);
+  }
+
+  .opt[data-mark="miss"] {
+    color: var(--wrong);
+    border-style: dashed;
+  }
+
+  .opt[data-mark="off"] {
+    color: var(--wrong);
+    opacity: 0.55;
+  }
+
+  /* ---------- risposta ---------- */
+
+  .reveal {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.25rem;
+  }
+
+  .reveal-body {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .reveal-body strong {
+    font-weight: 600;
+  }
+
+  .stamp {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--stamp-ink);
+    border: 1.5px solid var(--stamp);
+    border-radius: 2px;
+    padding: 0.35rem 0.6rem;
+    transform: rotate(-2.5deg);
+    opacity: 0.9;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .source {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+  }
+
+  .source a {
+    color: var(--muted);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .source a:hover { color: var(--ink); }
+
+  .source a:focus-visible {
+    outline: 2px solid var(--stamp);
+    outline-offset: 2px;
+  }
+
+  /* ---------- comandi ---------- */
+
+  .go {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    padding: 0.75rem 1.4rem;
+    cursor: pointer;
+    transition: opacity 140ms ease;
+  }
+
+  .go:hover { opacity: 0.82; }
+
+  .go:focus-visible {
+    outline: 2px solid var(--stamp);
+    outline-offset: 3px;
+  }
+
+  .go--quiet {
+    background: transparent;
+    color: var(--muted);
+    border-color: var(--rule);
+  }
+
+  .go--quiet:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* ---------- schermate ---------- */
+
+  .screen {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: enter 240ms ease both;
+  }
+
+  .lede {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .tally {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 11vw, 4rem);
+    line-height: 1;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tally span { color: var(--muted); }
+
+  .ledger {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  .ledger li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.92rem;
+  }
+
+  .ledger .n {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    flex: 0 0 auto;
+  }
+
+  .ledger a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ledger a:hover { border-color: var(--ink); }
+
+  .ledger a:focus-visible {
+    outline: 2px solid var(--stamp);
+    outline-offset: 2px;
+  }
+
+  @keyframes enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @keyframes press {
+    from { opacity: 0; transform: rotate(-2.5deg) scale(1.35); }
+    to   { opacity: 0.9; transform: rotate(-2.5deg) scale(1); }
+  }
+
+  .stamp { animation: press 260ms cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen, .stamp { animation: none; }
+    * { transition-duration: 1ms !important; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1 class="wordmark">Politicometro</h1>
+    <p class="kicker">Otto schede &middot; ogni risposta ha la sua fonte</p>
+  </header>
+
+  <div class="track" id="track" aria-hidden="true"></div>
+
+  <main id="stage"></main>
+</div>
+
+<script>
+  const SCHEDE = [
+    {
+      data: "08.05.2001",
+      testo: "In diretta televisiva, cinque giorni prima delle elezioni, un leader firma un documento: se entro cinque anni non realizza almeno quattro punti su cinque, si impegna a non ricandidarsi. <em>Chi firma?</em>",
+      opzioni: ["Silvio Berlusconi", "Romano Prodi", "Umberto Bossi", "Massimo D'Alema"],
+      giusta: 0,
+      risposta: "8 maggio 2001, a <strong>Porta a Porta</strong> su Rai 1. Il documento si chiama &laquo;Contratto con gli italiani&raquo;: meno tasse, poliziotto di quartiere, pensioni minime a un milione di lire, un milione e mezzo di posti di lavoro, grandi opere. Alle elezioni successive, nel 2006, si &egrave; ricandidato.",
+      fonte: "Contratto con gli italiani — Wikipedia",
+      url: "https://it.wikipedia.org/wiki/Contratto_con_gli_italiani"
+    },
+    {
+      data: "GEN 2016",
+      testo: "&laquo;Se perdo il referendum sulle riforme, smetto di fare politica.&raquo; <em>Chi lo dice?</em>",
+      opzioni: ["Pier Luigi Bersani", "Matteo Renzi", "Enrico Letta", "Walter Veltroni"],
+      giusta: 1,
+      risposta: "Gennaio 2016, intervista a Repubblica TV. Il referendum si tiene il <strong>4 dicembre 2016</strong> e vince il No. Renzi si dimette da presidente del Consiglio. Nel 2018 viene eletto senatore; nel 2019 fonda Italia Viva.",
+      fonte: "Il Sole 24 Ore, 12 gennaio 2016",
+      url: "https://st.ilsole24ore.com/art/notizie/2016-01-12/renzi-se-perdo-referendum-riforme-lascio-politica-113815.shtml?uuid=AC570M8B"
+    },
+    {
+      data: "02.02.2017",
+      testo: "L'accordo con la Libia per fermare le partenze dei migranti &egrave; stato firmato da un governo italiano. <em>Quale?</em>",
+      opzioni: ["Governo Gentiloni (PD)", "Governo Conte I (M5S-Lega)", "Governo Draghi", "Governo Meloni"],
+      giusta: 0,
+      risposta: "2 febbraio 2017, ministro dell'Interno <strong>Marco Minniti</strong>. Il memorandum dura tre anni e si rinnova da solo se nessuna delle due parti lo disdice per iscritto tre mesi prima della scadenza. &Egrave; stato rinnovato nel <strong>2020</strong>, con il governo Conte II (M5S-PD), e nel <strong>2023</strong>, con il governo Meloni. Nessun governo lo ha disdetto.",
+      fonte: "Memorandum Italia-Libia — Wikipedia",
+      url: "https://it.wikipedia.org/wiki/Memorandum_Italia-Libia_del_2017"
+    },
+    {
+      data: "08.10.2019",
+      testo: "La Camera vota il taglio dei parlamentari, da 945 a 600. Votano in 569. <em>Quanti votano contro?</em>",
+      opzioni: ["14", "96", "187", "254"],
+      giusta: 0,
+      risposta: "<strong>553 favorevoli, 14 contrari, 2 astenuti.</strong> Votano a favore tutti i gruppi, di maggioranza e di opposizione, salvo alcuni del Gruppo misto. Pochi mesi dopo, Forza Italia e Lega &mdash; che avevano votato s&igrave; quattro volte su quattro &mdash; raccolgono le firme necessarie per chiedere il referendum. Al referendum del settembre 2020 il S&igrave; vince con quasi il 70%.",
+      fonte: "Referendum costituzionale 2020 — Wikipedia",
+      url: "https://it.wikipedia.org/wiki/Referendum_costituzionale_in_Italia_del_2020"
+    },
+    {
+      data: "27.09.2018",
+      testo: "&laquo;Abbiamo abolito la povert&agrave;.&raquo; <em>Dove viene pronunciata questa frase?</em>",
+      opzioni: ["A Porta a Porta", "In aula alla Camera", "Dal balcone di Palazzo Chigi", "A un comizio a Napoli"],
+      giusta: 2,
+      risposta: "27 settembre 2018. <strong>Luigi Di Maio</strong>, vicepresidente del Consiglio, si affaccia dal balcone di Palazzo Chigi con altri ministri del M5S dopo l'accordo sulla manovra che introduce il reddito di cittadinanza. Sotto, i parlamentari arrivati da Montecitorio con bandiere e striscioni.",
+      fonte: "Sky TG24, 28 settembre 2018",
+      url: "https://tg24.sky.it/politica/2018/09/28/manovra-luigi-di-maio-esultanza"
+    },
+    {
+      data: "DIC 2014",
+      testo: "La flat tax al 15% per le partite IVA sotto una certa soglia di reddito. <em>Quale governo l'ha introdotta?</em>",
+      opzioni: ["Governo Renzi", "Governo Conte I", "Governo Draghi", "Governo Meloni"],
+      giusta: 0,
+      risposta: "Il regime forfettario al 15% viene introdotto a fine 2014 dal <strong>governo Renzi</strong>. Il governo Conte I, con la Lega, ne allarga la platea nella manovra per il 2019, portando la soglia a 65 mila euro. La flat tax al 15% <em>per tutti</em>, scritta nel programma della Lega del 2018, non &egrave; stata introdotta: le stime la valutano intorno ai 60 miliardi di euro l'anno.",
+      fonte: "Pagella Politica",
+      url: "https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva"
+    },
+    {
+      data: "GIU 2018",
+      testo: "Il Movimento 5 Stelle nasce con una regola: nessuna alleanza con altri partiti. <em>Con chi ha governato per primo?</em>",
+      opzioni: ["Con nessuno, da solo", "Con il PD", "Con Forza Italia", "Con la Lega"],
+      giusta: 3,
+      risposta: "Giugno 2018, <strong>governo Conte I</strong> con la Lega. Nel 2013 il M5S aveva fatto sapere al PD che non avrebbe governato se non da solo. Dopo il 2018: nel 2019 governo Conte II con il PD, nel 2021 ingresso nel governo Draghi, sostenuto da quasi tutti i partiti.",
+      fonte: "Movimento 5 Stelle — Treccani",
+      url: "https://www.treccani.it/enciclopedia/movimento-5-stelle/"
+    },
+    {
+      data: "02.05.2022",
+      testo: "&laquo;La proposta pi&ugrave; seria l'abbiamo sempre fatta noi: si chiama blocco navale.&raquo; <em>Chi lo dice?</em>",
+      opzioni: ["Matteo Salvini", "Giorgia Meloni", "Silvio Berlusconi", "Carlo Calenda"],
+      giusta: 1,
+      risposta: "2 maggio 2022, conferenza programmatica di Fratelli d'Italia. Nei documenti del partito il blocco navale &egrave; descritto come una missione europea concordata con le autorit&agrave; libiche per impedire le partenze. Non &egrave; stato attuato. Nel 2023, primo anno pieno di governo, gli sbarchi sono aumentati rispetto al 2022.",
+      fonte: "Pagella Politica",
+      url: "https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale"
+    }
+  ];
+
+  const stage = document.getElementById("stage");
+  const track = document.getElementById("track");
+
+  let indice = 0;
+  let punti = 0;
+
+  SCHEDE.forEach(() => {
+    const t = document.createElement("div");
+    t.className = "tick";
+    track.appendChild(t);
+  });
+
+  const ticks = Array.from(track.children);
+
+  function segnaAvanzamento(stato) {
+    ticks.forEach((t, i) => {
+      if (i < indice) t.dataset.state = "done";
+      else if (i === indice && stato !== "fine") t.dataset.state = "now";
+      else delete t.dataset.state;
+    });
+    if (stato === "fine") ticks.forEach(t => (t.dataset.state = "done"));
+  }
+
+  function apertura() {
+    track.style.visibility = "hidden";
+    stage.innerHTML = "";
+
+    const s = document.createElement("div");
+    s.className = "screen";
+    s.innerHTML =
+      '<p class="lede">Otto frasi, otto voti, otto date. Tutte verificabili.<br>Indovina, poi guarda la fonte.</p>';
+
+    const b = document.createElement("button");
+    b.className = "go";
+    b.type = "button";
+    b.textContent = "Comincia";
+    b.addEventListener("click", () => {
+      indice = 0;
+      punti = 0;
+      mostraScheda();
+    });
+
+    s.appendChild(b);
+    stage.appendChild(s);
+  }
+
+  function mostraScheda() {
+    track.style.visibility = "visible";
+    segnaAvanzamento();
+    stage.innerHTML = "";
+
+    const scheda = SCHEDE[indice];
+
+    const s = document.createElement("div");
+    s.className = "screen";
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.innerHTML =
+      "<span>Scheda " + String(indice + 1).padStart(2, "0") + " / 08</span>";
+    card.appendChild(meta);
+
+    const prompt = document.createElement("h2");
+    prompt.className = "prompt";
+    prompt.innerHTML = scheda.testo;
+    card.appendChild(prompt);
+
+    const lista = document.createElement("ul");
+    lista.className = "options";
+
+    scheda.opzioni.forEach((testo, i) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.className = "opt";
+      b.type = "button";
+      b.textContent = testo;
+      b.addEventListener("click", () => scegli(i, lista, card, scheda));
+      li.appendChild(b);
+      lista.appendChild(li);
+    });
+
+    card.appendChild(lista);
+    s.appendChild(card);
+    stage.appendChild(s);
+  }
+
+  function scegli(scelta, lista, card, scheda) {
+    const bottoni = Array.from(lista.querySelectorAll(".opt"));
+    const corretto = scelta === scheda.giusta;
+    if (corretto) punti++;
+
+    bottoni.forEach((b, i) => {
+      b.disabled = true;
+      if (i === scheda.giusta) b.dataset.mark = "right";
+      else if (i === scelta) b.dataset.mark = "miss";
+      else b.dataset.mark = "off";
+    });
+
+    const reveal = document.createElement("div");
+    reveal.className = "reveal";
+
+    const stamp = document.createElement("div");
+    stamp.className = "stamp";
+    stamp.textContent = "Agli atti · " + scheda.data;
+    reveal.appendChild(stamp);
+
+    const p = document.createElement("p");
+    p.className = "reveal-body";
+    p.innerHTML = scheda.risposta;
+    reveal.appendChild(p);
+
+    const fonte = document.createElement("div");
+    fonte.className = "source";
+    fonte.innerHTML =
+      'Fonte: <a href="' + scheda.url + '" target="_blank" rel="noopener noreferrer">' +
+      scheda.fonte + "</a>";
+    reveal.appendChild(fonte);
+
+    const avanti = document.createElement("button");
+    avanti.className = "go";
+    avanti.type = "button";
+    avanti.textContent = indice === SCHEDE.length - 1 ? "Vedi il totale" : "Scheda seguente";
+    avanti.addEventListener("click", () => {
+      indice++;
+      if (indice >= SCHEDE.length) chiusura();
+      else mostraScheda();
+    });
+    reveal.appendChild(avanti);
+
+    card.appendChild(reveal);
+    avanti.focus({ preventScroll: true });
+    reveal.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function chiusura() {
+    segnaAvanzamento("fine");
+    stage.innerHTML = "";
+
+    const s = document.createElement("div");
+    s.className = "screen";
+
+    const t = document.createElement("p");
+    t.className = "tally";
+    t.innerHTML = punti + "<span>/8</span>";
+    s.appendChild(t);
+
+    const l = document.createElement("p");
+    l.className = "lede";
+    l.textContent = "Le otto schede, con le fonti:";
+    s.appendChild(l);
+
+    const ul = document.createElement("ul");
+    ul.className = "ledger";
+
+    SCHEDE.forEach((scheda, i) => {
+      const li = document.createElement("li");
+      li.innerHTML =
+        '<span class="n">' + String(i + 1).padStart(2, "0") + "</span>" +
+        '<span><a href="' + scheda.url + '" target="_blank" rel="noopener noreferrer">' +
+        scheda.fonte + "</a></span>";
+      ul.appendChild(li);
+    });
+
+    s.appendChild(ul);
+
+    const b = document.createElement("button");
+    b.className = "go go--quiet";
+    b.type = "button";
+    b.textContent = "Ricomincia";
+    b.addEventListener("click", apertura);
+    s.appendChild(b);
+
+    stage.appendChild(s);
+  }
+
+  apertura();
+</script>
