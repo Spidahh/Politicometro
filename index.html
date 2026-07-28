@@ -2,218 +2,96 @@
 
 <style>
   :root {
-    --bg:      #0B0D11;
-    --card:    #13171E;
-    --card2:   #1A1F28;
-    --line:    #252C37;
-    --text:    #EDF1F6;
-    --dim:     #8B96A6;
-    --you:     #4DD4F0;
-    --them:    #FF6B4A;
-    --ok:      #3DDC97;
-    --wait:    #FFC53D;
-
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --bg:#0B0D11; --card:#13171E; --card2:#1A1F28; --line:#252C37;
+    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   }
-
   @media (prefers-color-scheme: light) {
-    :root {
-      --bg:    #F3F5F8; --card: #FFFFFF; --card2: #EBEFF4; --line: #DCE2EA;
-      --text:  #0F141B; --dim: #5C687A;
-      --you:   #0B7C93; --them: #C4442A; --ok: #14805A; --wait: #8F6200;
-    }
+    :root { --bg:#F3F5F8; --card:#FFF; --card2:#EBEFF4; --line:#DCE2EA;
+            --text:#0F141B; --dim:#5C687A; --acc:#0B7C93; --hot:#C4442A; }
   }
-  :root[data-theme="light"] {
-    --bg:    #F3F5F8; --card: #FFFFFF; --card2: #EBEFF4; --line: #DCE2EA;
-    --text:  #0F141B; --dim: #5C687A;
-    --you:   #0B7C93; --them: #C4442A; --ok: #14805A; --wait: #8F6200;
-  }
-  :root[data-theme="dark"] {
-    --bg:    #0B0D11; --card: #13171E; --card2: #1A1F28; --line: #252C37;
-    --text:  #EDF1F6; --dim: #8B96A6;
-    --you:   #4DD4F0; --them: #FF6B4A; --ok: #3DDC97; --wait: #FFC53D;
-  }
+  :root[data-theme="light"] { --bg:#F3F5F8; --card:#FFF; --card2:#EBEFF4; --line:#DCE2EA;
+    --text:#0F141B; --dim:#5C687A; --acc:#0B7C93; --hot:#C4442A; }
+  :root[data-theme="dark"] { --bg:#0B0D11; --card:#13171E; --card2:#1A1F28; --line:#252C37;
+    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A; }
 
-  * { box-sizing: border-box; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+         font-size:16px; line-height:1.45; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:58rem; margin:0 auto; padding:1.25rem 1rem 5rem; }
 
-  body {
-    margin: 0; background: var(--bg); color: var(--text);
-    font-family: var(--sans); font-size: 16px; line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
+  .head { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem;
+          flex-wrap:wrap; padding-bottom:.9rem; border-bottom:1px solid var(--line); }
+  .logo { margin:0; font-size:clamp(1.5rem,6vw,2rem); font-weight:800;
+          letter-spacing:-.035em; line-height:1; }
+  .logo b { color:var(--acc); }
+  .lab { font-family:var(--mono); font-size:.66rem; letter-spacing:.13em;
+         text-transform:uppercase; color:var(--dim); font-variant-numeric:tabular-nums; margin:0; }
 
-  .wrap { max-width: 64rem; margin: 0 auto; padding: 1.25rem 1rem 5rem; }
+  .live { display:flex; flex-wrap:wrap; align-items:center; gap:.7rem 1.1rem;
+          background:var(--card); border:1px solid var(--line); border-left:4px solid var(--hot);
+          border-radius:10px; padding:.85rem 1.05rem; margin:1.25rem 0 1.5rem; }
+  .live p { flex:1 1 17rem; margin:0; font-weight:600; }
+  .pill { font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+          font-weight:700; color:var(--bg); background:var(--hot); border-radius:999px;
+          padding:.32rem .72rem; white-space:nowrap; font-variant-numeric:tabular-nums; }
 
-  .lab {
-    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--dim); font-variant-numeric: tabular-nums;
-  }
+  .conta { display:grid; grid-template-columns:repeat(auto-fit,minmax(7rem,1fr)); gap:.6rem;
+           margin-bottom:1.25rem; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:.8rem .9rem; }
+  .box .n { font-size:1.7rem; font-weight:800; line-height:1; letter-spacing:-.03em;
+            font-variant-numeric:tabular-nums; display:block; margin-bottom:.2rem; }
+  .box .n.acc { color:var(--acc); }
 
-  /* testata */
-  .head {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    gap: 1rem; flex-wrap: wrap; padding-bottom: 1rem;
-    border-bottom: 1px solid var(--line); margin-bottom: 1.25rem;
-  }
-  .logo {
-    margin: 0; font-size: clamp(1.5rem, 6vw, 2rem); font-weight: 800;
-    letter-spacing: -0.035em; line-height: 1;
-  }
-  .logo b { color: var(--you); font-weight: 800; }
+  .filtri { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.5rem; }
+  .chip { font:inherit; font-size:.82rem; color:var(--text); background:var(--card);
+          border:1px solid var(--line); border-radius:999px; padding:.4rem .8rem;
+          cursor:pointer; display:inline-flex; align-items:center; gap:.45rem;
+          transition:border-color 120ms ease,color 120ms ease; }
+  .chip b { font-family:var(--mono); font-size:.66rem; color:var(--dim);
+            font-variant-numeric:tabular-nums; }
+  .chip:hover { border-color:var(--acc); }
+  .chip[aria-pressed="true"] { border-color:var(--acc); color:var(--acc); }
+  .chip[aria-pressed="true"] b { color:var(--acc); }
+  .chip:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
 
-  /* striscia live */
-  .live {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.1rem;
-    background: var(--card); border: 1px solid var(--line);
-    border-left: 4px solid var(--wait); border-radius: 10px;
-    padding: 0.9rem 1.1rem; margin-bottom: 2.5rem;
-  }
-  .live p { flex: 1 1 18rem; margin: 0; font-weight: 600; line-height: 1.4; }
-  .pill {
-    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
-    text-transform: uppercase; font-weight: 700; color: var(--bg);
-    background: var(--wait); border-radius: 999px; padding: 0.35rem 0.75rem;
-    white-space: nowrap; font-variant-numeric: tabular-nums;
-  }
+  .giorno { font-family:var(--mono); font-size:.68rem; letter-spacing:.14em;
+            text-transform:uppercase; color:var(--dim); margin:1.6rem 0 .6rem;
+            padding-bottom:.4rem; border-bottom:1px solid var(--line); }
+  .giorno:first-of-type { margin-top:0; }
 
-  /* schermo */
-  .screen { margin-bottom: 3rem; }
-  .screen > h2 {
-    margin: 0 0 0.35rem; font-size: clamp(1.35rem, 5vw, 1.85rem);
-    font-weight: 800; letter-spacing: -0.025em; text-wrap: balance;
-  }
-  .screen > .sub { margin: 0 0 1.25rem; color: var(--dim); font-size: 0.95rem; }
+  .lista { display:flex; flex-direction:column; gap:.35rem; }
 
-  /* ---- diagramma confronto ---- */
-  .vs { display: flex; flex-direction: column; gap: 0.6rem; }
+  .voce { display:grid; grid-template-columns:auto 1fr; gap:.2rem .8rem; align-items:baseline;
+          background:var(--card); border:1px solid var(--line); border-radius:9px;
+          padding:.7rem .85rem; text-decoration:none; color:inherit;
+          transition:border-color 120ms ease, background 120ms ease; }
+  .voce:hover { border-color:var(--acc); background:var(--card2); }
+  .voce:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  .ora { font-family:var(--mono); font-size:.7rem; color:var(--dim);
+         font-variant-numeric:tabular-nums; grid-row:1; }
+  .tit { font-size:.97rem; font-weight:600; line-height:1.35; grid-row:1; }
+  .meta { grid-column:2; display:flex; flex-wrap:wrap; gap:.3rem .5rem; margin-top:.3rem; }
+  .meta b { font-family:var(--mono); font-size:.6rem; letter-spacing:.09em;
+            text-transform:uppercase; font-weight:700; padding:.18rem .45rem;
+            border-radius:999px; border:1px solid var(--line); color:var(--dim); }
+  .meta .tema { color:var(--acc); border-color:currentColor; }
 
-  .cmp {
-    background: var(--card); border: 1px solid var(--line);
-    border-radius: 10px; padding: 1rem 1.1rem;
-    display: flex; flex-direction: column; gap: 0.85rem;
-  }
-  .cmp h3 {
-    margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
-  }
+  .vuoto { color:var(--dim); font-size:.9rem; padding:1.5rem 0; display:none; }
 
-  .side { display: flex; flex-direction: column; gap: 0.3rem; }
-  .side .top {
-    display: flex; justify-content: space-between; align-items: baseline;
-    gap: 0.75rem; font-size: 0.9rem;
-  }
-  .side .top b {
-    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em;
-    text-transform: uppercase; font-weight: 700;
-  }
-  .side .val { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
-
-  .track { height: 10px; border-radius: 5px; background: var(--card2); overflow: hidden; display: flex; }
-  .track i { display: block; height: 100%; }
-
-  .you  { color: var(--you); }
-  .them { color: var(--them); }
-  .track i.b-you  { background: var(--you); }
-  .track i.b-them { background: var(--them); }
-  .track i.b-them2 { background: var(--them); opacity: 0.62; }
-  .track i.b-them3 { background: var(--them); opacity: 0.38; }
-  .track i.b-them4 { background: var(--them); opacity: 0.2; }
-
-  .note { margin: 0; font-size: 0.85rem; color: var(--dim); }
-  .note a { color: var(--dim); }
-  .note a:hover { color: var(--text); }
-  a:focus-visible { outline: 2px solid var(--you); outline-offset: 2px; border-radius: 3px; }
-
-  .keyrow { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
-  .key { display: flex; align-items: center; gap: 0.35rem; }
-  .key i { width: 10px; height: 10px; border-radius: 2px; display: block; }
-
-  /* ---- catena fatto -> conseguenza ---- */
-  .chains { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.75rem; }
-
-  .chain {
-    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-    padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.9rem;
-  }
-  .chain header { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
-  .chain h3 { margin: 0; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.015em; }
-  .chain h3 span {
-    display: block; font-family: var(--mono); font-size: 0.62rem;
-    letter-spacing: 0.1em; color: var(--dim); font-weight: 400; margin-top: 0.2rem;
-  }
-  .tag {
-    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
-    text-transform: uppercase; font-weight: 700; padding: 0.28rem 0.5rem;
-    border-radius: 999px; border: 1px solid currentColor; white-space: nowrap;
-  }
-  .tag.stop { color: var(--them); }
-  .tag.ok   { color: var(--ok); }
-  .tag.wait { color: var(--wait); }
-
-  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-  .steps li {
-    position: relative; padding: 0 0 0.9rem 1.4rem; font-size: 0.9rem;
-  }
-  .steps li:last-child { padding-bottom: 0; }
-  .steps li::before {
-    content: ""; position: absolute; left: 0; top: 0.45rem;
-    width: 8px; height: 8px; border-radius: 50%; background: var(--dim);
-  }
-  .steps li:last-child::before { background: var(--them); }
-  .steps li:not(:last-child)::after {
-    content: ""; position: absolute; left: 3.5px; top: 1.05rem; bottom: 0.15rem;
-    width: 1px; background: var(--line);
-  }
-  .steps li em { font-style: normal; font-family: var(--mono); font-size: 0.62rem;
-    letter-spacing: 0.08em; color: var(--dim); display: block; margin-bottom: 0.15rem;
-    font-variant-numeric: tabular-nums; }
-
-  .srcline {
-    margin: 0; padding-top: 0.6rem; border-top: 1px solid var(--line);
-    font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.05em; color: var(--dim);
-  }
-  .srcline a { color: var(--dim); text-underline-offset: 3px; }
-  .srcline a:hover { color: var(--you); }
-
-  /* ---- detto / poi ---- */
-  .said { display: flex; flex-direction: column; gap: 0.6rem; }
-  .say {
-    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-    display: grid; grid-template-columns: 1fr; gap: 0;
-  }
-  @media (min-width: 46rem) { .say { grid-template-columns: 1.15fr 1fr; } }
-
-  .say .q { padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; }
-  .say .q p { margin: 0; font-size: 1.02rem; font-weight: 600; line-height: 1.4; }
-  .say .who {
-    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--dim); font-variant-numeric: tabular-nums;
-  }
-  .say .a {
-    padding: 1rem 1.1rem; background: var(--card2); display: flex;
-    flex-direction: column; gap: 0.4rem; justify-content: center;
-    border-top: 1px solid var(--line);
-  }
-  @media (min-width: 46rem) { .say .a { border-top: 0; border-left: 1px solid var(--line); } }
-  .say .a p { margin: 0; font-size: 0.92rem; }
-  .say .a .lab { color: var(--them); }
-
-  footer {
-    border-top: 1px solid var(--line); padding-top: 1rem; margin-top: 1rem;
-    color: var(--dim); font-size: 0.82rem; display: flex; flex-direction: column; gap: 0.35rem;
-  }
-  footer p { margin: 0; }
-
-  .cmp, .chain, .say, .live { animation: up 300ms ease both; }
-  @keyframes up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) { .cmp, .chain, .say, .live { animation: none; } }
+  footer { border-top:1px solid var(--line); padding-top:1rem; margin-top:2.5rem;
+           color:var(--dim); font-size:.8rem; display:flex; flex-direction:column; gap:.35rem; }
+  footer p { margin:0; }
+  footer a { color:var(--dim); }
+  footer a:hover { color:var(--acc); }
 </style>
 
 <div class="wrap">
 
   <header class="head">
     <h1 class="logo">Politico<b>metro</b></h1>
-    <p class="lab">Aggiornato 28.07.2026</p>
+    <p class="lab">Aggiornato 28.07.2026 ore 15:40</p>
   </header>
 
   <div class="live">
@@ -221,193 +99,434 @@
     <span class="pill" id="count">30 luglio</span>
   </div>
 
-  <!-- ============ SCHERMO 1 ============ -->
-  <section class="screen">
-    <h2>Le stesse regole, applicate a te e a loro</h2>
-    <p class="sub">Stessi anni, stesso paese, stessa legge. Cambia solo chi sei.</p>
+  <div class="conta">
+    <div class="box"><span class="lab">Notizie</span><span class="n acc">77</span></div>
+    <div class="box"><span class="lab">Fonti</span><span class="n">7</span></div>
+    <div class="box"><span class="lab">Giorni</span><span class="n">5</span></div>
+  </div>
 
-    <div class="vs">
+  <div class="filtri" id="filtri">
+    <button class="chip" type="button" data-tema="" aria-pressed="true">Tutto</button>
+        <button class="chip" type="button" data-tema="Altro">Altro<b>50</b></button>
+        <button class="chip" type="button" data-tema="Giustizia">Giustizia<b>11</b></button>
+        <button class="chip" type="button" data-tema="Parlamento">Parlamento<b>6</b></button>
+        <button class="chip" type="button" data-tema="Soldi pubblici">Soldi pubblici<b>6</b></button>
+        <button class="chip" type="button" data-tema="Territori">Territori<b>3</b></button>
+        <button class="chip" type="button" data-tema="Estero e difesa">Estero e difesa<b>1</b></button>
+  </div>
 
-      <div class="cmp">
-        <h3>Se un pm vuole le tue chat</h3>
-        <div class="side">
-          <div class="top"><b class="you">Tu</b><span class="val">Le prende</span></div>
-          <div class="track"><i class="b-you" style="width:100%"></i></div>
-        </div>
-        <div class="side">
-          <div class="top"><b class="them">Un parlamentare</b><span class="val">Decide la Camera</span></div>
-          <div class="track"><i class="b-them" style="width:100%"></i></div>
-        </div>
-        <p class="note">A te basta il decreto di un giudice. Per un deputato o un senatore l&rsquo;articolo 68 della Costituzione impone l&rsquo;autorizzazione della sua Camera: a votare sono gli altri parlamentari. &mdash; <a href="https://www.senato.it/istituzione/la-costituzione/parte-ii/titolo-i/sezione-i/articolo-68" target="_blank" rel="noopener noreferrer">Costituzione, art. 68</a></p>
+  <main id="flusso">
+      <h3 class="giorno">oggi</h3>
+      <div class="lista">
+        <a class="voce" data-tema="Parlamento" href="https://www.repubblica.it/politica/2026/07/28/news/fondi_safe_armi_tajani_prenotati_149_miliardi_crosetto-425497487/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">15:00</span>
+          <span class="tit">Fondi Safe per armi, Tajani: “Li useremo”. Stop Lega: “Decide Parlamento”. Ue chiede chiarezza</span>
+          <span class="meta"><b class="tema">Parlamento</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/28/news/mattarella_pantelleria_visita_parco_nazionale-425497684/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">14:20</span>
+          <span class="tit">Mattarella a Pantelleria: “Una vacanza qui un giorno? Chissà. Ma alla mia età niente programmi”</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.adnkronos.com/politica/nordio-riceve-alemanno-focus-su-carceri-e-sovraffollamento_2YQhutbQDLIbMQBKvMSlIy" target="_blank" rel="noopener noreferrer">
+          <span class="ora">14:16</span>
+          <span class="tit">Nordio riceve Alemanno, focus su carceri e sovraffollamento</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Soldi pubblici" href="https://www.ansa.it/sito/notizie/politica/2026/07/28/tajani-abbiamo-deciso-di-chiedere-safe-per-149-miliardi_14b82a80-5820-48e4-865f-082cdab8620b.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">14:02</span>
+          <span class="tit">Tajani: &#x27;Il governo ha prenotato 14,9 miliardi delle risorse Safe&#x27; per le spese militari</span>
+          <span class="meta"><b class="tema">Soldi pubblici</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.rainews.it/articoli/2026/07/ex-ilva-senza-interventi-stop-entro-90-giorni-jindal-conferma-linteresse-a-comprare-863c932d-1380-4c1c-b76c-698d3ac9df56.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">13:46</span>
+          <span class="tit">Ex Ilva, senza interventi stop entro 90 giorni. Jindal conferma l&#x27;interesse a comprare</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Soldi pubblici" href="https://www.open.online/2026/07/28/giappone-terremoto-magnitudo-tsunami/" target="_blank" rel="noopener noreferrer">
+          <span class="ora">13:27</span>
+          <span class="tit">Terremoto in Giappone, «diverse vittime» in centro commerciale danneggiato. Il primo bilancio della premier: «Persone sotto le macerie» – I video</span>
+          <span class="meta"><b class="tema">Soldi pubblici</b><b class="fonte">Open</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/pd-guerini-adnkronos-intervista-adntalks_5hRlwPVds7oJaEj8j1jTpc" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:54</span>
+          <span class="tit">Pd, Guerini domani alle 10 all&#x27;Adnkronos ospite di &#x27;AdnTalks&#x27;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.open.online/2026/07/28/azione-universitaria-fdi-rocco-siffredi-ospite-latina/" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:46</span>
+          <span class="tit">Alla festa di Azione Universitaria spunta Rocco Siffredi: lezioni d’amore con un prete, tra ministri e colonnelli di FdI</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Open</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.ansa.it/sito/notizie/politica/2026/07/28/mattarella-le-isole-minori-sono-grande-rilievo-per-lequilibrio-e-il-futuro-del_a647aafa-153a-4be8-88d8-436c55306231.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:39</span>
+          <span class="tit">Mattarella: &#x27;Le isole minori sono di grande rilievo per l&#x27;equilibrio e il futuro del Paese&#x27;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Soldi pubblici" href="https://www.rainews.it/articoli/2026/07/difesa-tajani-abbiamo-deciso-di-chiedere-safe-per-149-miliardi-entro-la-fine-dellanno-b6200268-cfc5-414a-a30b-88e0f3bea9d6.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:34</span>
+          <span class="tit">Difesa, Tajani: abbiamo deciso di chiedere Safe per 14,9 miliardi</span>
+          <span class="meta"><b class="tema">Soldi pubblici</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Parlamento" href="https://www.ansa.it/sito/notizie/politica/2026/07/28/borghi-lega-nessuna-decisione-sul-safe-si-esprimera-il-parlamento_a59f9dca-677a-46bb-997c-a908dd072e2d.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:26</span>
+          <span class="tit">Borghi (Lega), &#x27;nessuna decisione sul Safe, si esprimerà il Parlamento&#x27;</span>
+          <span class="meta"><b class="tema">Parlamento</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.rainews.it/video/2026/07/mattarella-a-pantelleria-le-isole-minori-tutte-di-gran-rilievo-per-il-futuro-del-nostro-paese-1cb8130e-379a-478a-b8c9-1defed5840fc.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:19</span>
+          <span class="tit">Mattarella a Pantelleria: &quot;Le isole minori tutte di gran rilievo per il futuro del nostro Paese&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Estero e difesa" href="https://www.ansa.it/sito/notizie/politica/2026/07/28/cosa-e-e-come-funziona-il-fondo-safe_82bc1925-72c8-427a-ab73-15f9bdec7a73.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:09</span>
+          <span class="tit">Prestiti agevolati per la difesa. Cosa è e come funziona il fondo Safe</span>
+          <span class="meta"><b class="tema">Estero e difesa</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.ansa.it/sito/notizie/politica/2026/07/28/tajani-contrari-ad-emendamento-su-intercettazioni-credo-sia-anche-inammissibile_2f478448-4d27-4316-8c9e-1c740c404a8a.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">11:48</span>
+          <span class="tit">Tajani, &#x27;contrari ad emendamento su intercettazioni, credo sia anche inammissibile&#x27;</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Soldi pubblici" href="https://www.adnkronos.com/internazionale/esteri/fondo-safe-tajani-italia_2B6Vrv82dyu7EAGBe7zf5L" target="_blank" rel="noopener noreferrer">
+          <span class="ora">10:16</span>
+          <span class="tit">Tajani annuncia: &quot;Abbiamo deciso di utilizzare fondo Safe, chiederemo 14,9 miliardi&quot;</span>
+          <span class="meta"><b class="tema">Soldi pubblici</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/28/news/sondaggi_politici_futuro_nazionale_vannacci_forza_italia-425497246/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">10:03</span>
+          <span class="tit">Sondaggi politici, Futuro nazionale di Vannacci si avvicina a Forza Italia</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Territori" href="https://www.repubblica.it/politica/2026/07/28/news/la_prossima_vita_di_mastella_fare_il_sindaco_nella_sua_ceppaloni-425497156/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">09:33</span>
+          <span class="tit">La prossima vita di Mastella: fare il sindaco nella sua Ceppaloni</span>
+          <span class="meta"><b class="tema">Territori</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/28/news/politici_scorta_lepore_segre_picierno-425497148/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">09:32</span>
+          <span class="tit">Da Segre a Picierno fino a Lepore: i politici finiti sotto scorta perché vittime di odiatori sul web</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.ilsole24ore.com/art/sicurezza-l-idea-anti-vandali-fdi-punirli-associazione-delinquere-AJR78FX" target="_blank" rel="noopener noreferrer">
+          <span class="ora">08:26</span>
+          <span class="tit">Sicurezza, l’idea anti-vandali di Fdi: punirli per associazione a delinquere</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Il Sole</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.rainews.it/video/2026/07/due-stati-medio-oriente-tajani-italia-scelta-in-grado-di-interloquire-con-tutti-f9799c5f-90d3-46c3-b79c-7726434b06df.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">07:32</span>
+          <span class="tit">Due Stati in Medio Oriente, Tajani:&quot; Italia scelta perché in grado di interloquire con tutti&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://bologna.repubblica.it/cronaca/2026/07/28/news/bologna_pilastro_2_agosto_lepore_piazza-425496790/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">04:43</span>
+          <span class="tit">Bologna tra Pilastro e 2 agosto, Lepore: &quot;In piazza la città ferita&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/28/news/lorenzo_guerini_sicurezza_no_tav_destra_intervista-425496610/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">01:00</span>
+          <span class="tit">Guerini: “Il governo ha fallito ma il tema della sicurezza non va lasciato alla destra”</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/28/news/meloni_visita_tav_schlein_agiamo_insieme-425496595/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">01:00</span>
+          <span class="tit">Meloni visita la Tav: “Pm facciano il massimo”. Schlein: agire insieme</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.repubblica.it/politica/2026/07/28/news/chat_delmastro_caroccia_magistrati_voto_camera-425496582/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">01:00</span>
+          <span class="tit">Chat tra Delmastro e Caroccia, la prudenza dei magistrati in attesa del voto alla Camera</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/28/news/ranucci_cda_rai_report_meloni_schlein-425496570/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">01:00</span>
+          <span class="tit">Giovedì il cda su Ranucci, Meloni attacca Schlein: “Deve chiederci scusa”</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/28/news/la_vignetta_di_ellekappa-425496515/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">00:01</span>
+          <span class="tit">La vignetta di Ellekappa</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
       </div>
-
-      <div class="cmp">
-        <h3>Quanto entra ogni mese</h3>
-        <div class="side">
-          <div class="top"><b class="you">Dipendente privato, media</b><span class="val">2.749 &euro;</span></div>
-          <div class="track"><i class="b-you" style="width:13.9%"></i></div>
-        </div>
-        <div class="side">
-          <div class="top"><b class="them">Deputato</b><span class="val">19.765 &euro;</span></div>
-          <div class="track">
-            <i class="b-them"  style="width:52.8%"></i>
-            <i class="b-them2" style="width:17.7%"></i>
-            <i class="b-them3" style="width:21.2%"></i>
-            <i class="b-them4" style="width:8.3%"></i>
-          </div>
-        </div>
-        <div class="keyrow lab">
-          <span class="key"><i style="background:var(--them)"></i> Indennit&agrave; 10.435</span>
-          <span class="key"><i style="background:var(--them);opacity:.62"></i> Diaria 3.500</span>
-          <span class="key"><i style="background:var(--them);opacity:.38"></i> Spese di mandato 4.180</span>
-          <span class="key"><i style="background:var(--them);opacity:.2"></i> Forfait 1.650</span>
-        </div>
-        <p class="note">La media privata &egrave; 32.991 &euro; lordi l&rsquo;anno (2025). Solo l&rsquo;indenni&agrave; del deputato &egrave; tassata come reddito: diaria e rimborsi no. &mdash; <a href="https://www.quotidiano.net/economia/quanto-guadagna-parlamentare-stipendio-senatore-deputato-87690603" target="_blank" rel="noopener noreferrer">QN</a> &middot; <a href="https://www.money.it/media-stipendi-in-italia-nel-2026-dati" target="_blank" rel="noopener noreferrer">Money.it</a></p>
+      <h3 class="giorno">lunedì 27 luglio</h3>
+      <div class="lista">
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/27/news/melonellum_costituzionalisti_rischio_incostituzionalita_liste_bloccate-425496525/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">21:39</span>
+          <span class="tit">Melonellum, i costituzionalisti: &quot;Rischio incostituzionalità con le liste bloccate&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.ansa.it/sito/notizie/politica/2026/07/27/telt-a-chiomonte-il-peggior-attacco-ai-cantieri-tav-dal-2011_720b925a-fc25-4c0c-b105-3582769d5c99.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">21:03</span>
+          <span class="tit">Telt, &#x27;A Chiomonte il peggior attacco ai cantieri Tav dal 2011&#x27;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/sondaggio-tg-la-7-elezioni-voto-oggi-27-luglio_UdDj2SycSm4gyBfZbD8qa" target="_blank" rel="noopener noreferrer">
+          <span class="ora">20:57</span>
+          <span class="tit">Sondaggio politico, Fratelli d&#x27;Italia cresce e allunga. Vannacci non si ferma</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.ansa.it/sito/notizie/politica/2026/07/27/val-susa-schlein-conte-condannano-ma-e-scontro-con-il-governo-strumentalizza_b78bd2fd-044a-486d-9717-08798145e23f.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">20:19</span>
+          <span class="tit">Val Susa, Schlein-Conte condannano ma è scontro con il governo: &#x27;Strumentalizza&#x27;</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.ansa.it/sito/notizie/politica/2026/07/27/meloni-il-taglio-sul-gasolio-non-risolve-il-problema-ma-e-tempestivo_83fae40e-2e71-494e-97f0-96be9fcea5e2.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">19:10</span>
+          <span class="tit">Meloni, il taglio sul gasolio non risolve il problema ma è tempestivo</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/salute-dal-partito-vicino-alla-cei-il-progetto-un-manifesto-per-una-politica-sanitaria-rinnovata_1Se8C610C0PgtYYWUGk2Vz" target="_blank" rel="noopener noreferrer">
+          <span class="ora">18:22</span>
+          <span class="tit">Salute, dal Partito vicino alla Cei il progetto: un Manifesto per una politica sanitaria rinnovata</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Parlamento" href="https://www.adnkronos.com/politica/senato-calcio-ddl-pd-rivoluzione-vivai-serie-a-cosa-prevede_4A1AztxnQBTfcqQgguHP0B" target="_blank" rel="noopener noreferrer">
+          <span class="ora">18:00</span>
+          <span class="tit">Serie A e vivai, il Ddl che rivoluziona calcio: &quot;Crisi diverse, servono risposte diverse&quot;</span>
+          <span class="meta"><b class="tema">Parlamento</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/giorgia-meloni-elly-schlein-botta-e-risposta-bomba-ranucci_3rH1PS2zpwJcABd9aGEzO6" target="_blank" rel="noopener noreferrer">
+          <span class="ora">17:43</span>
+          <span class="tit">Attentato a Ranucci, Meloni a Schlein: &quot;Allusioni al governo, chieda scusa&quot;. La replica: &quot;Mai parlato di mandanti&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/27/news/ponte_stretto_esposto_cgil_corte_conti_danno_erariale-425495208/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">17:08</span>
+          <span class="tit">Ponte, esposto Cgil alla Corte dei Conti: danno erariale per spese fatte senza progetto approvato</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.ansa.it/sito/notizie/politica/2026/07/27/meloni-schlein-sul-caso-ranucci-getto-ombra-sul-governo-chieda_689cea93-2477-4cfe-bb35-b8a5c2a12f1e.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">17:07</span>
+          <span class="tit">Meloni: &#x27;Schlein sul caso Ranucci gettò ombra sul governo, chieda scusa&#x27;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/caro-carburanti-decreto-taglio-accise-oggi-ultime-notizie_7xRHjamFFVl3vCM42KxJlI" target="_blank" rel="noopener noreferrer">
+          <span class="ora">16:36</span>
+          <span class="tit">Caro carburanti, sconto sul gasolio di 17 centesimi al litro. Meloni: &quot;Risposta tempestiva&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Parlamento" href="https://www.ansa.it/sito/notizie/politica/2026/07/27/salvini-contrario-alle-accise-sui-tabacchi-per-il-decreto-carburanti_3250df78-b78e-43dc-81fa-7ce5c1d6cfd6.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">16:16</span>
+          <span class="tit">Salvini, contrario alle accise sui tabacchi per il decreto carburanti</span>
+          <span class="meta"><b class="tema">Parlamento</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Soldi pubblici" href="https://www.ansa.it/sito/notizie/politica/2026/07/27/il-garante-privacy-sanziona-lusha-per-2-milioni-di-euro_fdc6d2c6-62d6-4ba3-80e8-28d3940c23d5.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">16:02</span>
+          <span class="tit">Il Garante Privacy sanziona Lusha per 2 milioni di euro</span>
+          <span class="meta"><b class="tema">Soldi pubblici</b><b class="fonte">ANSA</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.ilpost.it/2026/07/27/intercettazioni-a-strascico-senato-berrino-sisler/" target="_blank" rel="noopener noreferrer">
+          <span class="ora">15:45</span>
+          <span class="tit">Cosa sono le “intercettazioni a strascico” che stanno facendo litigare la destra</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Il Post</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/lepore-scorta-cosa-ha-detto-sindaco-bologna_byct5bAYHEeYvvmNy8moA" target="_blank" rel="noopener noreferrer">
+          <span class="ora">14:05</span>
+          <span class="tit">Lepore: &quot;Non ho chiesto io la scorta, è un obbligo e mi fido dello Stato&quot;﻿</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.adnkronos.com/politica/no-tav-chiomonte-meloni-piantedosi-assalto-stato-non-indietreggia_6QR1xTieJQj7Xu9mlZFmI" target="_blank" rel="noopener noreferrer">
+          <span class="ora">14:03</span>
+          <span class="tit">No Tav, Meloni: &quot;Stato non indietreggia, violenti vanno assicurati alla giustizia&quot;</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.repubblica.it/politica/2026/07/27/news/meloni_schlein_no_tav_val_di_susa_violenze-425495634/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">13:45</span>
+          <span class="tit">No Tav, Meloni: “Magistratura faccia il massimo contro violenti”. Schlein: “Governo strumentalizza”</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://milano.repubblica.it/cronaca/2026/07/27/news/sala_via_palestro_elezioni_politiche_no_tav-425495601/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:44</span>
+          <span class="tit">Sala: “Nel 2027 elezioni storiche, non avveleniamo i pozzi. Dai No Tav atto criminale”</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/27/news/costi_sedi_partito_pd_lega_m5s_vannacci-425495354/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:14</span>
+          <span class="tit">Sedi di partito, Pd e Lega spendono di più. Quella di Vannacci è quasi gratis</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.repubblica.it/politica/2026/07/27/news/intercettazioni_reati_spia_pd_emendamento_fdi-425495211/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">10:31</span>
+          <span class="tit">Intercettazioni estese ai reati “spia”, Pd valuta il sì a un emendamento FdI. No del M5S</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Soldi pubblici" href="https://www.adnkronos.com/politica/governo-tasse-proposte-tajani_2RfYGyf4jbiGO1lN8jSEb4" target="_blank" rel="noopener noreferrer">
+          <span class="ora">09:49</span>
+          <span class="tit">Tajani: &quot;Ecco il piano per abbassare le tasse agli italiani&quot;</span>
+          <span class="meta"><b class="tema">Soldi pubblici</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.rainews.it/articoli/2026/07/piantedosi-le-forze-democratiche-si-distanzino-dagli-attacchi-gli-agenti-sono-lo-stato-b450e4bb-2241-4465-af58-920695ec2000.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">09:33</span>
+          <span class="tit">Piantedosi, &quot;Attaccare chi indossa la divisa è attaccare lo Stato&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Parlamento" href="https://www.repubblica.it/politica/2026/07/27/news/legge_elettorale_liste_bloccate_costituzionalist-425495136/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">09:27</span>
+          <span class="tit">Liste bloccate e voti dei partiti sotto il 3%: la legge elettorale al vaglio dei costituzionalisti</span>
+          <span class="meta"><b class="tema">Parlamento</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/rubriche/spin-off/2026/07/27/news/andrea_pirlo_ct_nazionale_partita_persa_opinione_pubblica-425495080/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">08:50</span>
+          <span class="tit">Il caso Pirlo e la partita persa con l’opinione pubblica</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/27/news/premierato_riforma_istituzionale_sondaggi-425494707/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">01:00</span>
+          <span class="tit">Elezione diretta del premier: il no del 53% degli italiani</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/27/news/bruno_guerri_michele_serra_populismo_social-425494668/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">01:00</span>
+          <span class="tit">“Michele Serra ha ragione: il fanatismo non ha pensiero”</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/27/news/meloni_salvini_vannacci_sicurezza_morte_fakir-425494661/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">01:00</span>
+          <span class="tit">“Tensioni nel Paese”. Palazzo Chigi frena su Salvini al Viminale</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
       </div>
-
-      <div class="cmp">
-        <h3>Quanto devi lavorare per la pensione</h3>
-        <div class="side">
-          <div class="top"><b class="you">Tu</b><span class="val">20 anni di contributi, a 67 anni</span></div>
-          <div class="track"><i class="b-you" style="width:100%"></i></div>
-        </div>
-        <div class="side">
-          <div class="top"><b class="them">Parlamentare</b><span class="val">4 anni, 6 mesi e 1 giorno</span></div>
-          <div class="track"><i class="b-them" style="width:22.5%"></i></div>
-        </div>
-        <p class="note">Con quel mandato l&rsquo;assegno parte a 65 anni, e scende a 60 con due mandati. Vale fra i 900 e i 970 &euro; al mese. In pi&ugrave;, a fine mandato, circa 9.000 &euro; per ogni anno passato in Parlamento. &mdash; <a href="https://www.pensionioggi.it/dizionario/vitalizi" target="_blank" rel="noopener noreferrer">Pensioni Oggi</a> &middot; <a href="https://fap.acli.it/pensione-di-vecchiaia-2026-i-requisiti-restano-67-anni-e-20-di-contributi/" target="_blank" rel="noopener noreferrer">Acli</a></p>
+      <h3 class="giorno">domenica 26 luglio</h3>
+      <div class="lista">
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/26/news/la_russa_meloni_quirinale_mattarella-425494403/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">21:32</span>
+          <span class="tit">La Russa: “Meloni al Colle sarebbe una grande fortuna per l&#x27;Italia”</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/ai-giorgino-patto-di-non-belligeranza-digitale-sia-sottoscritto-da-tutti-i-leader-politici_63f7VUVHZs3tQyvKBKo8eV" target="_blank" rel="noopener noreferrer">
+          <span class="ora">19:44</span>
+          <span class="tit">Ai, Giorgino: &quot;Patto di &#x27;non belligeranza digitale&#x27; sia sottoscritto da tutti i leader politici&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/la-russa-meloni-presidente-repubblica_6O15EUJGlE8f9hX3TUN5sa" target="_blank" rel="noopener noreferrer">
+          <span class="ora">19:29</span>
+          <span class="tit">La Russa: &quot;Meloni presidente della Repubblica? Lo diventerà, magari non stavolta...&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/lega-affitto-salvini-vannacci-numeri_2BClUF3JglfUh0qa4MxFaS" target="_blank" rel="noopener noreferrer">
+          <span class="ora">16:04</span>
+          <span class="tit">Lega, Salvini spende 30mila euro mensili per Via Bellerio: solo Schlein paga di più. Sorride Vannacci, la sua è gratis</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/26/news/radio_radicale_alessandro_barbano_stampa_regime_rassegna_sponsorizzazioni-425494112/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">13:47</span>
+          <span class="tit">Radio Radicale apre alle sponsorizzazioni per coprire il compenso di Barbano alla rassegna stampa</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.repubblica.it/politica/2026/07/26/news/reazioni_attentato_pride_berlino_meloni_salvini-425494016/?rss" target="_blank" rel="noopener noreferrer">
+          <span class="ora">13:33</span>
+          <span class="tit">Berlino, Meloni: “L’Italia contro ogni forma di odio”. Salvini: “Fanatismo islamico è il problema”</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Repubblica</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/lex-amico-sergio-de-gregorio-lavitola-affascinante-ma-porta-guai-povero-ranucci_Tw4FbpoDRh0S0YZzI6Scd" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:16</span>
+          <span class="tit">L&#x27;ex amico Sergio De Gregorio: &quot;Lavitola? Affascinante ma porta guai, povero Ranucci...&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/futuro-nazionale-vannacci-cosa-dice-follini_3dNk7cH4jGT49AJ9DV8EXz" target="_blank" rel="noopener noreferrer">
+          <span class="ora">10:03</span>
+          <span class="tit">Fn, il punto di vista di Follini: &quot;Video Vannacci ennesimo passo verso inciviltà politica, non merita sfida Renzi&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.ilpost.it/2026/07/26/governo-valuta-nuovo-decreto-riduzione-accise-carburanti/" target="_blank" rel="noopener noreferrer">
+          <span class="ora">09:36</span>
+          <span class="tit">Il governo sta di nuovo pensando di ridurre le accise sui carburanti</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Il Post</b></span>
+        </a>
       </div>
-
-    </div>
-  </section>
-
-  <!-- ============ SCHERMO 2 ============ -->
-  <section class="screen">
-    <h2>Le chat: tre volte in otto settimane, cosa &egrave; successo dopo</h2>
-    <p class="sub">Stessa richiesta, tre partiti diversi, tre finali diversi.</p>
-
-    <div class="chains">
-
-      <article class="chain">
-        <header>
-          <h3>Delmastro<span>Fratelli d&rsquo;Italia</span></h3>
-          <span class="tag stop">Negate</span>
-        </header>
-        <ul class="steps">
-          <li><em>27 maggio</em>I pm di Roma chiedono alla Camera le chat con l&rsquo;ex socio Caroccia, per gli inquirenti prestanome del clan Senese.</li>
-          <li><em>22 luglio</em>La Giunta per le autorizzazioni dice no. Il M5S occupa i banchi del governo al Senato.</li>
-          <li><em>25 luglio</em>Le stesse chat arrivano in procura lo stesso: le consegna l&rsquo;avvocato di Caroccia.</li>
-        </ul>
-        <p class="srcline"><a href="https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso</a> &middot; <a href="https://gds.it/articoli/cronaca/2026/07/25/in-procura-le-chat-tra-delmastro-e-caroccia-5bd3a8a2-c726-4d8b-9e15-359181757420/" target="_blank" rel="noopener noreferrer">GdS</a></p>
-      </article>
-
-      <article class="chain">
-        <header>
-          <h3>Santanch&egrave;<span>Fratelli d&rsquo;Italia</span></h3>
-          <span class="tag wait">Processo fermo</span>
-        </header>
-        <ul class="steps">
-          <li><em>Processo truffa Inps</em>I pm mettono agli atti mail e registrazioni della senatrice senza chiedere il via libera al Senato.</li>
-          <li><em>Il Senato reagisce</em>Solleva conflitto davanti alla Corte costituzionale.</li>
-          <li><em>3 giugno</em>La Corte lo dichiara ammissibile. Il processo si ferma finch&eacute; non decide.</li>
-        </ul>
-        <p class="srcline"><a href="https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/" target="_blank" rel="noopener noreferrer">Il Fatto</a> &middot; <a href="https://www.adnkronos.com/cronaca/santanche-consulta-dichiara-ammissibile-ricorso_6IUhRHGCG8VC5158k11E9W" target="_blank" rel="noopener noreferrer">Adnkronos</a></p>
-      </article>
-
-      <article class="chain">
-        <header>
-          <h3>Scarpinato<span>Movimento 5 Stelle</span></h3>
-          <span class="tag ok">Usate</span>
-        </header>
-        <ul class="steps">
-          <li><em>Commissione Antimafia</em>Si fa mandare da Caltanissetta intercettazioni che lo riguardano, senza passare dal Senato.</li>
-          <li><em>Chiede lo stesso scudo</em>Domanda alla Giunta del Senato il conflitto ottenuto per Santanch&egrave;. La maggioranza dice no.</li>
-          <li><em>16 giugno</em>Ricorre da solo. La Consulta lo dichiara inammissibile: serve la Camera, non basta il singolo.</li>
-        </ul>
-        <p class="srcline"><a href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio</a> &middot; <a href="https://www.ildubbio.news/giustizia/intercettazioni-a-scarpinato-blindate-dal-centrodestra-ed-e-rissa-col-m5s-qa48kfsx" target="_blank" rel="noopener noreferrer">Il Dubbio</a></p>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- ============ SCHERMO 3 ============ -->
-  <section class="screen">
-    <h2>Detto &mdash; poi</h2>
-    <p class="sub">A sinistra la frase, con la data. A destra cosa risulta essere successo.</p>
-
-    <div class="said">
-
-      <div class="say">
-        <div class="q">
-          <p>&laquo;Se non realizzo almeno quattro punti su cinque, non mi ricandido.&raquo;</p>
-          <span class="who">Silvio Berlusconi &middot; Forza Italia &middot; 08.05.2001, in diretta a Porta a Porta</span>
-        </div>
-        <div class="a">
-          <span class="lab">Poi</span>
-          <p>Si &egrave; ricandidato alle elezioni del 2006. &mdash; <a href="https://it.wikipedia.org/wiki/Contratto_con_gli_italiani" target="_blank" rel="noopener noreferrer">Fonte</a></p>
-        </div>
+      <h3 class="giorno">sabato 25 luglio</h3>
+      <div class="lista">
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/calenda-andrea-pirlo-ct-russia-propaganda-putin-cosa-ha-detto_57sKzTCsunyvq7bAPeE1yZ" target="_blank" rel="noopener noreferrer">
+          <span class="ora">17:40</span>
+          <span class="tit">Pirlo nuovo ct, Calenda: &quot;Chi fa propaganda per Russia non dovrebbe ricoprire cariche nazionali&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/mauro-berruto-commenta-pirlo-ct-nazionale-italiana-cosa-ha-detto_2UP8KRHGir45pjvOgplYGV" target="_blank" rel="noopener noreferrer">
+          <span class="ora">17:15</span>
+          <span class="tit">Pirlo ct, Mauro Berruto: &quot;Mi auguro abbia le qualità. Imbarazzo per provider russo&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.ilsole24ore.com/art/vannacci-nuovo-video-ai-intercede-finto-mattarella-grazia-roggero-AJCUwlV" target="_blank" rel="noopener noreferrer">
+          <span class="ora">17:02</span>
+          <span class="tit">Vannacci, nuovo video con AI: intercede con finto Mattarella per grazia a Roggero</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Il Sole</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/partiti-affitti-bilanci-pd-fdi-lega-m5s_1kyFyzCQcUKXULOvzbLYQt" target="_blank" rel="noopener noreferrer">
+          <span class="ora">16:38</span>
+          <span class="tit">Ecco quanto spendono i partiti per le sedi nazionali: il &#x27;Nazareno&#x27; costa al Pd 41mila euro al mese di affitto, Forza Italia ne versa 16mila, Fratelli d&#x27;Italia 13mila e M5S 12mila</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.adnkronos.com/politica/pirlo-nuovo-ct-nazionale-italia-la-russa_4kXINzUY5IWXL0dPsnM5el" target="_blank" rel="noopener noreferrer">
+          <span class="ora">15:53</span>
+          <span class="tit">Pirlo nuovo ct della Nazionale, La Russa: &quot;Dopo Ventura e Gattuso è un&#x27;altra scommessa&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Adnkronos</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.rainews.it/video/2026/07/caro-carburanti-vertice-premier-meloni-e-ministro-delleconomia-giorgetti-a-palazzo-chigi-le-misure-09832103-4e02-45cc-8cca-9e7e9cacadb2.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">07:24</span>
+          <span class="tit">Caro Carburanti, vertice premier Meloni e ministro dell&#x27;economia Giorgetti a Palazzo Chigi</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Rainews</b></span>
+        </a>
       </div>
-
-      <div class="say">
-        <div class="q">
-          <p>&laquo;Se perdo il referendum sulle riforme, smetto di fare politica.&raquo;</p>
-          <span class="who">Matteo Renzi &middot; PD &middot; gennaio 2016</span>
-        </div>
-        <div class="a">
-          <span class="lab">Poi</span>
-          <p>Ha perso il 4 dicembre 2016. Si &egrave; dimesso da premier, nel 2018 &egrave; stato eletto senatore, nel 2019 ha fondato Italia Viva. &mdash; <a href="https://st.ilsole24ore.com/art/notizie/2016-01-12/renzi-se-perdo-referendum-riforme-lascio-politica-113815.shtml?uuid=AC570M8B" target="_blank" rel="noopener noreferrer">Fonte</a></p>
-        </div>
+      <h3 class="giorno">venerdì 24 luglio</h3>
+      <div class="lista">
+        <a class="voce" data-tema="Giustizia" href="https://www.rainews.it/video/2026/07/scontro-politico-economia-punibilita-minori-chat-delmastro-tg1-de-pizzo-4167aa83-7b62-44d6-a92a-0b5443b73a71.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">20:15</span>
+          <span class="tit">Scontro politico su economia, punibilità dei minori e chat di Delmastro</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.rainews.it/articoli/2026/07/il-cdmi-approva-norma-sullimputabilita-dei-minori-meloni-chi-sbaglia-deve-rispondere-99c29679-2709-4871-a004-577fe6209221.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">16:16</span>
+          <span class="tit">Il CdM approva norma sull&#x27;imputabilità dei minori. Meloni: &quot;Chi sbaglia deve rispondere&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Territori" href="https://www.ilsole24ore.com/art/sindaco-milano-le-primarie-centrosinistra-mario-calabresi-si-prepara-AJe6s9T" target="_blank" rel="noopener noreferrer">
+          <span class="ora">15:20</span>
+          <span class="tit">Sindaco Milano, verso le primarie del centrosinistra. Mario Calabresi si prepara</span>
+          <span class="meta"><b class="tema">Territori</b><b class="fonte">Il Sole</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.ilpost.it/2026/07/24/sicurezza-piscine-morti-decreto-ddl/" target="_blank" rel="noopener noreferrer">
+          <span class="ora">12:09</span>
+          <span class="tit">Come il governo vorrebbe rendere più sicure le piscine</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Il Post</b></span>
+        </a>
+        <a class="voce" data-tema="Territori" href="https://www.ilpost.it/2026/07/24/milano-la-russa-maurizio-lupi-candidato-sindaco/" target="_blank" rel="noopener noreferrer">
+          <span class="ora">08:53</span>
+          <span class="tit">La Russa si sta spendendo un sacco per trovare un candidato sindaco a Milano</span>
+          <span class="meta"><b class="tema">Territori</b><b class="fonte">Il Post</b></span>
+        </a>
       </div>
-
-      <div class="say">
-        <div class="q">
-          <p>&laquo;Abbiamo abolito la povert&agrave;.&raquo;</p>
-          <span class="who">Luigi Di Maio &middot; M5S &middot; 27.09.2018, dal balcone di Palazzo Chigi</span>
-        </div>
-        <div class="a">
-          <span class="lab">Poi</span>
-          <p>Il reddito di cittadinanza &egrave; stato introdotto nel 2019 e abolito nel 2023. &mdash; <a href="https://tg24.sky.it/politica/2018/09/28/manovra-luigi-di-maio-esultanza" target="_blank" rel="noopener noreferrer">Fonte</a></p>
-        </div>
+      <h3 class="giorno">giovedì 23 luglio</h3>
+      <div class="lista">
+        <a class="voce" data-tema="Giustizia" href="https://www.ilpost.it/2026/07/23/il-governo-vuole-rendere-piu-facile-processare-i-minori/" target="_blank" rel="noopener noreferrer">
+          <span class="ora">20:56</span>
+          <span class="tit">Il governo vuole rendere più facile processare i minori</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Il Post</b></span>
+        </a>
+        <a class="voce" data-tema="Parlamento" href="https://www.rainews.it/articoli/2026/07/ddl-imputabilita-minore-ecco-cosa-prevede-il-nuovo-testo-bcc99625-f267-4b5b-9484-5cd97e8c6ee1.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">20:48</span>
+          <span class="tit">Ddl imputabilità dei minori, ecco cosa prevede il nuovo testo</span>
+          <span class="meta"><b class="tema">Parlamento</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Altro" href="https://www.rainews.it/video/2026/07/meloni-colpiamo-chi-sfrutta-i-minori-ma-anche-chi-crede-di-essere-intoccabile-e19524fe-d234-4a53-8f01-2cadfeb68941.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">20:39</span>
+          <span class="tit">Meloni: &quot;Colpiamo chi sfrutta i minori ma anche chi crede di essere intoccabile&quot;</span>
+          <span class="meta"><b class="tema">Altro</b><b class="fonte">Rainews</b></span>
+        </a>
+        <a class="voce" data-tema="Giustizia" href="https://www.rainews.it/articoli/2026/07/caso-delmastro-procura-di-roma-valuta-conflitto-attribuzione-effac550-89c4-46fc-9cc5-0c401cd35ae2.html" target="_blank" rel="noopener noreferrer">
+          <span class="ora">16:27</span>
+          <span class="tit">Caso Delmastro, la Procura di Roma valuta il conflitto di attribuzione</span>
+          <span class="meta"><b class="tema">Giustizia</b><b class="fonte">Rainews</b></span>
+        </a>
       </div>
+  </main>
 
-      <div class="say">
-        <div class="q">
-          <p>&laquo;Flat tax al 15% per tutti.&raquo;</p>
-          <span class="who">Lega &middot; programma elettorale 2018</span>
-        </div>
-        <div class="a">
-          <span class="lab">Poi</span>
-          <p>Non introdotta: costerebbe circa 60 miliardi l&rsquo;anno. Il 15% per le partite IVA c&rsquo;era gi&agrave;: lo aveva introdotto il governo Renzi nel 2014. &mdash; <a href="https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva" target="_blank" rel="noopener noreferrer">Fonte</a></p>
-        </div>
-      </div>
-
-      <div class="say">
-        <div class="q">
-          <p>&laquo;La proposta pi&ugrave; seria l&rsquo;abbiamo sempre fatta noi: si chiama blocco navale.&raquo;</p>
-          <span class="who">Giorgia Meloni &middot; Fratelli d&rsquo;Italia &middot; 02.05.2022</span>
-        </div>
-        <div class="a">
-          <span class="lab">Poi</span>
-          <p>Non &egrave; stato attuato. Nel 2023, primo anno pieno di governo, gli sbarchi sono aumentati rispetto al 2022. &mdash; <a href="https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale" target="_blank" rel="noopener noreferrer">Fonte</a></p>
-        </div>
-      </div>
-
-      <div class="say">
-        <div class="q">
-          <p>&laquo;Mai alleanze con altri partiti.&raquo;</p>
-          <span class="who">Movimento 5 Stelle &middot; regola dalla fondazione</span>
-        </div>
-        <div class="a">
-          <span class="lab">Poi</span>
-          <p>2018 governo con la Lega. 2019 governo con il PD. 2021 dentro il governo Draghi con quasi tutti. &mdash; <a href="https://www.treccani.it/enciclopedia/movimento-5-stelle/" target="_blank" rel="noopener noreferrer">Fonte</a></p>
-        </div>
-      </div>
-
-    </div>
-  </section>
+  <p class="vuoto" id="vuoto">Niente in questo tema negli ultimi giorni.</p>
 
   <footer>
-    <p>Ogni riga ha la fonte e la data. Indagato non vuol dire condannato; una condanna non definitiva pu&ograve; essere ribaltata.</p>
+    <p>Raccolta automatica dai feed di ANSA, Il Post, Adnkronos, Corriere e Open. Ogni titolo porta all&rsquo;articolo originale.</p>
+    <p>I titoli sono di chi li ha scritti. Indagato non vuol dire condannato.</p>
+    <p><a href="dati.json">dati.json</a> &middot; <a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice</a></p>
   </footer>
 
 </div>
@@ -415,10 +534,45 @@
 <script>
   (function () {
     var el = document.getElementById("count");
-    if (!el) return;
-    var voto = new Date(2026, 6, 30), oggi = new Date();
-    oggi.setHours(0, 0, 0, 0);
-    var g = Math.round((voto - oggi) / 86400000);
-    el.textContent = g > 1 ? "fra " + g + " giorni" : g === 1 ? "domani" : g === 0 ? "oggi" : "voto del 30 luglio";
+    if (el) {
+      var voto = new Date(2026, 6, 30), oggi = new Date();
+      oggi.setHours(0, 0, 0, 0);
+      var g = Math.round((voto - oggi) / 86400000);
+      el.textContent = g > 1 ? "fra " + g + " giorni" : g === 1 ? "domani"
+                     : g === 0 ? "oggi" : "voto del 30 luglio";
+    }
+
+    var filtri = document.getElementById("filtri");
+    var vuoto = document.getElementById("vuoto");
+    if (!filtri) return;
+
+    filtri.addEventListener("click", function (e) {
+      var b = e.target.closest(".chip");
+      if (!b) return;
+
+      Array.prototype.forEach.call(filtri.querySelectorAll(".chip"), function (c) {
+        c.setAttribute("aria-pressed", c === b ? "true" : "false");
+      });
+
+      var t = b.dataset.tema;
+      var visibili = 0;
+
+      Array.prototype.forEach.call(document.querySelectorAll(".voce"), function (v) {
+        var ok = !t || v.dataset.tema === t;
+        v.style.display = ok ? "" : "none";
+        if (ok) visibili++;
+      });
+
+      Array.prototype.forEach.call(document.querySelectorAll(".lista"), function (l) {
+        var pieno = l.querySelector('.voce:not([style*="none"])');
+        l.style.display = pieno ? "" : "none";
+        var titolo = l.previousElementSibling;
+        if (titolo && titolo.classList.contains("giorno")) {
+          titolo.style.display = pieno ? "" : "none";
+        }
+      });
+
+      vuoto.style.display = visibili ? "none" : "block";
+    });
   })();
 </script>

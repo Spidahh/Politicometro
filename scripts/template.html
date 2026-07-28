@@ -1,0 +1,171 @@
+<title>Politicometro</title>
+
+<style>
+  :root {
+    --bg:#0B0D11; --card:#13171E; --card2:#1A1F28; --line:#252C37;
+    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#F3F5F8; --card:#FFF; --card2:#EBEFF4; --line:#DCE2EA;
+            --text:#0F141B; --dim:#5C687A; --acc:#0B7C93; --hot:#C4442A; }
+  }
+  :root[data-theme="light"] { --bg:#F3F5F8; --card:#FFF; --card2:#EBEFF4; --line:#DCE2EA;
+    --text:#0F141B; --dim:#5C687A; --acc:#0B7C93; --hot:#C4442A; }
+  :root[data-theme="dark"] { --bg:#0B0D11; --card:#13171E; --card2:#1A1F28; --line:#252C37;
+    --text:#EDF1F6; --dim:#8B96A6; --acc:#4DD4F0; --hot:#FF6B4A; }
+
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+         font-size:16px; line-height:1.45; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:58rem; margin:0 auto; padding:1.25rem 1rem 5rem; }
+
+  .head { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem;
+          flex-wrap:wrap; padding-bottom:.9rem; border-bottom:1px solid var(--line); }
+  .logo { margin:0; font-size:clamp(1.5rem,6vw,2rem); font-weight:800;
+          letter-spacing:-.035em; line-height:1; }
+  .logo b { color:var(--acc); }
+  .lab { font-family:var(--mono); font-size:.66rem; letter-spacing:.13em;
+         text-transform:uppercase; color:var(--dim); font-variant-numeric:tabular-nums; margin:0; }
+
+  .live { display:flex; flex-wrap:wrap; align-items:center; gap:.7rem 1.1rem;
+          background:var(--card); border:1px solid var(--line); border-left:4px solid var(--hot);
+          border-radius:10px; padding:.85rem 1.05rem; margin:1.25rem 0 1.5rem; }
+  .live p { flex:1 1 17rem; margin:0; font-weight:600; }
+  .pill { font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+          font-weight:700; color:var(--bg); background:var(--hot); border-radius:999px;
+          padding:.32rem .72rem; white-space:nowrap; font-variant-numeric:tabular-nums; }
+
+  .conta { display:grid; grid-template-columns:repeat(auto-fit,minmax(7rem,1fr)); gap:.6rem;
+           margin-bottom:1.25rem; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:.8rem .9rem; }
+  .box .n { font-size:1.7rem; font-weight:800; line-height:1; letter-spacing:-.03em;
+            font-variant-numeric:tabular-nums; display:block; margin-bottom:.2rem; }
+  .box .n.acc { color:var(--acc); }
+
+  .filtri { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.5rem; }
+  .chip { font:inherit; font-size:.82rem; color:var(--text); background:var(--card);
+          border:1px solid var(--line); border-radius:999px; padding:.4rem .8rem;
+          cursor:pointer; display:inline-flex; align-items:center; gap:.45rem;
+          transition:border-color 120ms ease,color 120ms ease; }
+  .chip b { font-family:var(--mono); font-size:.66rem; color:var(--dim);
+            font-variant-numeric:tabular-nums; }
+  .chip:hover { border-color:var(--acc); }
+  .chip[aria-pressed="true"] { border-color:var(--acc); color:var(--acc); }
+  .chip[aria-pressed="true"] b { color:var(--acc); }
+  .chip:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+
+  .giorno { font-family:var(--mono); font-size:.68rem; letter-spacing:.14em;
+            text-transform:uppercase; color:var(--dim); margin:1.6rem 0 .6rem;
+            padding-bottom:.4rem; border-bottom:1px solid var(--line); }
+  .giorno:first-of-type { margin-top:0; }
+
+  .lista { display:flex; flex-direction:column; gap:.35rem; }
+
+  .voce { display:grid; grid-template-columns:auto 1fr; gap:.2rem .8rem; align-items:baseline;
+          background:var(--card); border:1px solid var(--line); border-radius:9px;
+          padding:.7rem .85rem; text-decoration:none; color:inherit;
+          transition:border-color 120ms ease, background 120ms ease; }
+  .voce:hover { border-color:var(--acc); background:var(--card2); }
+  .voce:focus-visible { outline:2px solid var(--acc); outline-offset:2px; }
+  .ora { font-family:var(--mono); font-size:.7rem; color:var(--dim);
+         font-variant-numeric:tabular-nums; grid-row:1; }
+  .tit { font-size:.97rem; font-weight:600; line-height:1.35; grid-row:1; }
+  .meta { grid-column:2; display:flex; flex-wrap:wrap; gap:.3rem .5rem; margin-top:.3rem; }
+  .meta b { font-family:var(--mono); font-size:.6rem; letter-spacing:.09em;
+            text-transform:uppercase; font-weight:700; padding:.18rem .45rem;
+            border-radius:999px; border:1px solid var(--line); color:var(--dim); }
+  .meta .tema { color:var(--acc); border-color:currentColor; }
+
+  .vuoto { color:var(--dim); font-size:.9rem; padding:1.5rem 0; display:none; }
+
+  footer { border-top:1px solid var(--line); padding-top:1rem; margin-top:2.5rem;
+           color:var(--dim); font-size:.8rem; display:flex; flex-direction:column; gap:.35rem; }
+  footer p { margin:0; }
+  footer a { color:var(--dim); }
+  footer a:hover { color:var(--acc); }
+</style>
+
+<div class="wrap">
+
+  <header class="head">
+    <h1 class="logo">Politico<b>metro</b></h1>
+    <p class="lab">Aggiornato {{AGGIORNATO}}</p>
+  </header>
+
+  <div class="live">
+    <p>Il 30 luglio l&rsquo;aula della Camera vota se i pm possono usare le chat di Andrea Delmastro.</p>
+    <span class="pill" id="count">30 luglio</span>
+  </div>
+
+  <div class="conta">
+    <div class="box"><span class="lab">Notizie</span><span class="n acc">{{TOTALE}}</span></div>
+    <div class="box"><span class="lab">Fonti</span><span class="n">{{FONTI}}</span></div>
+    <div class="box"><span class="lab">Giorni</span><span class="n">{{GIORNI}}</span></div>
+  </div>
+
+  <div class="filtri" id="filtri">
+    <button class="chip" type="button" data-tema="" aria-pressed="true">Tutto</button>
+{{CHIPS}}
+  </div>
+
+  <main id="flusso">
+{{VOCI}}
+  </main>
+
+  <p class="vuoto" id="vuoto">Niente in questo tema negli ultimi giorni.</p>
+
+  <footer>
+    <p>Raccolta automatica dai feed di ANSA, Il Post, Adnkronos, Corriere e Open. Ogni titolo porta all&rsquo;articolo originale.</p>
+    <p>I titoli sono di chi li ha scritti. Indagato non vuol dire condannato.</p>
+    <p><a href="dati.json">dati.json</a> &middot; <a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice</a></p>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var el = document.getElementById("count");
+    if (el) {
+      var voto = new Date(2026, 6, 30), oggi = new Date();
+      oggi.setHours(0, 0, 0, 0);
+      var g = Math.round((voto - oggi) / 86400000);
+      el.textContent = g > 1 ? "fra " + g + " giorni" : g === 1 ? "domani"
+                     : g === 0 ? "oggi" : "voto del 30 luglio";
+    }
+
+    var filtri = document.getElementById("filtri");
+    var vuoto = document.getElementById("vuoto");
+    if (!filtri) return;
+
+    filtri.addEventListener("click", function (e) {
+      var b = e.target.closest(".chip");
+      if (!b) return;
+
+      Array.prototype.forEach.call(filtri.querySelectorAll(".chip"), function (c) {
+        c.setAttribute("aria-pressed", c === b ? "true" : "false");
+      });
+
+      var t = b.dataset.tema;
+      var visibili = 0;
+
+      Array.prototype.forEach.call(document.querySelectorAll(".voce"), function (v) {
+        var ok = !t || v.dataset.tema === t;
+        v.style.display = ok ? "" : "none";
+        if (ok) visibili++;
+      });
+
+      Array.prototype.forEach.call(document.querySelectorAll(".lista"), function (l) {
+        var pieno = l.querySelector('.voce:not([style*="none"])');
+        l.style.display = pieno ? "" : "none";
+        var titolo = l.previousElementSibling;
+        if (titolo && titolo.classList.contains("giorno")) {
+          titolo.style.display = pieno ? "" : "none";
+        }
+      });
+
+      vuoto.style.display = visibili ? "none" : "block";
+    });
+  })();
+</script>
