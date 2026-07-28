@@ -112,6 +112,19 @@
                border-radius:999px; padding:.3rem .65rem; white-space:nowrap; }
   .no { color:var(--c2); } .mezzo { color:var(--c3); } .si { color:var(--c4); }
 
+  /* perche non torna */
+  .check { background:var(--sur); border:1px solid var(--line); border-radius:16px;
+           overflow:hidden; margin-bottom:.6rem; }
+  .check .det { margin:0; padding:1rem 1.1rem; font-size:1.05rem; font-weight:700;
+                line-height:1.4; letter-spacing:-.015em; border-left:4px solid var(--k); }
+  .check .det i { display:block; font-style:normal; font-family:var(--mono); font-size:.6rem;
+                  letter-spacing:.09em; text-transform:uppercase; color:var(--dim);
+                  font-weight:400; margin-top:.45rem; }
+  .check .reg { margin:0; padding:1rem 1.1rem; background:var(--sur2);
+                border-top:1px solid var(--line); font-size:.94rem; line-height:1.55; }
+  .check .reg b { display:block; font-family:var(--mono); font-size:.6rem; letter-spacing:.12em;
+                  text-transform:uppercase; color:var(--k); margin-bottom:.35rem; }
+
   .steps { list-style:none; margin:0; padding:0; }
   .steps li { position:relative; padding:0 0 1.2rem 1.95rem; }
   .steps li:last-child { padding-bottom:0; }
@@ -183,6 +196,31 @@ const COL = {
 };
 
 const S = [
+{
+  f:"Detto contro fatto", t:"Il gioielliere che vogliono candidare, ma non pu&ograve; nemmeno votare", meta:"15 luglio 2026",
+  hook:"Condanna definitiva a 14 anni e 9 mesi. Per legge &egrave; fuori da ogni lista.",
+  lead:"Mario Roggero, gioielliere di Grinzane Cavour, ha ucciso due rapinatori dopo una rapina nel 2021. Il 15 luglio 2026 la Cassazione ha reso definitiva la condanna a 14 anni e 9 mesi. Salvini lo difende e c&rsquo;&egrave; chi ne parla come candidato: la legge lo esclude.",
+  check:[
+    ["Siamo con Roggero. Una sentenza profondamente ingiusta.",
+     "Matteo Salvini, dopo la Cassazione &middot; luglio 2026",
+     "La sentenza &egrave; definitiva: ha passato tre gradi di giudizio. Dopo la Cassazione non esiste pi&ugrave; un giudice a cui chiedere di rivederla. L&rsquo;unica strada che resta &egrave; la grazia, che non spetta al governo ma al Presidente della Repubblica."],
+    ["Candidiamolo.",
+     "Ipotesi circolata nel centrodestra &middot; luglio 2026",
+     "Non &egrave; possibile. La legge Severino (decreto legislativo 235 del 2012) rende incandidabile chi ha una condanna definitiva superiore a due anni per delitti non colposi. Qui la condanna &egrave; di 14 anni e 9 mesi. Roggero non pu&ograve; essere eletto e, finch&eacute; dura la pena accessoria, non pu&ograve; nemmeno votare. Anche Vannacci, che gli promette sostegno politico, ha dovuto dire no alle liste."]
+  ],
+  steps:[["28 apr 2021","Rapina a mano armata nella gioielleria di Gallo, frazione di Grinzane Cavour. Roggero spara: due rapinatori muoiono, un terzo resta ferito."],
+    ["I gradi di giudizio","Il processo arriva fino in appello, che nel 2025 fissa la pena a 14 anni e 9 mesi."],
+    ["15 lug 2026","La Cassazione conferma: la condanna diventa definitiva. Roggero: &laquo;&Egrave; finita, vado in carcere&raquo;."],
+    ["La reazione politica","Salvini chiede la grazia a Mattarella: &laquo;Grazia per un uomo onesto, che a 72 anni non merita di dividere la cella con veri criminali&raquo;. Circola l&rsquo;ipotesi di candidarlo."],
+    ["Il muro della legge","La legge Severino lo rende incandidabile. Vannacci rivendica il no alle liste ma promette sostegno politico."]],
+  aperti:["La domanda di grazia, se presentata, la decide il Presidente della Repubblica: non ha tempi fissati.","La grazia riguarda la pena, e solo se concessa cambierebbe la posizione sull&rsquo;incandidabilit&agrave;.","Sul merito della sentenza si pu&ograve; discutere quanto si vuole: qui &egrave; riportato cosa dice, non se sia giusta."],
+  prove:[["Condanna definitiva per il gioielliere Roggero","ANSA","15.07.2026","https://www.ansa.it/sito/notizie/cronaca/2026/07/15/uccise-due-banditi-condannato-in-via-definitiva-il-gioielliere-mario-roggero.-lui_7451dd1c-0381-4287-ad63-09fea9ade74c.html"],
+    ["Salvini chiede la grazia a Mattarella","TorinoToday","Luglio 2026","https://www.torinotoday.it/cronaca/mario-roggero-gioielliere-condannato-cassazione-appello-matteo-salvini-grazia.html"],
+    ["Perch&eacute; non pu&ograve; essere candidato","Fanpage","Spiegazione","https://www.fanpage.it/politica/perche-mario-roggero-non-puo-essere-candidato-e-la-grazia-resta-unipotesi-lontana/"],
+    ["Salvini vuole candidarlo, ma la legge chiude la porta","Ottopagine","Luglio 2026","https://www.ottopagine.it/italia/attualita/433538/salvini-vuole-candidare-roggero-ma-la-legge-chiude-la-porta.shtml"],
+    ["Vannacci: no alle liste, ma sostegno politico","Giornale La Voce","Luglio 2026","https://www.giornalelavoce.it/news/attualita/720079/roggero-e-incandidabile-per-legge-ma-vannacci-rivendica-il-no-alle-liste-e-promette-sostegno-politico.html"],
+    ["Testo unico sull&rsquo;incandidabilit&agrave; (legge Severino)","Altalex","D.lgs. 235/2012","https://www.altalex.com/documents/news/2014/04/15/testo-unico-delle-disposizioni-in-materia-di-incandidabilita-cd-legge-severino"]]
+},
 {
   f:"Che fine ha fatto", t:"Il generale che doveva &laquo;vannaccizzare&raquo; la Lega", meta:"2024 &rarr; oggi",
   hook:"Entra da indipendente, diventa vicesegretario, se ne va e fonda un partito che supera la Lega nei sondaggi.",
@@ -306,6 +344,11 @@ const S = [
   f:"Detto contro fatto", t:"Il blocco navale", meta:"2022 &rarr; oggi",
   hook:"La misura numero uno della campagna. Non &egrave; mai partita.",
   lead:"Nel 2022 era la proposta principale per fermare gli sbarchi. Dal governo in poi non se n&rsquo;&egrave; pi&ugrave; parlato, e nel 2023 gli sbarchi sono aumentati.",
+  check:[
+    ["La proposta pi&ugrave; seria l&rsquo;abbiamo sempre fatta noi: si chiama blocco navale.",
+     "Giorgia Meloni &middot; 2 maggio 2022",
+     "Un blocco navale vero &egrave; un atto di guerra e serve un mandato internazionale. Nei documenti del partito infatti non si parla di questo, ma di una missione europea d&rsquo;accordo con la Libia. Il problema &egrave; che quella missione l&rsquo;Unione europea non l&rsquo;ha mai proposta n&eacute; approvata: non esiste un piano da attuare."]
+  ],
   steps:[["2 mag 2022","Conferenza programmatica di Fratelli d&rsquo;Italia: &laquo;La proposta pi&ugrave; seria l&rsquo;abbiamo sempre fatta noi: si chiama blocco navale&raquo;."],
     ["Nei documenti","Non &egrave; un&rsquo;operazione militare: sarebbe una missione europea, d&rsquo;accordo con la Libia, per impedire le partenze."],
     ["Ott 2022","Il governo si insedia."],
@@ -319,6 +362,11 @@ const S = [
   f:"Detto contro fatto", t:"La flat tax che non &egrave; arrivata", meta:"Manovra 2026",
   hook:"Estenderla agli autonomi fino a 100 mila euro. Nella manovra non c&rsquo;&egrave;.",
   lead:"Una delle promesse pi&ugrave; ripetute era portare la tassa piatta agli autonomi con ricavi fino a centomila euro l&rsquo;anno. Nella legge di bilancio per il 2026 non c&rsquo;&egrave;.",
+  check:[
+    ["Quello che la Lega ha proposto, l&rsquo;ha realizzato: la flat tax al 15%.",
+     "Rivendicazione ripetuta in campagna elettorale",
+     "Il regime al 15 per cento per le partite IVA non l&rsquo;ha introdotto la Lega: c&rsquo;era gi&agrave; dal 2014, voluto dal governo Renzi. Il primo governo Conte, con la Lega dentro, ne ha allargato la platea fino a 65 mila euro di ricavi. La flat tax &laquo;per tutti&raquo; promessa nel 2018 non &egrave; mai stata fatta: le stime la valutano intorno ai 60 miliardi di euro l&rsquo;anno."]
+  ],
   steps:[["La promessa","Estendere il regime al 15 per cento agli autonomi fino a 100 mila euro di ricavi annui."],
     ["Da dove viene","Il regime forfettario al 15 per cento esisteva gi&agrave;: lo aveva introdotto il governo Renzi nel 2014. Il primo governo Conte, con la Lega, ne aveva allargato la platea fino a 65 mila euro."],
     ["Manovra 2026","La misura non compare nel disegno di legge di bilancio presentato dal governo."]],
@@ -461,23 +509,38 @@ function conf(rows) {
 function apri(i) {
   const s = S[i];
   det.style.setProperty("--k", COL[s.f]);
+
+  const tab = [["Il fatto",
+      '<p class="lead">' + s.lead + "</p>" + conf(s.conf)]];
+
+  if (s.check) tab.push(["Perch&eacute; non torna",
+      s.check.map(c =>
+        '<div class="check"><p class="det">&laquo;' + c[0] + '&raquo;<i>' + c[1] + "</i></p>" +
+        '<p class="reg"><b>La regola</b>' + c[2] + "</p></div>"
+      ).join("")]);
+
+  tab.push(["Com&rsquo;&egrave; andata",
+      '<ul class="steps">' +
+      s.steps.map(x => "<li><em>" + x[0] + "</em><p>" + x[1] + "</p></li>").join("") +
+      '</ul><div class="open"><h3>Ancora aperto</h3><ul>' +
+      s.aperti.map(x => "<li>" + x + "</li>").join("") + "</ul></div>"]);
+
+  tab.push(["Le prove",
+      '<ul class="prove">' +
+      s.prove.map(p => '<li><a href="' + p[3] + '" target="_blank" rel="noopener noreferrer">' +
+        '<span class="t">' + p[0] + '</span><span class="arr">&rarr;</span>' +
+        '<span class="m">' + p[1] + " &middot; " + p[2] + "</span></a></li>").join("") +
+      "</ul>"]);
+
   det.innerHTML =
     '<button class="back" type="button">&larr; Tutte le schede</button>' +
     '<span class="pill">' + s.f + "</span><h2>" + s.t + "</h2>" +
     '<div class="seg" role="tablist">' +
-      '<button role="tab" aria-selected="true" data-p="0">Il fatto</button>' +
-      '<button role="tab" aria-selected="false" data-p="1">Com&rsquo;&egrave; andata</button>' +
-      '<button role="tab" aria-selected="false" data-p="2">Le prove</button></div>' +
-    '<div class="pan on" data-p="0"><p class="lead">' + s.lead + "</p>" + conf(s.conf) + "</div>" +
-    '<div class="pan" data-p="1"><ul class="steps">' +
-      s.steps.map(x => "<li><em>" + x[0] + "</em><p>" + x[1] + "</p></li>").join("") +
-    '</ul><div class="open"><h3>Ancora aperto</h3><ul>' +
-      s.aperti.map(x => "<li>" + x + "</li>").join("") + "</ul></div></div>" +
-    '<div class="pan" data-p="2"><ul class="prove">' +
-      s.prove.map(p => '<li><a href="' + p[3] + '" target="_blank" rel="noopener noreferrer">' +
-        '<span class="t">' + p[0] + '</span><span class="arr">&rarr;</span>' +
-        '<span class="m">' + p[1] + " &middot; " + p[2] + "</span></a></li>").join("") +
-    "</ul></div>";
+      tab.map((t, n) => '<button role="tab" aria-selected="' + (n === 0) +
+        '" data-p="' + n + '">' + t[0] + "</button>").join("") +
+    "</div>" +
+    tab.map((t, n) => '<div class="pan' + (n === 0 ? " on" : "") +
+      '" data-p="' + n + '">' + t[1] + "</div>").join("");
 
   det.querySelector(".back").addEventListener("click", chiudi);
   det.querySelectorAll(".seg button").forEach(b => {
