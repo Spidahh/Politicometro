@@ -488,7 +488,7 @@ const CHI = {
   "Movimento 5 Stelle":/m5s|cinque stelle|conte|scarpinato|grillo|di maio|appendino/i,
   "Partito Democratico":/pd|partito democratico|schlein|sala|minniti|gentiloni|bonaccini/i,
   "Italia Viva":       /renzi|italia viva/i,
-  "Governo":           /governo|manovra|legge di bilancio|consiglio dei ministri/i
+  "Centrodestra":      /centrodestra|meloni|salvini|tajani|governo/i
 };
 
 const TEMA = {
@@ -523,7 +523,7 @@ P.forEach((p, i) => {
   VOCI.push({
     tipo: "promessa", i, titolo: p[2], badge: STATO[p[0]][0], col: STATO[p[0]][1],
     quando: "Promessa del 2022", sotto: p[3].replace(/<[^>]+>/g, ""), testo,
-    chi: ["Governo"].concat(etichette(CHI, testo).filter(x => x !== "Governo")),
+    chi: etichette(CHI, testo).concat(["Centrodestra"]),
     tema: etichette(TEMA, testo)
   });
 });
