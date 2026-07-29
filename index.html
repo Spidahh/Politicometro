@@ -2,112 +2,75 @@
 
 <style>
   :root{
-    --bg:#07070C; --sur:rgba(255,255,255,.045); --sur2:rgba(255,255,255,.028);
-    --bordo:rgba(255,255,255,.10); --tx:#F4F5FA; --dim:#9BA0B4;
+    --bg:#07070C; --sur:rgba(255,255,255,.045); --bordo:rgba(255,255,255,.10);
+    --tx:#F4F5FA; --dim:#9BA0B4;
     --viola:#8B5CFF; --ciano:#25E0E8; --lime:#B6F24A; --corallo:#FF5F6D; --ambra:#FFC04D;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
   body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);font-size:17px;
        line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  body::before{content:"";position:fixed;inset:-30% -10% auto -10%;height:75vh;z-index:0;pointer-events:none;
-    background:radial-gradient(50% 55% at 20% 30%,rgba(139,92,255,.28),transparent 70%),
-               radial-gradient(45% 50% at 82% 12%,rgba(37,224,232,.18),transparent 70%),
-               radial-gradient(40% 45% at 60% 60%,rgba(255,95,109,.13),transparent 70%);
+  body::before{content:"";position:fixed;inset:-25% -10% auto -10%;height:60vh;z-index:0;pointer-events:none;
+    background:radial-gradient(50% 55% at 22% 30%,rgba(139,92,255,.26),transparent 70%),
+               radial-gradient(45% 50% at 80% 10%,rgba(37,224,232,.16),transparent 70%);
     filter:blur(30px)}
-  .wrap{position:relative;z-index:1;max-width:47rem;margin:0 auto;padding:1.6rem 1.15rem 7rem}
+  .wrap{position:relative;z-index:1;max-width:54rem;margin:0 auto;padding:1.6rem 1.15rem 7rem}
 
-  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem}
+  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2.5rem}
   .logo{margin:0;font-size:1.1rem;font-weight:800;letter-spacing:-.03em}
   .logo span{background:linear-gradient(92deg,var(--viola),var(--ciano));
              -webkit-background-clip:text;background-clip:text;color:transparent}
   .data{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 
-  /* mappa */
-  .mappa{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.55rem;margin-bottom:4.5rem}
-  .mappa a{display:block;background:var(--sur);border:1px solid var(--bordo);border-radius:16px;
-           padding:.95rem 1rem;text-decoration:none;color:inherit;transition:border-color .2s,background .2s}
-  .mappa a:hover{border-color:var(--k);background:var(--sur)}
-  .mappa a b{display:block;font-size:1.6rem;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--k)}
-  .mappa a span{display:block;font-size:.86rem;color:var(--dim);margin-top:.4rem;line-height:1.35}
+  /* la regola di lettura, una riga sola */
+  .regola{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;
+          border:1px dashed var(--bordo);border-radius:16px;padding:1rem 1.2rem;margin-bottom:1rem}
+  .regola b{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .regola b:last-child{text-align:right}
+  .regola i{font-style:normal;color:var(--dim);font-size:1.1rem}
+  @media (max-width:44rem){.regola{grid-template-columns:1fr;gap:.3rem}.regola b:last-child{text-align:left}.regola i{display:none}}
 
-  h2.sez{font-size:clamp(1.5rem,5.5vw,2rem);font-weight:900;letter-spacing:-.04em;margin:0 0 .4rem;
-         scroll-margin-top:1rem}
-  p.introsez{margin:0 0 2rem;color:var(--dim);font-size:.98rem;max-width:42ch}
-  section{margin-bottom:5.5rem}
+  .conta{display:flex;gap:1.4rem;flex-wrap:wrap;margin-bottom:3.5rem;font-family:var(--mono);
+         font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .conta em{font-style:normal;font-weight:700;font-size:1.5rem;letter-spacing:-.03em;display:block;margin-bottom:.2rem}
 
-  /* apertura numerica */
-  .gigante{font-size:clamp(4rem,19vw,7.5rem);font-weight:900;letter-spacing:-.06em;line-height:.85;margin:0;
-    background:linear-gradient(150deg,#fff 8%,var(--viola) 55%,var(--corallo));
-    -webkit-background-clip:text;background-clip:text;color:transparent}
-  .sotto-gigante{font-size:clamp(1.1rem,4.2vw,1.4rem);font-weight:600;line-height:1.35;margin:.9rem 0 0;
-                 letter-spacing:-.02em;max-width:22ch}
+  /* la coppia */
+  .coppia{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;
+          background:var(--sur);border:1px solid var(--bordo);border-radius:20px;overflow:hidden;
+          margin-bottom:1rem;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  @media (max-width:44rem){.coppia{grid-template-columns:1fr}}
 
-  /* nodi e fili */
-  .nodo{position:relative;background:var(--sur);border:1px solid var(--bordo);border-radius:20px;
-        padding:1.5rem 1.4rem;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow:hidden}
-  .nodo::after{content:"";position:absolute;inset:0 0 auto 0;height:1px;
-               background:linear-gradient(90deg,transparent,var(--k),transparent)}
-  .nodo .et{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
-            color:var(--k);margin:0 0 .8rem}
-  .nodo .n{font-size:clamp(2.2rem,9vw,3.2rem);font-weight:900;letter-spacing:-.05em;line-height:.9;
-           margin:0;color:var(--k)}
-  .nodo .n small{font-size:.34em;font-weight:700;color:var(--tx);margin-left:.5rem;vertical-align:.35em}
-  .nodo p{margin:.8rem 0 0;font-size:.96rem;color:var(--dim);line-height:1.6}
-  .nodo p b{color:var(--tx);font-weight:700}
-  .nodo a.f{color:var(--dim);font-family:var(--mono);font-size:.62rem;display:inline-block;margin-top:.85rem;
-            text-underline-offset:3px}
-  .nodo a.f:hover{color:var(--k)}
-  .filo{display:flex;flex-direction:column;align-items:center}
-  .filo i{display:block;width:2px;height:30px;background:linear-gradient(180deg,var(--da),var(--a))}
-  .filo span{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
-             color:var(--dim);padding:.5rem .8rem;border:1px solid var(--bordo);border-radius:999px;
-             background:rgba(7,7,12,.75)}
+  .lato{padding:1.4rem 1.4rem}
+  .lato .et{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;
+            color:var(--dim);margin:0 0 .8rem}
+  blockquote{margin:0;font-size:1.15rem;font-weight:700;line-height:1.35;letter-spacing:-.02em}
+  blockquote::before{content:"\201C"} blockquote::after{content:"\201D"}
+  .chi{margin:.8rem 0 0;font-size:.78rem;color:var(--dim)}
+  .fatto{margin:0;font-size:.98rem;line-height:1.6;color:var(--dim)}
+  .fatto b{color:var(--tx);font-weight:700}
+  .risulta{background:rgba(255,255,255,.028)}
+  .risulta a{color:var(--dim);font-family:var(--mono);font-size:.6rem;display:inline-block;margin-top:.9rem;
+             text-underline-offset:3px}
+  .risulta a:hover{color:var(--k)}
 
-  .barra{display:flex;height:46px;border-radius:11px;overflow:hidden;margin:1.15rem 0 .9rem;border:1px solid var(--bordo)}
-  .barra i{display:block;height:100%;transition:flex-grow .8s cubic-bezier(.2,.8,.3,1)}
-  .chiavi{display:flex;flex-wrap:wrap;gap:.45rem 1.25rem;margin:0}
-  .chiave{display:flex;align-items:center;gap:.4rem;font-size:.86rem;color:var(--dim)}
-  .chiave b{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
-  .chiave em{font-style:normal;color:var(--tx);font-weight:700;font-variant-numeric:tabular-nums}
+  .ponte{display:flex;align-items:center;justify-content:center;padding:0 .2rem;
+         border-left:1px solid var(--bordo);border-right:1px solid var(--bordo)}
+  .ponte span{font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;
+              font-weight:700;color:var(--k);writing-mode:vertical-rl;transform:rotate(180deg);
+              padding:.9rem .35rem}
+  @media (max-width:44rem){
+    .ponte{border:0;border-top:1px solid var(--bordo);justify-content:flex-start;padding:.65rem 1.4rem}
+    .ponte span{writing-mode:horizontal-tb;transform:none;padding:0}
+  }
 
-  /* persone */
-  .persone{display:grid;gap:.6rem}
-  .p{background:var(--sur);border:1px solid var(--bordo);border-radius:18px;padding:1.25rem 1.3rem;
-     border-left:3px solid var(--k)}
-  .p .testa{display:flex;justify-content:space-between;align-items:baseline;gap:.9rem;flex-wrap:wrap;margin-bottom:.5rem}
-  .p .nome{font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin:0}
-  .p .nome em{font-style:normal;display:block;font-size:.78rem;font-weight:400;color:var(--dim);
-              margin-top:.25rem;letter-spacing:0}
-  .p .stato{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
-            font-weight:700;color:var(--k);border:1px solid currentColor;border-radius:999px;
-            padding:.28rem .6rem;white-space:nowrap}
-  .p p{margin:0;font-size:.97rem;line-height:1.6;color:var(--dim)}
-  .p p b{color:var(--tx);font-weight:700}
-  .p a{color:var(--dim);font-family:var(--mono);font-size:.62rem;display:inline-block;margin-top:.8rem}
-  .p a:hover{color:var(--k)}
-
-  /* promesse */
-  .prom{display:grid;gap:.5rem}
-  .pr{display:grid;grid-template-columns:1fr auto;gap:.35rem .9rem;background:var(--sur2);
-      border:1px solid var(--bordo);border-radius:14px;padding:1rem 1.1rem;border-left:3px solid var(--k)}
-  .pr .d{font-size:1.02rem;font-weight:700;letter-spacing:-.015em;line-height:1.3}
-  .pr .s{font-family:var(--mono);font-size:.56rem;letter-spacing:.11em;text-transform:uppercase;
-         font-weight:700;color:var(--k);white-space:nowrap}
-  .pr .e{grid-column:1/-1;font-size:.9rem;color:var(--dim);line-height:1.5}
-  .pr .e b{color:var(--tx)}
-  .pr .e a{color:var(--dim);font-family:var(--mono);font-size:.6rem}
-
-  footer{border-top:1px solid var(--bordo);padding-top:1.5rem;color:var(--dim);font-size:.82rem}
+  footer{border-top:1px solid var(--bordo);padding-top:1.5rem;margin-top:3rem;color:var(--dim);font-size:.82rem}
   footer p{margin:0 0 .6rem;line-height:1.6}
   footer a{color:var(--dim)}
 
-  .su{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.3,1)}
+  .su{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.3,1)}
   .su.dentro{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){.su{opacity:1;transform:none;transition:none}
-    .barra i{transition:none} html{scroll-behavior:auto}}
+  @media (prefers-reduced-motion:reduce){.su{opacity:1;transform:none;transition:none}}
 </style>
 
 <div class="wrap">
@@ -117,299 +80,290 @@
     <span class="data">28.07.2026</span>
   </header>
 
-  <nav class="mappa su">
-    <a href="#ciclo"   style="--k:var(--corallo)"><b>1.507</b><span>indagati per corruzione, e come finiscono i processi</span></a>
-    <a href="#nomi"    style="--k:var(--ciano)"><b>11</b><span>nomi: a che punto sta ciascuno</span></a>
-    <a href="#promesse" style="--k:var(--ambra)"><b>13</b><span>promesse, e cosa risulta essere successo</span></a>
-    <a href="#voto"    style="--k:var(--lime)"><b>199</b><span>il voto che ha cancellato il reato</span></a>
-  </nav>
+  <div class="regola">
+    <b>Quello che hanno detto</b><i>&rarr;</i><b>Quello che risulta</b>
+  </div>
 
-  <!-- ============ 1. IL CICLO ============ -->
-  <section id="ciclo">
-    <h2 class="sez su">Quanti sono, e come finisce</h2>
-    <p class="introsez su">Il percorso completo: dall&rsquo;inchiesta alla sentenza. Ogni numero ha sotto chi lo ha pubblicato.</p>
+  <div class="conta">
+    <span><em style="color:var(--corallo)">15</em> non tornano</span>
+    <span><em style="color:var(--ambra)">2</em> in ritardo</span>
+    <span><em style="color:var(--lime)">3</em> tornano</span>
+  </div>
 
-    <div class="su" style="margin-bottom:2.5rem">
-      <p class="gigante">1.507</p>
-      <p class="sotto-gigante">persone sotto inchiesta per corruzione in diciotto mesi. Settantuno sono politici.</p>
-    </div>
-
-    <div class="nodo su" style="--k:var(--corallo)">
-      <p class="et">Di che si tratta</p>
-      <p class="n">386 <small>solo da gennaio a giugno 2026</small></p>
-      <p>Trentotto inchieste, 23 procure, dieci regioni. Le accuse vanno dalla corruzione per atto contrario
-        ai doveri d&rsquo;ufficio al <b>voto di scambio politico-mafioso</b>, dalla turbativa d&rsquo;asta
-        all&rsquo;estorsione aggravata dal metodo mafioso. Sicilia <b>107</b> indagati, Lazio <b>85</b>,
-        Campania <b>65</b>, Puglia <b>48</b> &mdash; e in Puglia il numero pi&ugrave; alto di politici coinvolti.</p>
-      <a class="f" href="https://www.ilfattoquotidiano.it/2026/06/08/corruzione-italia-inchieste-indagati-notizie/8411538/" target="_blank" rel="noopener noreferrer">Rapporto Libera, giugno 2026 &nearr;</a>
-    </div>
-
-    <div class="filo su" style="--da:var(--corallo);--a:var(--ambra)"><i></i><span>poi comincia il processo</span><i></i></div>
-
-    <div class="nodo su" style="--k:var(--ambra)">
-      <p class="et">Quanto si aspetta</p>
-      <p class="n">12 anni <small>e 6 mesi</small></p>
-      <p>&Egrave; il tempo dopo il quale la corruzione va in prescrizione: il reato si estingue e non si
-        decide pi&ugrave; niente. Dei processi che muoiono cos&igrave;, il <b>70%</b> si prescrive
-        <b>prima ancora della sentenza di primo grado</b>.</p>
-      <a class="f" href="https://eurispes.eu/news/eurispes-unione-camere-penali-italiane-secondo-rapporto-sul-processo-penale/" target="_blank" rel="noopener noreferrer">Rapporto Eurispes &ndash; Camere Penali &nearr;</a>
-    </div>
-
-    <div class="filo su" style="--da:var(--ambra);--a:var(--ciano)"><i></i><span>e per chi arriva in fondo</span><i></i></div>
-
-    <div class="nodo su" style="--k:var(--ciano)">
-      <p class="et">Come finiscono i processi che arrivano a sentenza</p>
-      <div class="barra" id="barra">
-        <i data-p="60.6" style="background:linear-gradient(180deg,#25E0E8,#12A8B4)"></i>
-        <i data-p="21.9" style="background:linear-gradient(180deg,#8B5CFF,#5B34C7)"></i>
-        <i data-p="14.9" style="background:linear-gradient(180deg,#FFC04D,#C98A15)"></i>
-        <i data-p="2.6"  style="background:rgba(255,255,255,.14)"></i>
+  <main>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; 2 maggio 2022</p>
+        <blockquote>La proposta pi&ugrave; seria l&rsquo;abbiamo sempre fatta noi: si chiama blocco navale.</blockquote>
+        <p class="chi">Giorgia Meloni · Fratelli d'Italia</p>
       </div>
-      <p class="chiavi">
-        <span class="chiave"><b style="background:#25E0E8"></b><em>60,6%</em> condanna</span>
-        <span class="chiave"><b style="background:#8B5CFF"></b><em>21,9%</em> assoluzione</span>
-        <span class="chiave"><b style="background:#FFC04D"></b><em>14,9%</em> reato estinto</span>
-      </p>
-      <p style="margin-top:1.1rem">Un caso intero, coi numeri che tornano: <b>Rimborsopoli in Calabria</b>.
-        Ventisei imputati, <b>dieci anni</b> di processo, alla fine <b>6 condanne, 18 assoluzioni,
-        2 prescrizioni</b>. Definitiva il 4 marzo 2026.</p>
-      <a class="f" href="https://www.quotidianodelsud.it/calabria/crotone/cronache/giudiziaria/2026/01/15/rimborsopoli-regione-calabria-i-motivi-di-condanne-e-assoluzioni" target="_blank" rel="noopener noreferrer">Il Quotidiano del Sud &nearr;</a>
-    </div>
-  </section>
-
-  <!-- ============ 2. I NOMI ============ -->
-  <section id="nomi">
-    <h2 class="sez su">I nomi, e a che punto stanno</h2>
-    <p class="introsez su">Chi &egrave; dentro a cosa, con lo stato esatto del procedimento. Indagato non vuol dire condannato.</p>
-
-    <div class="persone">
-
-      <article class="p su" style="--k:var(--corallo)">
-        <div class="testa"><p class="nome">Andrea Delmastro<em>Fratelli d&rsquo;Italia &middot; ex sottosegretario alla Giustizia</em></p>
-          <span class="stato">Condanna non definitiva</span></div>
-        <p><b>Otto mesi</b> per rivelazione di segreto d&rsquo;ufficio, confermati in appello il
-          <b>20 maggio 2026</b>: aveva passato a un collega di partito le carte segrete sulle conversazioni
-          in carcere dell&rsquo;anarchico Cospito. In quell&rsquo;udienza la Procura generale aveva chiesto
-          l&rsquo;assoluzione, i giudici non l&rsquo;hanno seguita. Annunciato ricorso in Cassazione.
-          Separatamente si &egrave; dimesso da sottosegretario per il ristorante di cui era socio con
-          <b>Mauro Caroccia</b>, per gli inquirenti prestanome del clan Senese: il <b>22 luglio 2026</b>
-          la Camera ha negato ai pm le loro chat, che tre giorni dopo sono arrivate in procura lo stesso,
-          portate dall&rsquo;avvocato di Caroccia. In quell&rsquo;inchiesta non &egrave; indagato.</p>
-        <a href="https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html" target="_blank" rel="noopener noreferrer">ANSA &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--ambra)">
-        <div class="testa"><p class="nome">Daniela Santanch&egrave;<em>Fratelli d&rsquo;Italia &middot; senatrice</em></p>
-          <span class="stato">Imputata &middot; processo fermo</span></div>
-        <p>A Milano &egrave; imputata per <b>falso in bilancio</b> nel caso Visibilia e, in un secondo
-          procedimento, per <b>truffa aggravata ai danni dell&rsquo;Inps</b>. In quest&rsquo;ultimo i pm
-          avevano messo agli atti sue mail e registrazioni senza chiedere il via libera al Senato:
-          il Senato ha sollevato conflitto e la Corte costituzionale lo ha dichiarato ammissibile il
-          <b>3 giugno 2026</b>. Il processo &egrave; fermo in attesa della decisione nel merito.</p>
-        <a href="https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--ciano)">
-        <div class="testa"><p class="nome">Roberto Scarpinato<em>Movimento 5 Stelle &middot; senatore, ex magistrato</em></p>
-          <span class="stato">Intercettazioni utilizzabili</span></div>
-        <p>La commissione Antimafia, presieduta da <b>Chiara Colosimo</b> (FdI), si &egrave; fatta mandare
-          da Caltanissetta intercettazioni che lo riguardano <b>senza passare dal Senato</b>. Lui ha chiesto
-          alla Giunta la stessa protezione ottenuta per Santanch&egrave;: la maggioranza ha detto no.
-          Ha fatto ricorso da solo e il <b>16 giugno 2026</b> la Consulta lo ha dichiarato inammissibile,
-          perch&eacute; un singolo parlamentare non pu&ograve; farlo.</p>
-        <a href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--viola)">
-        <div class="testa"><p class="nome">Giuseppe Sala<em>Sindaco di Milano &middot; centrosinistra</em></p>
-          <span class="stato">Indagato</span></div>
-        <p>Dentro l&rsquo;inchiesta sull&rsquo;urbanistica milanese: <b>false dichiarazioni sulle proprie
-          qualit&agrave; personali</b> e <b>concorso in induzione indebita a dare o promettere utilit&agrave;</b>.
-          In tutto <b>74 indagati</b> e sei richieste di arresto, fra cui l&rsquo;assessore Tancredi e
-          Manfredi Catella, presidente del gruppo immobiliare Coima. Meloni ha commentato che non c&rsquo;&egrave;
-          automatismo fra avviso di garanzia e dimissioni; Schlein gli ha espresso solidariet&agrave;.
-          &Egrave; rimasto in carica.</p>
-        <a href="https://www.ilpost.it/2025/07/17/inchieste-edilizia-milano-beppe-sala-indagato/" target="_blank" rel="noopener noreferrer">Il Post &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--corallo)">
-        <div class="testa"><p class="nome">Luigi Brugnaro<em>Sindaco di Venezia &middot; centrodestra</em></p>
-          <span class="stato">Chiesto il processo</span></div>
-        <p>Nell&rsquo;inchiesta chiamata <b>&laquo;Palude&raquo;</b> la procura ha chiesto il rinvio a
-          giudizio per <b>corruzione</b>, insieme al direttore generale <b>Morris Cerron</b>, al vicecapo
-          di gabinetto <b>Derek Donadini</b> e all&rsquo;ex assessore <b>Renato Boraso</b>. Il processo
-          potrebbe celebrarsi in piena campagna elettorale.</p>
-        <a href="https://en.ilsole24ore.com/art/venice-asked-for-trial-of-mayor-luigi-brugnaro-AHWuqYi" target="_blank" rel="noopener noreferrer">Il Sole 24 Ore &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--lime)">
-        <div class="testa"><p class="nome">Massimiliano Romeo<em>Lega &middot; capogruppo al Senato</em></p>
-          <span class="stato">Condannato per peculato</span></div>
-        <p>Condannato per <b>peculato</b> nel processo sulle spese pazze del Consiglio regionale lombardo,
-          insieme a <b>Renzo Bossi</b> e <b>Nicole Minetti</b>: soldi dei fondi dei gruppi usati per spese
-          personali. La condanna &egrave; arrivata nel 2019; &egrave; poi diventato capogruppo della Lega
-          al Senato.</p>
-        <a href="https://www.ilfattoquotidiano.it/2019/01/18/spese-pazze-lombardia-condannati-per-peculato-renzo-bossi-nicole-minetti-e-capogruppo-lega-al-senato-romeo/4906564/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--ambra)">
-        <div class="testa"><p class="nome">Giovanni Donzelli<em>Fratelli d&rsquo;Italia &middot; deputato</em></p>
-          <span class="stato">Non perseguibile</span></div>
-        <p>&Egrave; lui che nel febbraio 2023 lesse in aula alla Camera il contenuto delle conversazioni
-          registrate nel carcere di Sassari. Per quelle stesse carte il collega che gliele aveva passate
-          &egrave; stato condannato. Lui no: <b>le opinioni espresse in Parlamento non sono perseguibili</b>.</p>
-        <a href="https://www.ilfattoquotidiano.it/2026/05/20/caso-cospito-in-appello-confermata-la-condanna-a-8-mesi-per-andrea-delmastro/8393409/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--viola)">
-        <div class="testa"><p class="nome">Matteo Salvini<em>Lega &middot; vicepresidente del Consiglio</em></p>
-          <span class="stato">Chiede la grazia</span></div>
-        <p>Dopo che il <b>15 luglio 2026</b> la Cassazione ha reso definitiva la condanna a
-          <b>14 anni e 9 mesi</b> del gioielliere <b>Mario Roggero</b>, ha parlato di &laquo;sentenza
-          profondamente ingiusta&raquo; e ha chiesto la grazia a Mattarella. &Egrave; circolata anche
-          l&rsquo;ipotesi di candidarlo: non &egrave; possibile, perch&eacute; la <b>legge Severino</b>
-          rende incandidabile chi ha una condanna definitiva sopra i due anni. Finch&eacute; dura la pena
-          accessoria non pu&ograve; nemmeno votare.</p>
-        <a href="https://www.ottopagine.it/italia/attualita/433538/salvini-vuole-candidare-roggero-ma-la-legge-chiude-la-porta.shtml" target="_blank" rel="noopener noreferrer">Ottopagine &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--ciano)">
-        <div class="testa"><p class="nome">Roberto Vannacci<em>Ex vicesegretario della Lega</em></p>
-          <span class="stato">Ha fondato un altro partito</span></div>
-        <p>Entrato da indipendente nelle liste della Lega alle europee 2024, ne diventa vicesegretario
-          con l&rsquo;obiettivo dichiarato di &laquo;vannaccizzare&raquo; il partito. Il <b>3 febbraio 2026</b>
-          se ne va e fonda <b>Futuro Nazionale</b>; dalla Lega lo chiamano traditore. Il <b>30 giugno 2026</b>
-          il suo movimento supera la Lega nei sondaggi SWG per TgLa7.</p>
-        <a href="https://www.ilpost.it/2026/02/03/vannacci-lascia-lega/" target="_blank" rel="noopener noreferrer">Il Post &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--lime)">
-        <div class="testa"><p class="nome">Giuseppe Conte<em>Movimento 5 Stelle &middot; presidente</em></p>
-          <span class="stato">Regole cancellate</span></div>
-        <p>Le due regole su cui il Movimento era nato &mdash; nessuna alleanza con altri partiti, e non
-          pi&ugrave; di due mandati &mdash; sono state cancellate dal voto degli iscritti: <b>72,08%</b>
-          per modificare il limite dei mandati, <b>81,20%</b> contro il mantenimento del divieto di alleanze.
-          In sala i contestatori gridavano &laquo;Siete come il PD&raquo;; Grillo, assente, ha commentato
-          &laquo;da francescani a gesuiti&raquo;.</p>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Non &egrave; mai partito. Nei documenti del partito non era un blocco navale ma una missione europea concordata con la Libia: <b>l&rsquo;Unione europea non l&rsquo;ha mai proposta n&eacute; approvata</b>.</p>
+        <a href="https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; elezioni 2022</p>
+        <blockquote>Aboliremo, gradualmente, le accise sui carburanti.</blockquote>
+        <p class="chi">Programma del centrodestra</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Dal <b>1&deg; gennaio 2026</b> benzina e gasolio sono allineati a 672,90 euro ogni mille litri: sul gasolio sono <b>4,05 centesimi al litro in pi&ugrave;</b>. Lo sconto &egrave; scaduto il 3 luglio 2026, alla vigilia delle vacanze.</p>
+        <a href="https://www.ilfattoquotidiano.it/2026/07/27/taglio-accise-carburanti-gasolio-governo-notizie/8460248/" target="_blank" rel="noopener noreferrer">Il Fatto, 27.07.2026 &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; elezioni 2022</p>
+        <blockquote>Meno tasse: abbasseremo la pressione fiscale.</blockquote>
+        <p class="chi">Programma del centrodestra</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Nel 2022 era il <b>41,7%</b> del PIL. Nel 2025 &egrave; salita al <b>43,1%</b> certificato Istat: la pi&ugrave; alta degli ultimi undici anni.</p>
+        <a href="https://lespresso.it/c/economia/2026/4/3/pressione-fiscale-governo-meloni-dati-istat/61097" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso, dati Istat &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; programma 2018, ripetuto nel 2022</p>
+        <blockquote>Flat tax al 15 per cento. Quello che abbiamo proposto, l&rsquo;abbiamo realizzato.</blockquote>
+        <p class="chi">Lega</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Il 15% per le partite IVA <b>esisteva gi&agrave; dal 2014</b>, introdotto dal governo Renzi. Quella &laquo;per tutti&raquo; costerebbe circa <b>60 miliardi l&rsquo;anno</b> e non &egrave; mai arrivata: non c&rsquo;&egrave; neanche nella manovra 2026.</p>
+        <a href="https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; elezioni 2022</p>
+        <blockquote>Supereremo la legge Fornero sulle pensioni.</blockquote>
+        <p class="chi">Programma del centrodestra</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Non superata. Nella manovra 2026 <b>Quota 103 &egrave; cancellata</b> e <b>Opzione donna non prorogata</b>. Per la pensione servono ancora <b>67 anni e 20 di contributi</b>.</p>
+        <a href="https://fap.acli.it/pensione-di-vecchiaia-2026-i-requisiti-restano-67-anni-e-20-di-contributi/" target="_blank" rel="noopener noreferrer">Patronato Acli &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; 2023</p>
+        <blockquote>In Albania apriremo centri per esaminare le domande di asilo in tempi rapidi.</blockquote>
+        <p class="chi">Governo</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Un decreto del <b>marzo 2025</b> li ha trasformati in centri di rimpatrio, dopo le sentenze di tribunali italiani, Cassazione e Corte di giustizia UE. Ci sono passate circa <b>635 persone</b>; in quasi tre anni i rimpatri sono stati <b>83</b>.</p>
+        <a href="https://www.ilfattoquotidiano.it/2026/04/21/migranti-albania-rimpatri-flop-notizie/8362049/" target="_blank" rel="noopener noreferrer">Il Fatto, 21.04.2026 &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; elezioni 2022</p>
+        <blockquote>Elezione diretta del Presidente della Repubblica.</blockquote>
+        <p class="chi">Programma del centrodestra</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Il presidenzialismo &egrave; stato lasciato cadere. Al suo posto l&rsquo;elezione diretta del <b>presidente del Consiglio</b>, che &egrave; un&rsquo;altra cosa. E la riforma della giustizia &egrave; stata <b>bocciata dal referendum</b> del 22-23 marzo 2026.</p>
+        <a href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; elezioni 2022</p>
+        <blockquote>Difenderemo i balneari dalle gare europee.</blockquote>
+        <p class="chi">Programma del centrodestra</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Le gare sono state ammesse. Stessa sorte per l&rsquo;IVA sui prodotti per la prima infanzia, prima abbassata e poi rialzata, e per gli alberi del PNRR: obiettivo ridotto.</p>
+        <a href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--ambra)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; 2023</p>
+        <blockquote>Il ponte sullo Stretto si far&agrave;.</blockquote>
+        <p class="chi">Governo</p>
+      </div>
+      <div class="ponte"><span>In ritardo</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">I cantieri non sono partiti. La <b>Corte dei conti</b> ha rilevato che manca la determinazione del <b>costo definitivo</b>. Il nuovo decreto sposta tutto al <b>2032</b>. Il 27 luglio 2026 la Cgil ha presentato un esposto per danno erariale.</p>
+        <a href="https://www.ilfattoquotidiano.it/2026/07/27/esposto-cgil-corte-conti-danno-erariale-ponte-stretto/8460493/" target="_blank" rel="noopener noreferrer">Il Fatto, 27.07.2026 &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--ambra)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; impegni con l&rsquo;Unione europea</p>
+        <blockquote>Spenderemo i fondi del PNRR nei tempi previsti.</blockquote>
+        <p class="chi">Governo</p>
+      </div>
+      <div class="ponte"><span>In ritardo</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">A febbraio 2026: <b>113,5 miliardi</b> spesi sui <b>194,4</b> del piano. La Corte dei conti stima che <b>24,2 miliardi</b> slittino oltre il 2026, quasi il <b>40%</b> delle misure con scadenza perentoria.</p>
+        <a href="https://pagellapolitica.it/articoli/spesa-pnrr-ancora-ritardo-upb" target="_blank" rel="noopener noreferrer">Pagella Politica, dati UPB &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; regola dalla fondazione</p>
+        <blockquote>Mai alleanze con altri partiti. Due mandati e poi a casa.</blockquote>
+        <p class="chi">Movimento 5 Stelle</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Cancellate tutte e due dal voto degli iscritti: <b>72,08%</b> per togliere il limite dei mandati, <b>81,20%</b> contro il divieto di alleanze. In sala gridavano &laquo;Siete come il PD&raquo;; Grillo, assente: &laquo;Da francescani a gesuiti&raquo;.</p>
         <a href="https://www.today.it/politica/movimento-5-stelle-costituente-voto-contestazioni.html" target="_blank" rel="noopener noreferrer">Today &nearr;</a>
-      </article>
-
-      <article class="p su" style="--k:var(--corallo)">
-        <div class="testa"><p class="nome">Gianni Berrino e Sandro Sisler<em>Fratelli d&rsquo;Italia &middot; senatori</em></p>
-          <span class="stato">Emendamento fermo</span></div>
-        <p>Hanno presentato gli emendamenti che riammetterebbero le <b>intercettazioni a strascico</b>,
-          quelle che registrano anche persone non indagate, per mafia, terrorismo e tratta di esseri umani.
-          <b>Forza Italia &egrave; contraria</b> e dentro la maggioranza non c&rsquo;&egrave; accordo:
-          l&rsquo;emendamento non va al voto.</p>
-        <a href="https://www.ilpost.it/2026/07/27/intercettazioni-a-strascico-senato-berrino-sisler/" target="_blank" rel="noopener noreferrer">Il Post &nearr;</a>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- ============ 3. LE PROMESSE ============ -->
-  <section id="promesse">
-    <h2 class="sez su">Quello che avevano detto</h2>
-    <p class="introsez su">A sinistra la promessa, sotto cosa risulta essere successo. Comprese quelle mantenute.</p>
-    <div class="prom" id="prom"></div>
-  </section>
-
-  <!-- ============ 4. IL VOTO ============ -->
-  <section id="voto">
-    <h2 class="sez su">Il voto che ha chiuso il cerchio</h2>
-    <p class="introsez su">Il reato pi&ugrave; usato nei procedimenti contro gli amministratori pubblici non esiste pi&ugrave;.</p>
-
-    <div class="nodo su" style="--k:var(--lime)">
-      <p class="et">Camera dei deputati &middot; 10 luglio 2024</p>
-      <div style="display:flex;gap:2rem;flex-wrap:wrap;margin:.5rem 0 1rem">
-        <div><b style="display:block;font-size:2.4rem;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--lime)">199</b>
-          <span style="font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">favorevoli</span></div>
-        <div><b style="display:block;font-size:2.4rem;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--corallo)">102</b>
-          <span style="font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">contrari</span></div>
-        <div><b style="display:block;font-size:2.4rem;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--dim)">0</b>
-          <span style="font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">astenuti</span></div>
       </div>
-      <p>Cancellato il reato di <b>abuso d&rsquo;ufficio</b>. Chi era sotto processo per quello pu&ograve;
-        chiedere il <b>non doversi procedere</b>: il fatto non &egrave; pi&ugrave; previsto dalla legge come
-        reato. Nel 2025 la Corte costituzionale ha stabilito che la scelta &egrave; legittima, perch&eacute;
-        non esiste un obbligo costituzionale di punirlo penalmente.</p>
-      <a class="f" href="https://www.altalex.com/documents/news/2024/07/16/abuso-ufficio-sguardo-insieme-nascita-abolizione" target="_blank" rel="noopener noreferrer">Legge 114 del 9 agosto 2024 &nearr;</a>
-    </div>
-  </section>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; alla nomina di Vannacci a vicesegretario</p>
+        <blockquote>&Egrave; un valore aggiunto.</blockquote>
+        <p class="chi">Matteo Salvini · Lega</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Il <b>3 febbraio 2026</b> Vannacci ha lasciato la Lega e ha fondato Futuro Nazionale; dal partito lo hanno chiamato traditore. Il <b>30 giugno 2026</b> il suo movimento ha <b>superato la Lega</b> nei sondaggi SWG per TgLa7.</p>
+        <a href="https://www.ilpost.it/2026/02/03/vannacci-lascia-lega/" target="_blank" rel="noopener noreferrer">Il Post, 03.02.2026 &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; luglio 2026</p>
+        <blockquote>Una sentenza profondamente ingiusta. E lo candideremo.</blockquote>
+        <p class="chi">Matteo Salvini · Lega</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">La condanna del gioielliere Roggero &egrave; <b>definitiva dal 15 luglio 2026</b>: <b>14 anni e 9 mesi</b>. Dopo la Cassazione non c&rsquo;&egrave; pi&ugrave; nessun giudice a cui chiederne la revisione. E la <b>legge Severino</b> lo rende incandidabile: con una condanna definitiva sopra i due anni non pu&ograve; essere eletto e <b>non pu&ograve; nemmeno votare</b>.</p>
+        <a href="https://www.ottopagine.it/italia/attualita/433538/salvini-vuole-candidare-roggero-ma-la-legge-chiude-la-porta.shtml" target="_blank" rel="noopener noreferrer">Ottopagine &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; maggio-luglio 2026</p>
+        <blockquote>&Egrave; una questione di garanzie: le comunicazioni di un parlamentare non si toccano.</blockquote>
+        <p class="chi">Difesa ricorrente in Parlamento</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">La stessa domanda, tre volte in otto settimane, <b>tre risposte diverse</b>. Chat di <b>Delmastro</b> (FdI): negate dalla Camera. Mail e audio di <b>Santanch&egrave;</b> (FdI): bloccate, processo fermo. Intercettazioni di <b>Scarpinato</b> (M5S): la maggioranza gli nega la stessa protezione, restano utilizzabili. Le chat di Delmastro sono poi arrivate in procura lo stesso, portate dall&rsquo;avvocato dell&rsquo;altro indagato.</p>
+        <a href="https://lespresso.it/c/politica/2026/7/22/caso-delmastro-chat-caroccia-giunta-autorizzazioni-camera/63611" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso, 22.07.2026 &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; febbraio 2023</p>
+        <blockquote>Le ho riferite in aula nell&rsquo;esercizio delle mie funzioni.</blockquote>
+        <p class="chi">Giovanni Donzelli · Fratelli d&rsquo;Italia</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Lui non risponde di niente: le opinioni espresse in Parlamento non sono perseguibili. <b>Andrea Delmastro</b>, che gliele aveva passate, &egrave; stato <b>condannato a otto mesi</b> per rivelazione di segreto d&rsquo;ufficio, confermati in appello il 20 maggio 2026. In quell&rsquo;udienza la Procura generale aveva chiesto l&rsquo;assoluzione: i giudici non l&rsquo;hanno seguita.</p>
+        <a href="https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html" target="_blank" rel="noopener noreferrer">ANSA, 20.05.2026 &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; luglio 2025</p>
+        <blockquote>Non c&rsquo;&egrave; automatismo fra avviso di garanzia e dimissioni.</blockquote>
+        <p class="chi">Giorgia Meloni · su Giuseppe Sala</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Vale per tutti, e infatti nessuno se ne va. <b>Sala</b> (sindaco di Milano, centrosinistra) resta in carica da indagato per false dichiarazioni e concorso in induzione indebita, dentro un&rsquo;inchiesta con <b>74 indagati</b>. <b>Brugnaro</b> (sindaco di Venezia, centrodestra) resta in carica con una <b>richiesta di rinvio a giudizio per corruzione</b>.</p>
+        <a href="https://www.ilpost.it/2025/07/17/inchieste-edilizia-milano-beppe-sala-indagato/" target="_blank" rel="noopener noreferrer">Il Post &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--corallo)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; condanna del 2019</p>
+        <blockquote>Erano rimborsi dovuti.</blockquote>
+        <p class="chi">Lega · spese del Consiglio regionale lombardo</p>
+      </div>
+      <div class="ponte"><span>Non torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto"><b>Massimiliano Romeo</b> &egrave; stato condannato per <b>peculato</b>, insieme a Renzo Bossi e Nicole Minetti: soldi dei fondi dei gruppi usati per spese personali. &Egrave; poi diventato <b>capogruppo della Lega al Senato</b>.</p>
+        <a href="https://www.ilfattoquotidiano.it/2019/01/18/spese-pazze-lombardia-condannati-per-peculato-renzo-bossi-nicole-minetti-e-capogruppo-lega-al-senato-romeo/4906564/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--lime)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; legge 114 del 9 agosto 2024</p>
+        <blockquote>Cancelleremo il reato di abuso d&rsquo;ufficio.</blockquote>
+        <p class="chi">Governo</p>
+      </div>
+      <div class="ponte"><span>Torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Fatto. Alla Camera <b>199 favorevoli, 102 contrari</b>, nessun astenuto. Era il reato pi&ugrave; usato nei procedimenti contro gli amministratori pubblici: chi era sotto processo per quello pu&ograve; chiedere il <b>non doversi procedere</b>, perch&eacute; il fatto non &egrave; pi&ugrave; previsto come reato.</p>
+        <a href="https://www.altalex.com/documents/news/2024/07/16/abuso-ufficio-sguardo-insieme-nascita-abolizione" target="_blank" rel="noopener noreferrer">Altalex &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--lime)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; elezioni 2022</p>
+        <blockquote>Taglieremo il cuneo fiscale.</blockquote>
+        <p class="chi">Programma del centrodestra</p>
+      </div>
+      <div class="ponte"><span>Torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Fatto: il taglio &egrave; diventato <b>strutturale</b>, non pi&ugrave; da rinnovare ogni anno. Mantenute anche la riforma fiscale, l&rsquo;assegno di inclusione al posto del reddito di cittadinanza e il rafforzamento dell&rsquo;assegno unico. In tutto, sulle cento promesse principali, <b>22 risultano mantenute</b>.</p>
+        <a href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
+      </div>
+    </article>
+    <article class="coppia su" style="--k:var(--lime)">
+      <div class="lato detto">
+        <p class="et">Detto &middot; elezioni 2022</p>
+        <blockquote>Alzeremo il tetto ai pagamenti in contanti.</blockquote>
+        <p class="chi">Programma del centrodestra</p>
+      </div>
+      <div class="ponte"><span>Torna</span></div>
+      <div class="lato risulta">
+        <p class="et">Risulta</p>
+        <p class="fatto">Fatto: dal 1&deg; gennaio 2023 il limite &egrave; passato <b>da 1.000 a 5.000 euro</b>.</p>
+        <a href="https://www.confcommercio.it/-/tetto-contante" target="_blank" rel="noopener noreferrer">Confcommercio &nearr;</a>
+      </div>
+    </article>
+  </main>
 
   <footer>
-    <p>Ogni riga ha sotto il link a chi l&rsquo;ha pubblicata. Nessuno di questi numeri &egrave; una stima.</p>
-    <p>Essere indagati non vuol dire essere colpevoli. Una condanna non definitiva pu&ograve; essere ribaltata.
-      Una richiesta di processo non &egrave; una sentenza. Essere soci di qualcuno non &egrave; un reato.</p>
+    <p>Ogni riga ha a destra il link a chi ha pubblicato il fatto. Nessuno di questi numeri &egrave; una stima.</p>
+    <p>Essere indagati non vuol dire essere colpevoli. Una condanna non definitiva pu&ograve; essere ribaltata. Una richiesta di processo non &egrave; una sentenza.</p>
     <p><a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice</a></p>
   </footer>
 
 </div>
 
 <script>
-const P = [
-["contro","Fatto il contrario","Aboliremo, gradualmente, le accise sui carburanti",
- "Dal <b>1&deg; gennaio 2026</b> benzina e gasolio sono allineati a <b>672,90 euro ogni mille litri</b>: per il gasolio sono <b>4,05 centesimi al litro in pi&ugrave;</b> di prima. Lo sconto &egrave; scaduto il 3 luglio 2026, alla vigilia delle vacanze.",
- "Il Fatto, 27.07.2026","https://www.ilfattoquotidiano.it/2026/07/27/taglio-accise-carburanti-gasolio-governo-notizie/8460248/"],
-["contro","Fatto il contrario","Meno tasse: abbasseremo la pressione fiscale",
- "Nel 2022 era il <b>41,7%</b> del PIL. Nel 2025 &egrave; salita al <b>42,8%</b>, e l&rsquo;Istat ha poi certificato <b>43,1%</b>: la pi&ugrave; alta degli ultimi undici anni.",
- "L&rsquo;Espresso, dati Istat","https://lespresso.it/c/economia/2026/4/3/pressione-fiscale-governo-meloni-dati-istat/61097"],
-["contro","Fatto il contrario","In Albania centri per esaminare le domande di asilo in tempi rapidi",
- "Un decreto del <b>marzo 2025</b> li ha trasformati in centri di rimpatrio, dopo le sentenze di tribunali italiani, Cassazione e Corte di giustizia UE. Ci sono passate circa <b>635 persone</b>; in quasi tre anni i rimpatri sono stati <b>83</b>.",
- "Il Fatto, 21.04.2026","https://www.ilfattoquotidiano.it/2026/04/21/migranti-albania-rimpatri-flop-notizie/8362049/"],
-["contro","Fatto il contrario","Elezione diretta del Presidente della Repubblica",
- "Il presidenzialismo &egrave; stato lasciato cadere; al suo posto l&rsquo;elezione diretta del <b>presidente del Consiglio</b>, che &egrave; un&rsquo;altra cosa. La riforma della giustizia &egrave; stata <b>bocciata dal referendum</b> del 22-23 marzo 2026.",
- "Pagella Politica","https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni"],
-["contro","Fatto il contrario","Difenderemo i balneari dalle gare europee",
- "Le gare sono state ammesse. Stessa sorte per l&rsquo;IVA sui prodotti per la prima infanzia, prima abbassata e poi rialzata, e per l&rsquo;obiettivo di rimboschimento del PNRR, ridotto.",
- "Pagella Politica","https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni"],
-["rotta","Mai partita","Il blocco navale per fermare gli sbarchi",
- "Un blocco navale vero &egrave; un atto di guerra. Nei documenti del partito si parlava invece di una missione europea concordata con la Libia: <b>l&rsquo;Unione europea non l&rsquo;ha mai proposta n&eacute; approvata</b>.",
- "Pagella Politica","https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale"],
-["rotta","Mai partita","Flat tax al 15 per cento per tutti",
- "Il 15% per le partite IVA <b>esisteva gi&agrave; dal 2014</b>, introdotto dal governo Renzi. La flat tax per tutti costerebbe circa <b>60 miliardi l&rsquo;anno</b> e non &egrave; mai arrivata; nemmeno l&rsquo;estensione agli autonomi fino a 100 mila euro &egrave; nella manovra 2026.",
- "Pagella Politica","https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva"],
-["rotta","Mai partita","Supereremo la legge Fornero",
- "Non superata. Nella manovra 2026 <b>Quota 103 &egrave; stata cancellata</b> e <b>Opzione donna non prorogata</b>. Restano <b>67 anni e 20 di contributi</b>.",
- "Patronato Acli","https://fap.acli.it/pensione-di-vecchiaia-2026-i-requisiti-restano-67-anni-e-20-di-contributi/"],
-["lenta","In ritardo","Il ponte sullo Stretto si far&agrave;",
- "I cantieri non sono partiti. La <b>Corte dei conti</b> ha rilevato che manca la determinazione del <b>costo definitivo</b>. Il nuovo decreto sposta tutto al <b>2032</b>. Il 27 luglio 2026 la Cgil ha presentato un esposto per danno erariale.",
- "Il Fatto, 27.07.2026","https://www.ilfattoquotidiano.it/2026/07/27/esposto-cgil-corte-conti-danno-erariale-ponte-stretto/8460493/"],
-["lenta","In ritardo","Spenderemo i fondi del PNRR nei tempi",
- "A febbraio 2026: <b>113,5 miliardi</b> spesi sui <b>194,4</b> del piano. La Corte dei conti stima che <b>24,2 miliardi</b>, su 66 misure, slittino oltre il 2026: quasi il <b>40%</b> delle misure con scadenza perentoria.",
- "Pagella Politica, dati UPB","https://pagellapolitica.it/articoli/spesa-pnrr-ancora-ritardo-upb"],
-["fatta","Fatta","Taglieremo il cuneo fiscale",
- "Fatta: il taglio &egrave; diventato <b>strutturale</b>. Mantenute anche la riforma fiscale, l&rsquo;assegno di inclusione al posto del reddito di cittadinanza e il rafforzamento dell&rsquo;assegno unico. Sulle cento promesse principali del programma, <b>22 risultano mantenute</b>.",
- "Pagella Politica","https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni"],
-["fatta","Fatta","Alzeremo il tetto ai pagamenti in contanti",
- "Fatta: dal 1&deg; gennaio 2023 il limite &egrave; passato <b>da 1.000 a 5.000 euro</b>.",
- "Confcommercio","https://www.confcommercio.it/-/tetto-contante"],
-["fatta","Fatta","Cancelleremo il reato di abuso d&rsquo;ufficio",
- "Fatta con la legge 114 del 2024. Alla Camera <b>199 favorevoli e 102 contrari</b>. La Corte costituzionale ha poi respinto i dubbi di legittimit&agrave;.",
- "Altalex","https://www.altalex.com/documents/news/2024/07/16/abuso-ufficio-sguardo-insieme-nascita-abolizione"]
-];
-
-const COL = { contro:"var(--corallo)", rotta:"var(--viola)", lenta:"var(--ambra)", fatta:"var(--lime)" };
-const prom = document.getElementById("prom");
-P.forEach(p => {
-  const d = document.createElement("div");
-  d.className = "pr su";
-  d.style.setProperty("--k", COL[p[0]]);
-  d.innerHTML = '<span class="d">' + p[2] + '</span><span class="s">' + p[1] + "</span>" +
-    '<span class="e">' + p[3] + ' <a href="' + p[5] + '" target="_blank" rel="noopener noreferrer">' + p[4] + " &nearr;</a></span>";
-  prom.appendChild(d);
-});
-
-const occhio = new IntersectionObserver(v => {
-  v.forEach(x => { if (x.isIntersecting) { x.target.classList.add("dentro"); occhio.unobserve(x.target); } });
-}, { threshold:.14, rootMargin:"0px 0px -6% 0px" });
-document.querySelectorAll(".su").forEach((e,i) => { e.style.transitionDelay = (i%3)*60 + "ms"; occhio.observe(e); });
-
-const barra = document.getElementById("barra");
-[...barra.children].forEach(i => i.style.flexGrow = 0);
-const cresci = new IntersectionObserver(v => {
-  v.forEach(x => { if (!x.isIntersecting) return;
-    [...x.target.children].forEach(i => i.style.flexGrow = i.dataset.p); cresci.unobserve(x.target); });
-}, { threshold:.4 });
-cresci.observe(barra);
+  const occhio = new IntersectionObserver(v => {
+    v.forEach(x => { if (x.isIntersecting) { x.target.classList.add("dentro"); occhio.unobserve(x.target); } });
+  }, { threshold:.12, rootMargin:"0px 0px -5% 0px" });
+  document.querySelectorAll(".su").forEach(e => occhio.observe(e));
 </script>
