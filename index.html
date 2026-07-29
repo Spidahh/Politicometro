@@ -34,8 +34,6 @@
   .mono { font-family:var(--mono); font-size:.6rem; letter-spacing:.12em;
           text-transform:uppercase; color:var(--dim); font-variant-numeric:tabular-nums; }
 
-  /* barra numeri */
-  .barra { display:flex; flex-wrap:wrap; gap:.4rem .5rem; margin-bottom:1.1rem; }
   .f { font:inherit; font-size:.78rem; font-weight:700; color:var(--dim);
        background:var(--sur); border:1px solid var(--line); border-radius:999px;
        padding:.42rem .8rem; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem;
@@ -46,75 +44,66 @@
   .f[aria-pressed="true"] { color:var(--k,var(--tx)); border-color:currentColor; }
   .f:focus-visible { outline:2px solid var(--k,var(--c1)); outline-offset:2px; }
 
-  /* promesse */
-  .sezione { margin:0 0 1.4rem; display:flex; align-items:baseline; gap:.8rem; flex-wrap:wrap; }
-  .sezione h2 { margin:0; font-size:clamp(1.5rem,6vw,2.2rem); font-weight:900;
-                letter-spacing:-.04em; line-height:1; }
-  .sezione span { font-family:var(--mono); font-size:.62rem; letter-spacing:.11em;
-                  text-transform:uppercase; color:var(--dim); }
+  /* ricerca */
+  .cerca { position:relative; margin-bottom:.9rem; }
+  .cerca input { width:100%; font:inherit; font-size:1.02rem; color:var(--tx);
+                 background:var(--sur); border:1px solid var(--line); border-radius:14px;
+                 padding:.95rem 2.6rem .95rem 1.1rem; -webkit-appearance:none; }
+  .cerca input::placeholder { color:var(--dim); }
+  .cerca input:focus { outline:none; border-color:var(--c1); }
+  .pulisci { position:absolute; right:.5rem; top:50%; transform:translateY(-50%);
+             font:inherit; font-size:1.3rem; line-height:1; color:var(--dim);
+             background:none; border:0; padding:.3rem .55rem; cursor:pointer; border-radius:8px; }
+  .pulisci:hover { color:var(--tx); }
 
-  .promesse { display:grid; gap:.4rem; margin-bottom:2.5rem; }
-  .p { display:grid; grid-template-columns:1fr auto; gap:.4rem .9rem; align-items:start;
-       background:var(--sur); border:1px solid var(--line); border-radius:14px;
-       padding:.8rem .95rem; border-left:4px solid var(--k); }
-  .p .d { font-size:.97rem; font-weight:700; letter-spacing:-.01em; line-height:1.35; }
-  .p .st { font-family:var(--mono); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase;
-           font-weight:700; color:var(--k); border:1.5px solid currentColor; border-radius:999px;
-           padding:.26rem .55rem; white-space:nowrap; }
-  .p .e { grid-column:1/-1; font-size:.89rem; color:var(--dim); line-height:1.45; }
-  .p .e b { color:var(--tx); font-variant-numeric:tabular-nums; }
-  .p .e a { color:var(--dim); text-underline-offset:3px; }
-  .p .e a:hover { color:var(--k); }
-  .p.rotta { --k:var(--c2); } .p.contro { --k:var(--c5); }
-  .p.lenta { --k:var(--c3); } .p.fatta { --k:var(--c6); }
+  /* filtri */
+  .facce { display:flex; flex-direction:column; gap:.4rem; margin-bottom:1rem; }
+  .riga { display:flex; flex-wrap:wrap; gap:.35rem; align-items:center; }
+  .riga .lab { font-family:var(--mono); font-size:.58rem; letter-spacing:.13em;
+               text-transform:uppercase; color:var(--dim); width:3.2rem; flex:0 0 auto; }
+  .f { font:inherit; font-size:.78rem; color:var(--dim); background:var(--sur);
+       border:1px solid var(--line); border-radius:999px; padding:.34rem .7rem;
+       cursor:pointer; display:inline-flex; align-items:center; gap:.35rem;
+       transition:color 120ms ease,border-color 120ms ease; }
+  .f b { font-family:var(--mono); font-size:.6rem; font-weight:400; opacity:.75; }
+  .f:hover { color:var(--tx); border-color:var(--tx); }
+  .f[aria-pressed="true"] { color:var(--bg); background:var(--tx); border-color:var(--tx); }
+  .f[aria-pressed="true"] b { opacity:.6; }
+  .f:focus-visible { outline:2px solid var(--c1); outline-offset:2px; }
 
-  /* griglia densa */
-  .griglia { display:grid; grid-template-columns:repeat(auto-fill,minmax(17.5rem,1fr));
-             gap:.7rem; align-items:start; }
+  .esiti { margin:0 0 .7rem; font-family:var(--mono); font-size:.6rem; letter-spacing:.12em;
+           text-transform:uppercase; color:var(--dim); font-variant-numeric:tabular-nums; }
+  .niente { color:var(--dim); font-size:.92rem; padding:2rem 0; margin:0; }
 
-  .card { position:relative; width:100%; text-align:left; font:inherit; color:inherit;
+  /* risultati: un solo tipo di riga */
+  .risultati { display:grid; grid-template-columns:repeat(auto-fill,minmax(19rem,1fr)); gap:.5rem; }
+
+  .voce { position:relative; width:100%; text-align:left; font:inherit; color:inherit;
           cursor:pointer; background:var(--sur); border:1px solid var(--line);
-          border-radius:16px; padding:.95rem 1rem .85rem; overflow:hidden;
-          display:flex; flex-direction:column; gap:.5rem;
-          transition:transform 150ms cubic-bezier(.2,.8,.3,1),border-color 150ms ease; }
-  .card::before { content:""; position:absolute; inset:0 0 auto 0; height:3px; background:var(--k); }
-  .card:hover { transform:translateY(-2px); border-color:var(--k); }
-  .card:focus-visible { outline:2px solid var(--k); outline-offset:2px; }
-  .card.via { display:none; }
+          border-radius:14px; padding:.85rem .95rem; display:flex; flex-direction:column;
+          gap:.4rem; border-left:3px solid var(--k);
+          transition:border-color 130ms ease, background 130ms ease; }
+  .voce:hover { background:var(--sur2); border-color:var(--k); }
+  .voce:focus-visible { outline:2px solid var(--k); outline-offset:2px; }
 
-  .pill { align-self:flex-start; font-family:var(--mono); font-size:.56rem;
-          letter-spacing:.13em; text-transform:uppercase; font-weight:700;
-          color:var(--bg); background:var(--k); border-radius:999px; padding:.26rem .6rem; }
-  .card h2 { margin:0; font-size:1.08rem; font-weight:900; letter-spacing:-.028em;
-             line-height:1.18; text-wrap:balance; }
+  .voce .alto { display:flex; justify-content:space-between; align-items:baseline;
+                gap:.7rem; font-family:var(--mono); font-size:.56rem; letter-spacing:.11em;
+                text-transform:uppercase; }
+  .voce .bd { color:var(--k); font-weight:700; }
+  .voce .qd { color:var(--dim); white-space:nowrap; }
+  .voce .tt { font-size:1rem; font-weight:800; letter-spacing:-.02em; line-height:1.25; }
+  .voce .st { font-size:.85rem; color:var(--dim); line-height:1.4;
+              display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .voce .tg { display:flex; flex-wrap:wrap; gap:.25rem; margin-top:.1rem; }
+  .voce .tg i { font-style:normal; font-family:var(--mono); font-size:.54rem; letter-spacing:.08em;
+                text-transform:uppercase; color:var(--dim); border:1px solid var(--line);
+                border-radius:999px; padding:.16rem .4rem; }
 
-  /* bento: le schede con un numero forte occupano due colonne */
-  @media (min-width:56rem) { .card.big { grid-column:span 2; } }
-  .card.big h2 { font-size:1.35rem; }
-
-  .cifra { display:block; margin:.15rem 0 .1rem; }
-  .cifra b { display:block; font-size:clamp(2.2rem,7vw,3.1rem); font-weight:900;
-             letter-spacing:-.05em; line-height:.92; color:var(--k);
-             font-variant-numeric:tabular-nums; }
-  .cifra i { display:block; font-style:normal; font-size:.8rem; color:var(--dim);
-             margin-top:.35rem; line-height:1.35; }
-
-  /* avanzamento dentro la scheda aperta */
-  .prog { position:sticky; top:0; z-index:5; height:3px; background:var(--line);
-          margin:0 0 .9rem; border-radius:3px; overflow:hidden; }
-  .prog i { display:block; height:100%; width:0; background:var(--k); transition:width 90ms linear; }
-
-  .seg { position:sticky; top:.75rem; z-index:4; }
-  .card .hook { margin:0; font-size:.88rem; color:var(--dim); line-height:1.4; }
-  .card .foot { display:flex; justify-content:space-between; gap:.8rem; margin-top:.15rem;
-                font-family:var(--mono); font-size:.58rem; letter-spacing:.08em;
-                text-transform:uppercase; color:var(--dim); }
-  .card .foot em { font-style:normal; color:var(--k); font-weight:700; }
+  .cerca.off, .facce.off, .esiti.off, .risultati.off { display:none; }
 
   /* dettaglio */
   .apri { display:none; max-width:44rem; }
   .apri.on { display:block; animation:in 280ms cubic-bezier(.2,.8,.3,1) both; }
-  .griglia.off, .barra.off { display:none; }
 
   .back { font:inherit; font-family:var(--mono); font-size:.64rem; letter-spacing:.11em;
           text-transform:uppercase; font-weight:700; color:var(--dim); background:var(--sur);
@@ -216,18 +205,20 @@
     <span class="mono" id="cont"></span>
   </header>
 
-  <div class="sezione">
-    <h2>Quello che avevano promesso</h2>
-    <span id="contaP"></span>
+  <div class="cerca">
+    <input id="q" type="search" autocomplete="off" spellcheck="false"
+           placeholder="Cerca un nome, un partito, un tema&hellip;" aria-label="Cerca">
+    <button class="pulisci" id="pulisci" type="button" hidden aria-label="Cancella">&times;</button>
   </div>
-  <div class="promesse" id="promesse"></div>
 
-  <div class="sezione">
-    <h2>Le schede</h2>
-    <span id="contaS"></span>
+  <div class="facce">
+    <div class="riga" id="fTema" data-lab="Tema"></div>
+    <div class="riga" id="fChi" data-lab="Chi"></div>
   </div>
-  <div class="barra" id="barra"></div>
-  <div class="griglia" id="lista"></div>
+
+  <p class="esiti" id="esiti"></p>
+  <div class="risultati" id="lista"></div>
+  <p class="niente" id="niente" hidden>Nessun risultato. Prova con un altro nome o togli un filtro.</p>
   <div class="apri" id="det"></div>
 
   <footer>
@@ -325,53 +316,6 @@ const S = [
     ["Vannacci spaventa la Lega","ANSA","16.06.2026","https://www.ansa.it/sito/notizie/politica/2026/06/16/vannacci-spaventa-la-lega.-ma-giorgetti-rassicura-salvini-decidera_533c12fa-d459-4c47-badb-8d582e6fc310.html"]]
 },
 {
-  f:"Detto contro fatto", t:"Le due regole che il M5S aveva giurato di non toccare", meta:"Voto degli iscritti",
-  hook:"Mai alleanze e due mandati e a casa. Cancellate tutte e due dagli iscritti.",
-  lead:"Il Movimento 5 Stelle era nato su due regole ripetute per anni: nessuna alleanza con altri partiti, e non pi&ugrave; di due mandati e poi a casa. Gli iscritti le hanno cancellate votando.",
-  conf:[["Due mandati","Favorevoli a cambiarla","72,08%","no"],
-        ["Divieto di alleanze","Contrari a mantenerlo","81,20%","no"]],
-  steps:[["La regola numero uno","Nessuna alleanza con altri partiti. Nel 2013 il M5S fece sapere al PD che non avrebbe governato se non da solo."],
-    ["Com&rsquo;&egrave; finita","2018 governo con la Lega, 2019 governo con il PD, 2021 dentro il governo Draghi con quasi tutti. Oggi &egrave; nel campo largo con il PD."],
-    ["La regola numero due","Massimo due mandati, poi si torna a casa. Era il modo per non diventare politici di professione."],
-    ["Il voto","All&rsquo;assemblea costituente gli iscritti approvano la modifica della regola dei due mandati con il 72,08%. Sul divieto di alleanze l&rsquo;81,20% vota per toglierlo."],
-    ["In sala","I contestatori gridano &laquo;Dimissioni, siete come il PD, due mandati e a casa&raquo; e &laquo;Siamo nati per strada, non in un teatro&raquo;. Grillo, assente, manda un messaggio: &laquo;Da francescani a gesuiti&raquo;."]],
-  aperti:["Le due regole non ci sono pi&ugrave;: non sono sospese, sono state votate via.","Grillo e Conte sono ai ferri corti da allora."],
-  prove:[["Il piano di Conte: due mandati e alleanza con il Pd","Virgilio Notizie","Ricostruzione","https://notizie.virgilio.it/m5s-il-piano-di-giuseppe-conte-regola-dei-due-mandati-e-alleanza-con-il-pd-le-soluzioni-dell-ex-premier-1537226"],
-    ["Contestatori all&rsquo;assemblea: &laquo;Siete come il Pd&raquo;","Today","Assemblea costituente","https://www.today.it/politica/movimento-5-stelle-costituente-voto-contestazioni.html"],
-    ["Conte contestato, raggiunto il quorum online","Il Giornale","Assemblea","https://www.ilgiornale.it/news/interni/conte-contestato-allassemblea-m5s-dimissioni-siete-pd-2402279.html"],
-    ["Grillo: &laquo;Da francescani a gesuiti&raquo;","ItaliaOggi","Reazione","https://www.italiaoggi.it/economia-e-politica/attualita/m5s-da-conte-un-vaffa-a-grillo-e-ai-due-mandati-il-fondatore-da-francescani-a-gesuiti-lqh3cx7d"]]
-},
-{
-  f:"Stesso metro", t:"Chi litiga in casa propria", meta:"Luglio 2026",
-  hook:"Lega, PD e M5S: tre partiti, tre risse interne, stesso mese.",
-  lead:"Non &egrave; un problema di una parte sola. Nello stesso periodo la Lega perde il vicesegretario, dal PD se ne vanno quattro parlamentari e il M5S contesta il proprio leader in assemblea.",
-  conf:[["Lega","Il vicesegretario fonda un partito rivale","Scissione","no"],
-        ["PD","Quattro parlamentari lasciano il gruppo","Uscite","no"],
-        ["M5S","Il leader contestato dai suoi iscritti","Contestazione","no"]],
-  steps:[["Lega","Vannacci se ne va a febbraio 2026 e fonda Futuro Nazionale. A giugno il consiglio federale convocato da Salvini diventa un passaggio delicatissimo: sondaggi in calo e tensioni con il fronte del Nord."],
-    ["PD","Quattro parlamentari lasciano il partito. Schlein &egrave; sotto pressione fra i riformisti interni e la corsa alla leadership della coalizione."],
-    ["M5S","All&rsquo;assemblea i contestatori chiedono le dimissioni di Conte con lo slogan &laquo;Siete come il PD&raquo;. Grillo attacca da fuori."],
-    ["Il punto comune","In tutti e tre i casi lo scontro &egrave; su chi comanda e su quali regole si cambiano, non sui programmi."]],
-  aperti:["Nessuna delle tre partite &egrave; chiusa.","Le prossime elezioni politiche sono previste nel 2027."],
-  prove:[["Attriti e frizioni fra Salvini, Vannacci e i nordisti","ItaliaOggi","Analisi","https://www.italiaoggi.it/economia-e-politica/attualita/lega-attriti-e-frizioni-la-distanza-tra-salvini-vannacci-e-i-nordisti-quali-scenari-g8j35qh7"],
-    ["Quattro parlamentari lasciano il Pd","Blitz Quotidiano","Cronaca","https://www.blitzquotidiano.it/politica/pd-quattro-parlamentari-lasciano-schlein-sotto-pressione-3787647/"],
-    ["Conte contestato all&rsquo;assemblea M5S","Il Giornale","Assemblea","https://www.ilgiornale.it/news/interni/conte-contestato-allassemblea-m5s-dimissioni-siete-pd-2402279.html"],
-    ["Scontro interno al Pd e mediazione con i riformisti","MetroToday","07.05.2026","https://metrotoday.it/2026/05/07/pd-scontro-interno-e-mediazione-con-i-riformisti-cosa-sta-succedendo/"]]
-},
-{
-  f:"Nebbia", t:"Il campo largo che non si mette d&rsquo;accordo sulle armi", meta:"In corso",
-  hook:"Vogliono governare insieme ma sull&rsquo;Ucraina dicono il contrario.",
-  lead:"PD e M5S dovrebbero presentarsi insieme alle prossime elezioni. Sulle armi all&rsquo;Ucraina il PD considera il sostegno un punto fermo, il M5S &egrave; contrario. L&rsquo;accordo non c&rsquo;&egrave;.",
-  steps:[["La posizione del PD","Il sostegno politico e militare a Kiev &egrave; considerato un elemento essenziale della linea internazionale del partito."],
-    ["La posizione del M5S","Contrario a continuare l&rsquo;invio di armi."],
-    ["Gli altri","M5S e AVS guardano con diffidenza Italia Viva. Schlein dice di non aver mai messo veti e indica come obiettivo l&rsquo;unit&agrave; di tutte le opposizioni."],
-    ["Lug 2026","La coalizione resta divisa su Ucraina, alleanze e su chi guiderebbe."]],
-  aperti:["Non c&rsquo;&egrave; un accordo scritto su niente.","Non &egrave; deciso chi sarebbe il candidato alla guida del governo.","Questa scheda resta aperta: qui non ci sono ancora fatti chiusi."],
-  prove:[["Ucraina, alleanze e leadership dividono la coalizione","Juorno","Cronaca politica","https://www.juorno.it/schlein-accelera-sul-campo-largo-pronti-al-voto-ma-ucraina-alleanze-e-leadership-dividono-la-coalizione/"],
-    ["Contraddizioni e nodi dell&rsquo;alleanza fra Pd e M5S","Il Dubbio","Analisi","https://www.ildubbio.news/news/politica/33274/impossibile-ma-inevitabile-contraddizioni-e-nodi-dellalleanza-tra-pd-e-m5s.html"],
-    ["M5S, Ucraina e armi: il campo largo non regge","Lo Speciale","27.07.2026","https://www.lospecialegiornale.it/2026/07/27/schlein-sotto-tiro-m5s-ucraina-e-armi-il-campo-largo-non-regge/"]]
-},
-{
   f:"Stesso metro", t:"Le chat che il Parlamento non consegna", meta:"3 casi &middot; 8 settimane",
   hook:"Stessa richiesta, due partiti diversi, tre finali diversi.",
   lead:"Le tue chat un pm se le prende con la firma di un giudice. Quelle di un parlamentare no: decide la sua Camera, cio&egrave; gli altri parlamentari. In otto settimane &egrave; successo tre volte.",
@@ -405,23 +349,6 @@ const S = [
     ["Perch&eacute; &egrave; indagato il sindaco Sala","Avvenire","Inchiesta","https://www.avvenire.it/economia/pagine/inchiesta-urbanistica-milano-sei-arresti"],
     ["Chiesto il processo per il sindaco Brugnaro","Il Sole 24 Ore","Inchiesta Palude","https://en.ilsole24ore.com/art/venice-asked-for-trial-of-mayor-luigi-brugnaro-AHWuqYi"],
     ["Meloni su Sala: nessun automatismo con le dimissioni","Il Giorno","Cronaca","https://www.ilgiorno.it/milano/cronaca/inchiesta-urbanistica-diretta-wtmrph0u"]]
-},
-{
-  f:"Detto contro fatto", t:"Cento promesse, ventidue mantenute", meta:"Programma 2022",
-  hook:"Il conto sul programma del centrodestra, tre anni dopo il voto.",
-  lead:"Chi tiene il conto ha preso le cento promesse centrali del programma e le ha seguite una per una. Ventidue mantenute, cinquantanove ancora in corso, dieci mai iniziate, nove smentite da decisioni opposte a quello che era stato annunciato.",
-  conf:[["Mantenute","Fatte davvero","22","si"],
-        ["In corso","Non ancora concluse","59","mezzo"],
-        ["Senza seguito","Mai partite","10","no"],
-        ["Contraddette","Fatto il contrario","9","no"]],
-  steps:[["Il metodo","Vengono contate solo le promesse formali e verificabili, prese dal programma e dai documenti ufficiali. Le frasi vaghe restano fuori."],
-    ["21 ott 2025","Il conto viene aggiornato: 22 mantenute su 100."],
-    ["Fra le mantenute","Taglio del cuneo fiscale reso strutturale, riforma fiscale, pace fiscale, reddito di cittadinanza sostituito dall&rsquo;assegno di inclusione, assegno unico rafforzato."],
-    ["Fra le mancate","Flat tax estesa agli autonomi fino a 100 mila euro, proroga di Opzione donna, continuazione di Quota 103."]],
-  aperti:["Cinquantanove promesse sono ancora aperte: possono finire in entrambi i modi.","La legislatura non &egrave; finita."],
-  prove:[["Le promesse mantenute e tradite in tre anni","Pagella Politica","Conto aggiornato","https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni"],
-    ["Come vengono contate le promesse","Pagella Politica","Metodo","https://pagellapolitica.it/articoli/guida-pagella-politica-promesse-governo-meloni"],
-    ["In un anno mantenuta meno di una promessa su cinque","Pagella Politica","Analisi","https://pagellapolitica.it/articoli/promesse-non-mantenute-governo-meloni"]]
 },
 {
   f:"Detto contro fatto", t:"Il blocco navale", meta:"2022 &rarr; oggi",
@@ -459,33 +386,6 @@ const S = [
     ["Quanto costerebbe la flat tax per tutti","Pagella Politica","Conti","https://pagellapolitica.it/fact-checking/costo-flat-tax-reddito-cittadinanza"]]
 },
 {
-  f:"Dove sono finiti i soldi", t:"PNRR: 194 miliardi e la corsa contro il tempo", meta:"Feb 2026",
-  hook:"Incassati 166 miliardi. Oltre 30 ancora da spendere.",
-  lead:"A fine febbraio 2026 la spesa arriva a 113,5 miliardi, poco pi&ugrave; del 58 per cento del piano. L&rsquo;Italia ha incassato 166 dei 194,4 miliardi: oltre trenta restano da spendere e rendicontare.",
-  conf:[["Piano totale","Risorse europee","194,4 mld","mezzo"],
-        ["Incassato","Arrivato dall&rsquo;Ue","166 mld","si"],
-        ["Speso davvero","A fine febbraio 2026","113,5 mld","no"]],
-  steps:[["Il piano","Oltre 194 miliardi di euro dall&rsquo;Unione europea, con scadenze fissate."],
-    ["Feb 2026","Spesi 113,5 miliardi: il 58 per cento. Oltre trenta miliardi vanno ancora spesi e rendicontati."],
-    ["24 giu 2026","La Corte dei conti stima che circa 24,2 miliardi, su 66 misure, slitteranno oltre il 2026. Sono quasi il 40 per cento della dotazione delle misure con scadenza perentoria."]],
-  aperti:["Cosa succede ai soldi non spesi entro la scadenza non &egrave; ancora definito.","Le stime sullo slittamento vengono dalle amministrazioni stesse."],
-  prove:[["La spesa del PNRR continua a essere in ritardo","Pagella Politica","Dati UPB","https://pagellapolitica.it/articoli/spesa-pnrr-ancora-ritardo-upb"],
-    ["Corte dei conti: slitta oltre il 2026 circa il 40% della spesa","MilanoFinanza","24.06.2026","https://www.milanofinanza.it/news/pnrr-corte-dei-conti-previsto-slittamento-di-circa-il-40-della-spesa-oltre-2026-si-tratta-di-24-2-miliardi-202606241329064012"],
-    ["I dati aggiornati confermano le difficolt&agrave;","Openpolis","Analisi","https://www.openpolis.it/i-dati-aggiornati-sulla-spesa-dei-fondi-pnrr-confermano-le-difficolta-e-i-ritardi/"]]
-},
-{
-  f:"Dove sono finiti i soldi", t:"Il ponte che non ha ancora un costo", meta:"Luglio 2026",
-  hook:"La Corte dei conti: manca il costo definitivo. Ora tutto slitta al 2032.",
-  lead:"Sul Ponte sullo Stretto i magistrati contabili hanno rilevato che non &egrave; stato determinato il costo definitivo dell&rsquo;opera, oltre a problemi su appalti e ambiente. Il nuovo decreto sposta tutto al 2032.",
-  steps:[["I rilievi","Esaminando la delibera del Cipess, la Corte dei conti segnala pi&ugrave; criticit&agrave;: manca la determinazione del costo definitivo, e ci sono aspetti da chiarire su normativa europea degli appalti e tutela ambientale."],
-    ["Il nuovo decreto","Tutto viene spostato al 2032, fondi compresi. Alla societ&agrave; Stretto di Messina spa si affianca un commissario straordinario."],
-    ["27 lug 2026","La Cgil presenta un esposto alla Corte dei conti chiedendo di verificare se ci sia danno erariale nella gestione dei soldi pubblici del progetto."]],
-  aperti:["Il costo finale dell&rsquo;opera non &egrave; ancora determinato.","L&rsquo;esposto &egrave; una richiesta di verifica: non stabilisce nessuna responsabilit&agrave;.","Non &egrave; noto se e quando il progetto superer&agrave; i controlli."],
-  prove:[["Esposto della Cgil alla Corte dei conti per danno erariale","Il Fatto Quotidiano","27.07.2026","https://www.ilfattoquotidiano.it/2026/07/27/esposto-cgil-corte-conti-danno-erariale-ponte-stretto/8460493/"],
-    ["L&rsquo;esposto alle procure regionali di Sicilia e Lazio","Sky TG24","27.07.2026","https://tg24.sky.it/cronaca/2026/07/27/ponte-stretto-messina-esposto-cgil-corte-conti"],
-    ["Costi, tempi e controlli del nuovo percorso","Today","Ricostruzione","https://www.today.it/economia/ponte-stretto-novita-2026.html"]]
-},
-{
   f:"Che fine ha fatto", t:"Le carte lette in aula tre anni fa", meta:"2023 &rarr; 2026",
   hook:"Condanna confermata in appello. Non &egrave; ancora finita.",
   lead:"Nel 2023 un deputato lesse in aula conversazioni segrete registrate in carcere. Gliele aveva passate il sottosegretario alla Giustizia. Tre anni dopo: otto mesi, confermati in appello.",
@@ -497,29 +397,6 @@ const S = [
   prove:[["Confermata in appello la condanna","ANSA","20.05.2026","https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html"],
     ["Otto mesi per rivelazione di segreto d&rsquo;ufficio","Sky TG24","20.05.2026","https://tg24.sky.it/cronaca/2026/05/20/caso-cospito-andrea-delmastro-condanna-appello"],
     ["La Procura generale aveva chiesto l&rsquo;assoluzione","Il Fatto Quotidiano","20.05.2026","https://www.ilfattoquotidiano.it/2026/05/20/caso-cospito-in-appello-confermata-la-condanna-a-8-mesi-per-andrea-delmastro/8393409/"]]
-},
-{
-  f:"Che fine ha fatto", t:"Quota 103 e Opzione donna", meta:"Manovra 2026",
-  hook:"Due vie d&rsquo;uscita anticipata dal lavoro. Sparite dalla manovra.",
-  lead:"Erano due modi per andare in pensione prima. Nella legge di bilancio per il 2026 non ci sono: Opzione donna non viene prorogata, Quota 103 viene cancellata per mancanza di risorse.",
-  steps:[["Cos&rsquo;erano","Due canali di pensione anticipata rispetto ai 67 anni ordinari, rinnovati anno per anno."],
-    ["Manovra 2026","Nessuna proroga per Opzione donna. Quota 103 cancellata: le risorse non ci sono."],
-    ["Il contesto","Restano in piedi altre promesse sulle pensioni, ancora nella colonna delle cose in corso."]],
-  aperti:["Non &egrave; stato annunciato niente che le sostituisca.","Chi contava su quelle uscite resta con i requisiti ordinari."],
-  prove:[["Le promesse mantenute e tradite in tre anni","Pagella Politica","Conto aggiornato","https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni"],
-    ["Promesse e realt&agrave;: pensioni, tasse e migranti","Today","Bilancio","https://www.today.it/politica/governo-meloni-fact-checking-quattro-anni.html"],
-    ["Requisiti della pensione di vecchiaia 2026","Patronato Acli","67 anni e 20 di contributi","https://fap.acli.it/pensione-di-vecchiaia-2026-i-requisiti-restano-67-anni-e-20-di-contributi/"]]
-},
-{
-  f:"Una cosa fatta bene", t:"Il taglio del cuneo &egrave; diventato stabile", meta:"Promessa mantenuta",
-  hook:"Non pi&ugrave; rinnovato ogni anno: reso strutturale.",
-  lead:"Il taglio del cuneo fiscale, cio&egrave; la differenza fra quanto costa un lavoratore e quanto gli arriva in busta, era una misura da rinnovare ogni anno. &Egrave; stata resa strutturale: rientra fra le promesse mantenute.",
-  steps:[["La promessa","Ridurre il peso di tasse e contributi sul lavoro."],
-    ["Cosa &egrave; stato fatto","Il taglio &egrave; diventato strutturale invece di essere rinnovato di anno in anno."],
-    ["Nello stesso pacchetto","Sono contate come mantenute anche la riforma fiscale, la pace fiscale, l&rsquo;assegno di inclusione al posto del reddito di cittadinanza e il rafforzamento dell&rsquo;assegno unico."]],
-  aperti:["Questa scheda dice cosa &egrave; stato fatto, non se sia stata una buona idea: su questo il giudizio &egrave; politico.","Gli effetti su salari e occupazione si misurano negli anni."],
-  prove:[["Le promesse mantenute e tradite in tre anni","Pagella Politica","Conto aggiornato","https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni"],
-    ["Il paradosso delle leggi di bilancio","Pagella Politica","Analisi","https://pagellapolitica.it/articoli/paradosso-leggi-bilancio-governo-meloni"]]
 },
 {
   f:"Nebbia", t:"Intercettare anche chi non &egrave; indagato", meta:"In corso",
@@ -545,14 +422,6 @@ const P = [
 ["contro","Fatto il contrario","Abbassare la pressione fiscale",
  "Nel 2022 era il <b>41,7%</b> del PIL. Nel 2025 &egrave; salita al <b>42,8%</b>, e l&rsquo;Istat ha poi certificato <b>43,1%</b>: pi&ugrave; alta degli ultimi undici anni. Dall&rsquo;inizio del mandato &egrave; cresciuta di 1,3 punti.",
  "https://lespresso.it/c/economia/2026/4/3/pressione-fiscale-governo-meloni-dati-istat/61097","L&rsquo;Espresso, dati Istat"],
-
-["rotta","Non fatta","Flat tax al 15% per tutti, poi per gli autonomi fino a 100 mila euro",
- "Non introdotta. Non &egrave; nemmeno nel disegno di legge di bilancio per il 2026. Il regime al 15% per le partite IVA esisteva gi&agrave; dal 2014, voluto dal governo Renzi; il primo governo Conte, con la Lega, ne allarg&ograve; la platea a 65 mila euro.",
- "https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva","Pagella Politica"],
-
-["rotta","Non fatta","Il blocco navale per fermare gli sbarchi",
- "Mai attuato. Nei documenti del partito era una missione europea concordata con la Libia: quella missione l&rsquo;Unione europea non l&rsquo;ha mai proposta n&eacute; approvata.",
- "https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale","Pagella Politica"],
 
 ["contro","Fatto il contrario","I centri in Albania per procedure rapide di asilo",
  "Dopo le sentenze di tribunali italiani, Cassazione e Corte di giustizia UE, un decreto del marzo 2025 li ha trasformati in centri di rimpatrio. Ci sono passate circa <b>635 persone</b> e in quasi tre anni i rimpatri sono stati <b>83</b>: per eseguirli bisogna comunque riportare le persone in Italia.",
@@ -599,83 +468,152 @@ const P = [
  "https://www.altalex.com/documents/news/2024/07/16/abuso-ufficio-sguardo-insieme-nascita-abolizione","Altalex"]
 ];
 
-const promesse = document.getElementById("promesse");
-P.forEach(p => {
-  const d = document.createElement("div");
-  d.className = "p " + p[0];
-  d.innerHTML = '<span class="d">' + p[2] + '</span><span class="st">' + p[1] + "</span>" +
-    '<span class="e">' + p[3] + ' &mdash; <a href="' + p[4] +
-    '" target="_blank" rel="noopener noreferrer">' + p[5] + "</a></span>";
-  promesse.appendChild(d);
-});
-
-const rotte = P.filter(p => p[0] === "rotta" || p[0] === "contro").length;
-document.getElementById("contaP").className = "mono";
-document.getElementById("contaP").innerHTML =
-  P.length + " voci &middot; " + rotte + " non mantenute o rovesciate &middot; programma 2022";
-
 const lista = document.getElementById("lista");
 const det = document.getElementById("det");
-const barra = document.getElementById("barra");
+const esiti = document.getElementById("esiti");
+const niente = document.getElementById("niente");
+const q = document.getElementById("q");
+const pulisci = document.getElementById("pulisci");
 
-const nFonti = S.reduce((n, s) => n + s.prove.length, 0) + P.length;
-document.getElementById("cont").textContent = S.length + " schede · " + nFonti + " fonti";
-const cS = document.getElementById("contaS");
-cS.className = "mono";
-cS.textContent = S.length + " · " + new Set(S.map(s => s.f)).size + " formati";
-
-/* filtri */
-const conteggi = {};
-S.forEach(s => conteggi[s.f] = (conteggi[s.f] || 0) + 1);
-
-const tutti = document.createElement("button");
-tutti.className = "f"; tutti.type = "button"; tutti.dataset.f = "";
-tutti.setAttribute("aria-pressed", "true");
-tutti.innerHTML = "Tutte<b>" + S.length + "</b>";
-barra.appendChild(tutti);
-
-Object.keys(conteggi).forEach(f => {
-  const b = document.createElement("button");
-  b.className = "f"; b.type = "button"; b.dataset.f = f;
-  b.setAttribute("aria-pressed", "false");
-  b.style.setProperty("--k", COL[f]);
-  b.innerHTML = "<i></i>" + f + "<b>" + conteggi[f] + "</b>";
-  barra.appendChild(b);
-});
-
-barra.addEventListener("click", e => {
-  const b = e.target.closest(".f");
-  if (!b) return;
-  barra.querySelectorAll(".f").forEach(x =>
-    x.setAttribute("aria-pressed", x === b ? "true" : "false"));
-  lista.querySelectorAll(".card").forEach(c =>
-    c.classList.toggle("via", !!b.dataset.f && c.dataset.f !== b.dataset.f));
-});
-
-/* numeri forti: chi ce l'ha diventa una scheda grande */
-const CIFRE = {
-  0:  ["14 anni e 9 mesi", "la condanna, ormai definitiva"],
-  1:  ["Feb 2026", "lascia la Lega e fonda il partito che la supera"],
-  2:  ["72%", "degli iscritti ha votato per cancellare i due mandati"],
-  7:  ["22 su 100", "le promesse del programma davvero mantenute"],
-  10: ["113,5 mld", "spesi sui 194,4 del piano, a febbraio 2026"],
-  11: ["2032", "la nuova scadenza di un&rsquo;opera senza costo definito"],
-  12: ["8 mesi", "confermati in appello, tre anni dopo"]
+const STATO = {
+  rotta: ["Non mantenuta", "var(--c2)"],
+  contro:["Rovesciata",    "var(--c5)"],
+  lenta: ["In ritardo",    "var(--c3)"],
+  fatta: ["Fatta",         "var(--c6)"]
 };
 
-/* schede */
+const CHI = {
+  "Fratelli d'Italia": /fratelli d|fdi|meloni|delmastro|santanch|donzelli|colosimo|berrino|sisler|la russa/i,
+  "Lega":              /lega|salvini|vannacci|giorgetti/i,
+  "Movimento 5 Stelle":/m5s|cinque stelle|conte|scarpinato|grillo|di maio|appendino/i,
+  "Partito Democratico":/pd|partito democratico|schlein|sala|minniti|gentiloni|bonaccini/i,
+  "Italia Viva":       /renzi|italia viva/i,
+  "Governo":           /governo|manovra|legge di bilancio|consiglio dei ministri/i
+};
+
+const TEMA = {
+  "Tasse e soldi":   /tass|accise|flat tax|fiscale|iva|contante|manovra|bilancio|miliard|cuneo|pnrr|appalt|spesa|erariale/i,
+  "Giustizia":       /giudic|process|condann|procur|intercettazion|chat|consulta|abuso d|severino|cassazione|reato|corte dei conti|indagat/i,
+  "Immigrazione":    /migrant|sbarch|albania|blocco navale|flussi|rimpatri|asilo/i,
+  "Pensioni e lavoro":/pension|fornero|quota 103|opzione donna|salari|stipend|cuneo/i,
+  "Grandi opere":    /ponte|stretto|cantier|infrastrutt|rimbosch|alber/i,
+  "Partiti":         /partito|alleanz|mandat|segretari|scissione|congresso|iscritt|sondagg|leader/i
+};
+
+function etichette(mappa, testo) {
+  return Object.keys(mappa).filter(k => mappa[k].test(testo));
+}
+
+/* un solo indice: schede e promesse diventano voci dello stesso tipo */
+const VOCI = [];
+
 S.forEach((s, i) => {
-  const c = CIFRE[i];
-  const b = document.createElement("button");
-  b.className = "card" + (c ? " big" : ""); b.type = "button"; b.dataset.f = s.f;
-  b.style.setProperty("--k", COL[s.f]);
-  b.innerHTML = '<span class="pill">' + s.f + "</span><h2>" + s.t + "</h2>" +
-    (c ? '<span class="cifra"><b>' + c[0] + "</b><i>" + c[1] + "</i></span>"
-       : '<p class="hook">' + s.hook + "</p>") +
-    '<span class="foot">' + s.meta + "<em>Apri &rarr;</em></span>";
-  b.addEventListener("click", () => apri(i));
-  lista.appendChild(b);
+  const testo = [s.t, s.hook, s.lead, s.meta]
+    .concat(s.steps.map(x => x[1]))
+    .concat((s.check || []).map(c => c[0] + " " + c[2])).join(" ");
+  VOCI.push({
+    tipo: "scheda", i, titolo: s.t, badge: s.f, col: COL[s.f],
+    quando: s.meta, sotto: s.hook, testo,
+    chi: etichette(CHI, testo), tema: etichette(TEMA, testo)
+  });
 });
+
+P.forEach((p, i) => {
+  const testo = p[2] + " " + p[3];
+  VOCI.push({
+    tipo: "promessa", i, titolo: p[2], badge: STATO[p[0]][0], col: STATO[p[0]][1],
+    quando: "Promessa del 2022", sotto: p[3].replace(/<[^>]+>/g, ""), testo,
+    chi: ["Governo"].concat(etichette(CHI, testo).filter(x => x !== "Governo")),
+    tema: etichette(TEMA, testo)
+  });
+});
+
+/* filtri, costruiti contando quello che c'è davvero */
+let fTema = "", fChi = "";
+
+function costruisci(box, campo, scelto, cambia) {
+  const n = {};
+  VOCI.forEach(v => v[campo].forEach(x => n[x] = (n[x] || 0) + 1));
+  const ordinati = Object.keys(n).sort((a, b) => n[b] - n[a]);
+  box.innerHTML = "";
+
+  const lab = document.createElement("span");
+  lab.className = "lab";
+  lab.textContent = box.dataset.lab;
+  box.appendChild(lab);
+
+  [["", "Tutto", VOCI.length]].concat(ordinati.map(k => [k, k, n[k]])).forEach(([val, testo, num]) => {
+    const b = document.createElement("button");
+    b.className = "f"; b.type = "button"; b.dataset.v = val;
+    b.setAttribute("aria-pressed", val === scelto ? "true" : "false");
+    b.innerHTML = testo + "<b>" + num + "</b>";
+    b.addEventListener("click", () => cambia(val));
+    box.appendChild(b);
+  });
+}
+
+function disegnaFiltri() {
+  costruisci(document.getElementById("fTema"), "tema", fTema, v => { fTema = v; disegnaFiltri(); mostra(); });
+  costruisci(document.getElementById("fChi"),  "chi",  fChi,  v => { fChi  = v; disegnaFiltri(); mostra(); });
+}
+
+function mostra() {
+  const testo = q.value.trim().toLowerCase();
+  pulisci.hidden = !testo;
+
+  const fuori = VOCI.filter(v =>
+    (!fTema || v.tema.includes(fTema)) &&
+    (!fChi  || v.chi.includes(fChi)) &&
+    (!testo || v.testo.toLowerCase().includes(testo))
+  );
+
+  lista.innerHTML = "";
+  fuori.forEach(v => {
+    const b = document.createElement("button");
+    b.className = "voce"; b.type = "button";
+    b.style.setProperty("--k", v.col);
+    b.innerHTML =
+      '<span class="alto"><span class="bd">' + v.badge + "</span>" +
+      '<span class="qd">' + v.quando + "</span></span>" +
+      "<span class='tt'>" + v.titolo + "</span>" +
+      '<span class="st">' + v.sotto + "</span>" +
+      (v.chi.length ? '<span class="tg">' + v.chi.map(c => "<i>" + c + "</i>").join("") + "</span>" : "");
+    b.addEventListener("click", () => v.tipo === "scheda" ? apri(v.i) : apriPromessa(v.i));
+    lista.appendChild(b);
+  });
+
+  esiti.textContent = fuori.length + (fuori.length === 1 ? " risultato" : " risultati");
+  niente.hidden = fuori.length > 0;
+}
+
+q.addEventListener("input", mostra);
+pulisci.addEventListener("click", () => { q.value = ""; mostra(); q.focus(); });
+
+document.getElementById("cont").textContent =
+  VOCI.length + " voci · " + (S.reduce((n, s) => n + s.prove.length, 0) + P.length) + " fonti";
+
+/* dettaglio di una promessa: stessa forma delle schede, più corta */
+function apriPromessa(i) {
+  const p = P[i];
+  det.style.setProperty("--k", STATO[p[0]][1]);
+  det.innerHTML =
+    '<div class="prog"><i></i></div>' +
+    '<button class="back" type="button">&larr; Torna all&rsquo;elenco</button>' +
+    '<span class="pill">' + STATO[p[0]][0] + "</span><h2>" + p[2] + "</h2>" +
+    '<div class="pan on"><p class="lead">' + p[3] + "</p>" +
+    '<ul class="prove"><li><a href="' + p[4] + '" target="_blank" rel="noopener noreferrer">' +
+    '<span class="t">Verifica</span><span class="arr">&rarr;</span>' +
+    '<span class="m">' + p[5] + "</span></a></li></ul></div>";
+  det.querySelector(".back").addEventListener("click", chiudi);
+  vaiSuDettaglio();
+}
+
+function vaiSuDettaglio() {
+  document.querySelectorAll(".cerca,.facce,.esiti").forEach(e => e.classList.add("off"));
+  lista.classList.add("off"); niente.hidden = true; det.classList.add("on");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  avanzamento();
+}
 
 function conf(rows) {
   if (!rows) return "";
@@ -730,9 +668,7 @@ function apri(i) {
     });
   });
 
-  lista.classList.add("off"); barra.classList.add("off"); det.classList.add("on");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  avanzamento();
+  vaiSuDettaglio();
 }
 
 /* riempie la barra man mano che si scorre la scheda */
@@ -759,7 +695,10 @@ function avanzamento() {
 }
 
 function chiudi() {
-  det.classList.remove("on"); lista.classList.remove("off"); barra.classList.remove("off");
+  det.classList.remove("on");
+  document.querySelectorAll(".cerca,.facce,.esiti").forEach(e => e.classList.remove("off"));
+  lista.classList.remove("off");
+  mostra();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -768,4 +707,7 @@ h.addEventListener("click", chiudi);
 h.addEventListener("keydown", e => {
   if (e.key === "Enter" || e.key === " ") { e.preventDefault(); chiudi(); }
 });
+
+disegnaFiltri();
+mostra();
 </script>
