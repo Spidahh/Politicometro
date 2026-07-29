@@ -4,21 +4,21 @@
   :root {
     --bg:#0A0A0C; --sur:#141419; --sur2:#1C1C23; --line:#2A2A33;
     --tx:#F6F6F8; --dim:#9A9AA8;
-    --c1:#7B7BFF; --c2:#FF6A55; --c3:#FFB627; --c4:#2DD4BF; --c5:#FF5CA8; --c6:#8BE04F;
+    --c1:#7B7BFF; --c2:#FF6A55; --c3:#FFB627; --c4:#2DD4BF; --c5:#FF5CA8; --c6:#8BE04F; --c7:#59A5FF;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   }
   @media (prefers-color-scheme: light) {
     :root { --bg:#EEEEF2; --sur:#FFF; --sur2:#F4F4F8; --line:#DFDFE7;
             --tx:#0B0B0F; --dim:#61616D;
-            --c1:#4A4AD8; --c2:#DB3A22; --c3:#A66E00; --c4:#00897B; --c5:#C42B76; --c6:#3F8B00; }
+            --c1:#4A4AD8; --c2:#DB3A22; --c3:#A66E00; --c4:#00897B; --c5:#C42B76; --c6:#3F8B00; --c7:#1D6FD0; }
   }
   :root[data-theme="light"] { --bg:#EEEEF2; --sur:#FFF; --sur2:#F4F4F8; --line:#DFDFE7;
     --tx:#0B0B0F; --dim:#61616D; --c1:#4A4AD8; --c2:#DB3A22; --c3:#A66E00; --c4:#00897B;
-    --c5:#C42B76; --c6:#3F8B00; }
+    --c5:#C42B76; --c6:#3F8B00; --c7:#1D6FD0; }
   :root[data-theme="dark"] { --bg:#0A0A0C; --sur:#141419; --sur2:#1C1C23; --line:#2A2A33;
     --tx:#F6F6F8; --dim:#9A9AA8; --c1:#7B7BFF; --c2:#FF6A55; --c3:#FFB627; --c4:#2DD4BF;
-    --c5:#FF5CA8; --c6:#8BE04F; }
+    --c5:#FF5CA8; --c6:#8BE04F; --c7:#59A5FF; }
 
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--tx); font-family:var(--sans);
@@ -45,6 +45,28 @@
   .f:hover { color:var(--tx); border-color:var(--k,var(--tx)); }
   .f[aria-pressed="true"] { color:var(--k,var(--tx)); border-color:currentColor; }
   .f:focus-visible { outline:2px solid var(--k,var(--c1)); outline-offset:2px; }
+
+  /* promesse */
+  .sezione { margin:0 0 1.4rem; display:flex; align-items:baseline; gap:.8rem; flex-wrap:wrap; }
+  .sezione h2 { margin:0; font-size:clamp(1.5rem,6vw,2.2rem); font-weight:900;
+                letter-spacing:-.04em; line-height:1; }
+  .sezione span { font-family:var(--mono); font-size:.62rem; letter-spacing:.11em;
+                  text-transform:uppercase; color:var(--dim); }
+
+  .promesse { display:grid; gap:.4rem; margin-bottom:2.5rem; }
+  .p { display:grid; grid-template-columns:1fr auto; gap:.4rem .9rem; align-items:start;
+       background:var(--sur); border:1px solid var(--line); border-radius:14px;
+       padding:.8rem .95rem; border-left:4px solid var(--k); }
+  .p .d { font-size:.97rem; font-weight:700; letter-spacing:-.01em; line-height:1.35; }
+  .p .st { font-family:var(--mono); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase;
+           font-weight:700; color:var(--k); border:1.5px solid currentColor; border-radius:999px;
+           padding:.26rem .55rem; white-space:nowrap; }
+  .p .e { grid-column:1/-1; font-size:.89rem; color:var(--dim); line-height:1.45; }
+  .p .e b { color:var(--tx); font-variant-numeric:tabular-nums; }
+  .p .e a { color:var(--dim); text-underline-offset:3px; }
+  .p .e a:hover { color:var(--k); }
+  .p.rotta { --k:var(--c2); } .p.contro { --k:var(--c5); }
+  .p.lenta { --k:var(--c3); } .p.fatta { --k:var(--c6); }
 
   /* griglia densa */
   .griglia { display:grid; grid-template-columns:repeat(auto-fill,minmax(17.5rem,1fr));
@@ -194,6 +216,16 @@
     <span class="mono" id="cont"></span>
   </header>
 
+  <div class="sezione">
+    <h2>Quello che avevano promesso</h2>
+    <span id="contaP"></span>
+  </div>
+  <div class="promesse" id="promesse"></div>
+
+  <div class="sezione">
+    <h2>Le schede</h2>
+    <span id="contaS"></span>
+  </div>
   <div class="barra" id="barra"></div>
   <div class="griglia" id="lista"></div>
   <div class="apri" id="det"></div>
@@ -210,10 +242,43 @@
 const COL = {
   "Stesso metro":"var(--c1)", "Detto contro fatto":"var(--c2)",
   "Che fine ha fatto":"var(--c3)", "Nebbia":"var(--c4)",
-  "Dove sono finiti i soldi":"var(--c5)", "Una cosa fatta bene":"var(--c6)"
+  "Dove sono finiti i soldi":"var(--c5)", "Una cosa fatta bene":"var(--c6)",
+  "La storia che gira":"var(--c7)"
 };
 
 const S = [
+{
+  f:"La storia che gira", t:"La lista dei &laquo;grandi risultati&raquo; che gira su internet", meta:"Verificata voce per voce",
+  hook:"Met&agrave; regge coi numeri alla mano. L&rsquo;altra met&agrave; no, e conviene saperlo prima di rilanciarla.",
+  lead:"Gira un elenco di cose che il governo avrebbe fatto o non fatto in quattro anni. Alcune voci sono documentate e stanno in piedi. Altre sono gonfiate o sbagliate: se le rilanci, chi ti risponde ha gioco facile e passa per quello che ha ragione su tutto.",
+  check:[
+    ["In Albania hanno speso quasi un miliardo per far passare 500 persone.",
+     "Dalla lista che circola",
+     "Il numero delle persone regge, il miliardo no. I <b>670 milioni</b> erano il costo <b>previsto su cinque anni</b>, non la spesa gi&agrave; fatta, che risulta molto inferiore. Il dato solido &egrave; un altro: circa 635 persone passate e <b>83 rimpatri in quasi tre anni</b>, con la necessit&agrave; di riportarle comunque in Italia."],
+    ["Il decreto flussi prevede 500 mila ingressi: hanno fallito sull&rsquo;immigrazione.",
+     "Dalla lista che circola",
+     "Le quote sono vere &mdash; <b>497.550 in tre anni</b>, dal sito del Viminale &mdash; ma riguardano <b>immigrazione regolare per lavoro</b>, richiesta dalle imprese. Non c&rsquo;entrano con gli sbarchi. Usarle come prova del fallimento sugli arrivi irregolari &egrave; un errore, e si smonta in dieci secondi."],
+    ["Inflazione a doppia cifra.",
+     "Dalla lista che circola",
+     "Non nel 2026: viaggia intorno al <b>3%</b>. La doppia cifra c&rsquo;&egrave; stata nel 2022-2023. Il dato vero e verificabile &egrave; un altro: i salari reali restano sotto i livelli di trent&rsquo;anni fa."],
+    ["Appalti pubblici affidati direttamente, senza gare.",
+     "Dalla lista che circola",
+     "L&rsquo;affidamento diretto esiste ma vale <b>solo sotto certe soglie</b> di importo, non per tutti gli appalti. Detta cos&igrave; &egrave; falsa."],
+    ["Schedatura dei professori di sinistra.",
+     "Dalla lista che circola",
+     "Il questionario per segnalare docenti &laquo;di parte&raquo; &egrave; stato diffuso da <b>Azione Studentesca</b>, organizzazione giovanile vicina a Fratelli d&rsquo;Italia. Non &egrave; un atto del governo. Attribuirlo al governo rende contestabile tutto il resto della lista."]
+  ],
+  steps:[["Cosa regge","Accise sul gasolio aumentate, blocco navale mai attuato, centri in Albania trasformati in strutture di rimpatrio, pressione fiscale salita, ponte fermo senza costo definitivo, flat tax mai arrivata: tutte voci documentate e con fonte."],
+    ["Cosa non regge","Il miliardo speso in Albania, l&rsquo;inflazione a doppia cifra oggi, gli appalti tutti senza gara, la schedatura dei professori attribuita al governo, le quote del decreto flussi usate come prova sugli sbarchi."],
+    ["Perch&eacute; conta","Nello stesso thread in cui gira la lista, un utente le ha smontate una per una con i link ufficiali. Le voci false trascinano gi&ugrave; anche quelle vere."],
+    ["La regola","Se una voce non ha una fonte che la regge, qui non entra. Anche quando fa comodo."]],
+  aperti:["Alcune voci della lista non sono verificabili con dati pubblici e restano fuori.","Questa scheda verr&agrave; aggiornata se escono numeri nuovi."],
+  prove:[["Decreto flussi 2026-2028: 497.550 quote in tre anni","Ministero dell&rsquo;Interno","Comunicato ufficiale","https://www.interno.gov.it/it/notizie/decreto-flussi-2026-2028-previste-497550-quote-tre-anni-precompilazione-domande-dal-23-ottobre"],
+    ["I centri in Albania non costano un milione a migrante, ma restano cari","Pagella Politica","Verifica","https://pagellapolitica.it/articoli/centri-albania-costo-milione-euro-migrante"],
+    ["Albania: promessi 36 mila migranti, solo 83 rimpatri","Il Fatto Quotidiano","21.04.2026","https://www.ilfattoquotidiano.it/2026/04/21/migranti-albania-rimpatri-flop-notizie/8362049/"],
+    ["Prezzi al consumo, giugno 2026","Istat","Dati ufficiali","https://www.istat.it/comunicato-stampa/prezzi-al-consumo-giugno-2026/"],
+    ["Vademecum sugli affidamenti diretti","ANAC","Soglie","https://www.anticorruzione.it/en/-/news.09.08.24.vademecum.affidamenti.diretti"]]
+},
 {
   f:"Detto contro fatto", t:"Il gioielliere che vogliono candidare, ma non pu&ograve; nemmeno votare", meta:"15 luglio 2026",
   hook:"Condanna definitiva a 14 anni e 9 mesi. Per legge &egrave; fuori da ogni lista.",
@@ -471,12 +536,93 @@ const S = [
 }
 ];
 
+/* --- promesse del programma 2022, una per riga --- */
+const P = [
+["contro","Fatto il contrario","Tagliare, e poi abolire, le accise sui carburanti",
+ "Dal 1&deg; gennaio 2026 benzina e gasolio sono allineati a <b>672,90 euro ogni mille litri</b>: per il gasolio sono <b>4,05 centesimi al litro in pi&ugrave;</b> rispetto al 2025. Lo sconto &egrave; scaduto il 3 luglio 2026, prima delle vacanze. A fine luglio il governo ha varato un taglio temporaneo per riportare il gasolio verso i 2 euro.",
+ "https://www.ilfattoquotidiano.it/2026/07/27/taglio-accise-carburanti-gasolio-governo-notizie/8460248/","Il Fatto, 27.07.2026"],
+
+["contro","Fatto il contrario","Abbassare la pressione fiscale",
+ "Nel 2022 era il <b>41,7%</b> del PIL. Nel 2025 &egrave; salita al <b>42,8%</b>, e l&rsquo;Istat ha poi certificato <b>43,1%</b>: pi&ugrave; alta degli ultimi undici anni. Dall&rsquo;inizio del mandato &egrave; cresciuta di 1,3 punti.",
+ "https://lespresso.it/c/economia/2026/4/3/pressione-fiscale-governo-meloni-dati-istat/61097","L&rsquo;Espresso, dati Istat"],
+
+["rotta","Non fatta","Flat tax al 15% per tutti, poi per gli autonomi fino a 100 mila euro",
+ "Non introdotta. Non &egrave; nemmeno nel disegno di legge di bilancio per il 2026. Il regime al 15% per le partite IVA esisteva gi&agrave; dal 2014, voluto dal governo Renzi; il primo governo Conte, con la Lega, ne allarg&ograve; la platea a 65 mila euro.",
+ "https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva","Pagella Politica"],
+
+["rotta","Non fatta","Il blocco navale per fermare gli sbarchi",
+ "Mai attuato. Nei documenti del partito era una missione europea concordata con la Libia: quella missione l&rsquo;Unione europea non l&rsquo;ha mai proposta n&eacute; approvata.",
+ "https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale","Pagella Politica"],
+
+["contro","Fatto il contrario","I centri in Albania per procedure rapide di asilo",
+ "Dopo le sentenze di tribunali italiani, Cassazione e Corte di giustizia UE, un decreto del marzo 2025 li ha trasformati in centri di rimpatrio. Ci sono passate circa <b>635 persone</b> e in quasi tre anni i rimpatri sono stati <b>83</b>: per eseguirli bisogna comunque riportare le persone in Italia.",
+ "https://www.ilfattoquotidiano.it/2026/04/21/migranti-albania-rimpatri-flop-notizie/8362049/","Il Fatto, 21.04.2026"],
+
+["contro","Fatto il contrario","Elezione diretta del Presidente della Repubblica",
+ "Il presidenzialismo &egrave; stato lasciato cadere. Al suo posto &egrave; stata portata avanti l&rsquo;elezione diretta del presidente del Consiglio, che &egrave; un&rsquo;altra cosa.",
+ "https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni","Pagella Politica"],
+
+["rotta","Non fatta","Superare la legge Fornero sulle pensioni",
+ "Non superata. Nella manovra 2026 <b>Quota 103 &egrave; stata cancellata</b> per mancanza di risorse e <b>Opzione donna non &egrave; stata prorogata</b>. Restano 67 anni e 20 di contributi.",
+ "https://fap.acli.it/pensione-di-vecchiaia-2026-i-requisiti-restano-67-anni-e-20-di-contributi/","Patronato Acli"],
+
+["contro","Fatto il contrario","Difendere i balneari dalle gare europee",
+ "Alla fine le gare sono state ammesse, dopo anni di opposizione in campagna elettorale.",
+ "https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni","Pagella Politica"],
+
+["contro","Fatto il contrario","Abbassare l&rsquo;IVA sui prodotti per la prima infanzia",
+ "Prima abbassata, poi rialzata sugli stessi prodotti.",
+ "https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni","Pagella Politica"],
+
+["contro","Fatto il contrario","Piantare nuovi alberi secondo gli obiettivi del PNRR",
+ "L&rsquo;obiettivo di rimboschimento &egrave; stato ridotto.",
+ "https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni","Pagella Politica"],
+
+["lenta","In ritardo","Spendere i fondi del PNRR nei tempi",
+ "A febbraio 2026 spesi <b>113,5 miliardi</b> sui 194,4 del piano. La Corte dei conti stima che <b>24,2 miliardi</b>, su 66 misure, slitteranno oltre il 2026: quasi il 40% delle misure con scadenza perentoria.",
+ "https://pagellapolitica.it/articoli/spesa-pnrr-ancora-ritardo-upb","Pagella Politica, dati UPB"],
+
+["lenta","In ritardo","Costruire il ponte sullo Stretto",
+ "I cantieri non sono partiti. La Corte dei conti ha rilevato che <b>manca la determinazione del costo definitivo</b> dell&rsquo;opera. Il nuovo decreto sposta tutto al <b>2032</b>.",
+ "https://www.today.it/economia/ponte-stretto-novita-2026.html","Today"],
+
+["fatta","Fatta","Rendere strutturale il taglio del cuneo fiscale",
+ "Non &egrave; pi&ugrave; da rinnovare ogni anno. Contate come mantenute anche la riforma fiscale, la pace fiscale, l&rsquo;assegno di inclusione al posto del reddito di cittadinanza e il rafforzamento dell&rsquo;assegno unico.",
+ "https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni","Pagella Politica"],
+
+["fatta","Fatta","Alzare il tetto ai pagamenti in contanti",
+ "Dal 1&deg; gennaio 2023 il limite &egrave; passato da <b>1.000 a 5.000 euro</b>.",
+ "https://www.confcommercio.it/-/tetto-contante","Confcommercio"],
+
+["fatta","Fatta","Cancellare il reato di abuso d&rsquo;ufficio",
+ "Abrogato dalla legge 114 del 9 agosto 2024. Alla Camera: <b>199 favorevoli, 102 contrari</b>, nessun astenuto. La Corte costituzionale ha poi respinto i dubbi di legittimit&agrave;.",
+ "https://www.altalex.com/documents/news/2024/07/16/abuso-ufficio-sguardo-insieme-nascita-abolizione","Altalex"]
+];
+
+const promesse = document.getElementById("promesse");
+P.forEach(p => {
+  const d = document.createElement("div");
+  d.className = "p " + p[0];
+  d.innerHTML = '<span class="d">' + p[2] + '</span><span class="st">' + p[1] + "</span>" +
+    '<span class="e">' + p[3] + ' &mdash; <a href="' + p[4] +
+    '" target="_blank" rel="noopener noreferrer">' + p[5] + "</a></span>";
+  promesse.appendChild(d);
+});
+
+const rotte = P.filter(p => p[0] === "rotta" || p[0] === "contro").length;
+document.getElementById("contaP").className = "mono";
+document.getElementById("contaP").innerHTML =
+  P.length + " voci &middot; " + rotte + " non mantenute o rovesciate &middot; programma 2022";
+
 const lista = document.getElementById("lista");
 const det = document.getElementById("det");
 const barra = document.getElementById("barra");
 
-document.getElementById("cont").textContent =
-  S.length + " schede · " + S.reduce((n, s) => n + s.prove.length, 0) + " fonti";
+const nFonti = S.reduce((n, s) => n + s.prove.length, 0) + P.length;
+document.getElementById("cont").textContent = S.length + " schede · " + nFonti + " fonti";
+const cS = document.getElementById("contaS");
+cS.className = "mono";
+cS.textContent = S.length + " · " + new Set(S.map(s => s.f)).size + " formati";
 
 /* filtri */
 const conteggi = {};
