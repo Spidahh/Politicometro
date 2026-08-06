@@ -1,12 +1,11 @@
 <title>Politicometro — Dal dire al fare</title>
-<meta name="description" content="Seguiamo promesse, dichiarazioni e decisioni della politica italiana per mostrare gli sviluppi, le fonti e le conseguenze.">
+<meta name="description" content="Quello che i politici hanno promesso, e quello che è successo davvero. Spiegato semplice, con le fonti.">
 
 <style>
   :root{
-    --inchiostro:#04101E; --verde:#376063; --oro:#C9954F; --rosso:#C5574F;
-    --crema:#F7F2EE; --crema2:#E1DCD8;
-    --fondo:#05111D; --carta:#0E1A28; --linea:#1E2E40; --pista:#2E3842;
-    --testo:#EEF2F6; --tenue:#94A3B4;
+    --inchiostro:#04101E; --verde:#376063; --crema:#F7F2EE; --crema2:#E1DCD8;
+    --fondo:#05111D; --carta:#0E1A28; --linea:#203044;
+    --testo:#F2F5F8; --tenue:#9DAABA;
     --verde-c:#5FB3A6; --oro-c:#E0A94C; --rosso-c:#DB6259; --salvia:#7CC08A;
     --serif:"Source Serif 4","Source Serif Pro","Iowan Old Style",Georgia,"Times New Roman",serif;
     --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -14,631 +13,517 @@
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--fondo);color:var(--testo);font-family:var(--sans);
-       font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
-  .contenitore{max-width:70rem;margin:0 auto;padding:0 1.4rem}
+       font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .dentro{max-width:44rem;margin:0 auto;padding:0 1.3rem}
 
-  .barra{position:sticky;top:0;z-index:20;background:rgba(5,17,29,.9);
-         backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--linea)}
-  .barra .contenitore{display:flex;align-items:center;gap:2rem;height:66px}
-  .marca{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--testo);flex:0 0 auto}
-  .marchio{width:30px;height:24px;overflow:visible}
-  .marca b{font-family:var(--serif);font-size:1.28rem;font-weight:600;letter-spacing:-.015em}
-  nav{display:flex;gap:1.6rem;margin-left:auto;flex-wrap:wrap}
-  nav a{color:var(--tenue);text-decoration:none;font-size:.88rem;padding:.3rem 0;border-bottom:2px solid transparent}
-  nav a:hover{color:var(--testo)}
-  nav a.qui{color:var(--testo);border-bottom-color:var(--verde-c)}
-  @media (max-width:58rem){ nav{display:none} }
+  /* barra */
+  .barra{position:sticky;top:0;z-index:20;background:rgba(5,17,29,.94);
+         backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--linea)}
+  .barra .dentro{display:flex;align-items:center;gap:1.4rem;height:60px}
+  .marca{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--testo)}
+  .marchio{width:28px;height:22px;overflow:visible}
+  .marca b{font-family:var(--serif);font-size:1.2rem;font-weight:600}
+  .barra nav{display:flex;gap:1.2rem;margin-left:auto}
+  .barra nav a{color:var(--tenue);text-decoration:none;font-size:.9rem}
+  .barra nav a:hover{color:var(--testo)}
+  @media (max-width:40rem){ .barra nav{display:none} }
 
-  .apertura{padding:4.5rem 0 3.2rem;border-bottom:1px solid var(--linea)}
-  .apertura h1{font-family:var(--serif);font-size:clamp(2.4rem,6.2vw,4rem);font-weight:600;
-               letter-spacing:-.028em;line-height:1.06;margin:0 0 1.1rem;max-width:16ch}
-  .occhio{font-size:1.05rem;color:var(--tenue);max-width:48ch;margin:0 0 2rem}
-  .cta{display:inline-block;background:var(--verde);color:#fff;text-decoration:none;padding:.85rem 1.6rem;
-       border-radius:8px;font-size:.95rem;border:1px solid rgba(255,255,255,.09)}
-  .cta:hover{background:#42736F}
-  .scala{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:3rem}
-  .grado{flex:1 1 8rem;position:relative;padding-top:1.5rem}
-  .grado::before{content:"";position:absolute;top:5px;left:0;right:0;height:2px;background:var(--pista)}
-  .grado span{position:absolute;top:0;left:0;width:12px;height:12px;border-radius:50%;
-              background:var(--pista);border:2px solid var(--fondo)}
-  .grado.d span{background:var(--verde-c)} .grado.c span{background:var(--salvia)}
-  .grado.o span{background:var(--oro-c)}  .grado.r span{background:var(--rosso-c)}
-  .grado b{display:block;font-size:.76rem;font-weight:500;color:var(--tenue);line-height:1.35}
+  /* apertura */
+  .apri{padding:3.5rem 0 2.5rem}
+  .apri h1{font-family:var(--serif);font-size:clamp(2.2rem,8vw,3.2rem);font-weight:600;
+           line-height:1.1;letter-spacing:-.025em;margin:0 0 1rem}
+  .apri p{margin:0;font-size:1.15rem;color:var(--tenue)}
 
-  section{padding:3.5rem 0;border-bottom:1px solid var(--linea)}
-  h2.tit{font-family:var(--serif);font-size:clamp(1.5rem,3.4vw,2rem);font-weight:600;
-         letter-spacing:-.02em;margin:0 0 .35rem}
-  .sottotit{margin:0 0 2rem;color:var(--tenue);font-size:.95rem;max-width:56ch}
+  /* contatore grande */
+  .conto{display:flex;gap:.7rem;margin:2.5rem 0 0}
+  .box{flex:1;background:var(--carta);border:1px solid var(--linea);border-radius:14px;
+       padding:1.1rem .9rem;text-align:center}
+  .box b{display:block;font-size:2.4rem;font-weight:800;line-height:1;letter-spacing:-.03em}
+  .box span{display:block;font-size:.85rem;color:var(--tenue);margin-top:.4rem;line-height:1.3}
+  .box.r b{color:var(--rosso-c)} .box.o b{color:var(--oro-c)} .box.v b{color:var(--salvia)}
 
-  .griglia{display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1rem}
-  .scheda{background:var(--carta);border:1px solid var(--linea);border-radius:14px;padding:1.4rem}
-  .tema{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin:0 0 .6rem}
-  .tema.non{color:var(--rosso-c)} .tema.corso{color:var(--verde-c)}
-  .tema.si{color:var(--salvia)}   .tema.parz{color:var(--oro-c)}
-  .scheda h3{font-family:var(--serif);font-size:1.28rem;font-weight:600;letter-spacing:-.015em;
-             line-height:1.25;margin:0 0 .5rem;text-wrap:balance}
-  .quando{margin:0 0 1rem;font-size:.82rem;color:var(--tenue)}
+  /* sezioni */
+  section{padding:3rem 0;border-top:1px solid var(--linea)}
+  h2{font-family:var(--serif);font-size:clamp(1.6rem,5vw,2.1rem);font-weight:600;
+     letter-spacing:-.02em;margin:0 0 1.6rem;line-height:1.15}
 
-  .pillola{display:inline-block;font-size:.78rem;padding:.34rem .8rem;border-radius:999px}
-  .pillola.non{background:rgba(219,98,89,.16);color:var(--rosso-c);border:1px solid rgba(219,98,89,.32)}
-  .pillola.corso{background:rgba(95,179,166,.14);color:var(--verde-c);border:1px solid rgba(95,179,166,.32)}
-  .pillola.parz{background:rgba(224,169,76,.14);color:var(--oro-c);border:1px solid rgba(224,169,76,.32)}
-  .pillola.si{background:rgba(124,192,138,.14);color:var(--salvia);border:1px solid rgba(124,192,138,.32)}
+  /* caso */
+  .caso{background:var(--carta);border:1px solid var(--linea);border-radius:16px;padding:1.5rem 1.4rem}
+  .caso h3{font-family:var(--serif);font-size:1.35rem;font-weight:600;margin:0 0 1.4rem;line-height:1.3}
+  .passi{list-style:none;margin:0 0 1.5rem;padding:0}
+  .tappa{position:relative;padding:0 0 1.3rem 1.9rem}
+  .tappa:last-child{padding-bottom:0}
+  .tappa::before{content:"";position:absolute;left:0;top:.42rem;width:13px;height:13px;border-radius:50%}
+  .tappa:not(:last-child)::after{content:"";position:absolute;left:6px;top:1.5rem;bottom:.1rem;
+                                 width:1px;background:var(--linea)}
+  .tappa.d::before{background:var(--verde-c)} .tappa.o::before{background:var(--oro-c)}
+  .tappa.c::before{background:var(--salvia)}  .tappa.r::before{background:var(--rosso-c)}
+  .tappa b{display:block;font-size:.85rem;color:var(--tenue);font-weight:600;margin-bottom:.1rem}
+  .tappa span{display:block;font-size:1.02rem;line-height:1.5}
+  .numerone{display:flex;align-items:baseline;gap:.8rem;padding:1.2rem 0 0;border-top:1px solid var(--linea)}
+  .numerone b{font-size:3rem;font-weight:800;line-height:1;color:var(--rosso-c);letter-spacing:-.04em}
+  .numerone span{font-size:.95rem;color:var(--tenue);line-height:1.4}
+  .chiave{margin:1.2rem 0 0;padding:1rem 1.1rem;background:rgba(95,179,166,.09);
+          border-left:3px solid var(--verde-c);border-radius:0 10px 10px 0;font-size:1.02rem;line-height:1.55}
 
-  .avanz{display:flex;align-items:center;gap:.75rem;margin:1.1rem 0 1rem}
-  .pista{flex:1;height:4px;background:var(--pista);border-radius:2px;overflow:hidden}
-  .pista i{display:block;height:100%;border-radius:2px}
-  .pista i.non{background:var(--rosso-c)} .pista i.corso{background:var(--verde-c)}
-  .pista i.si{background:var(--salvia)}   .pista i.parz{background:var(--oro-c)}
-  .avanz b{font-size:.85rem;color:var(--tenue);min-width:2.4rem;text-align:right;font-variant-numeric:tabular-nums}
-  .spiega{margin:0 0 1rem;font-size:.92rem;line-height:1.65;color:var(--tenue)}
-  .spiega b{color:var(--testo);font-weight:600}
-  .fonti{font-size:.78rem;color:var(--tenue);text-decoration:none;border-bottom:1px solid var(--linea);padding-bottom:2px}
-  .fonti:hover{color:var(--verde-c);border-color:var(--verde-c)}
-
-  .doppia{display:grid;grid-template-columns:1fr 16rem;gap:1rem}
-  @media (max-width:54rem){ .doppia{grid-template-columns:1fr} }
-  .pannello{background:var(--carta);border:1px solid var(--linea);border-radius:14px;padding:1.6rem}
-  .pannello h3{font-family:var(--serif);font-size:1.4rem;font-weight:600;margin:0 0 .35rem;
-               letter-spacing:-.015em;line-height:1.28}
-  .linea{display:flex;gap:.5rem;margin:1.8rem 0 1.4rem}
-  .tappa{flex:1;position:relative;padding-top:1.7rem}
-  .tappa::before{content:"";position:absolute;top:6px;left:0;right:0;height:2px;background:var(--pista)}
-  .tappa:first-child::before{left:7px}
-  .tappa:last-child::before{right:calc(100% - 14px)}
-  .pallino{position:absolute;top:0;left:0;width:14px;height:14px;border-radius:50%;border:2px solid var(--carta)}
-  .pallino.d{background:var(--verde-c)} .pallino.c{background:var(--salvia)}
-  .pallino.o{background:var(--oro-c)}   .pallino.r{background:var(--rosso-c)}
-  .tappa b{display:block;font-size:.78rem;font-weight:600;margin-bottom:.15rem}
-  .tappa span:not(.pallino){font-size:.76rem;color:var(--tenue);line-height:1.35;display:block}
-  .dettagli{list-style:none;margin:0;padding:0;display:grid;gap:.65rem}
-  .dettagli li{font-size:.9rem;color:var(--tenue);padding-left:1.1rem;position:relative;line-height:1.6}
-  .dettagli li::before{content:"";position:absolute;left:0;top:.65rem;width:5px;height:5px;border-radius:50%;background:var(--pista)}
-  .dettagli b{color:var(--testo)}
-  .lato .et{font-size:.72rem;color:var(--tenue);margin:0 0 .55rem}
-  .lato .voce{margin:1.2rem 0 0;font-size:.85rem;color:var(--tenue)}
-  .lato .voce b{color:var(--testo)}
-  .lato .fonti{margin-top:1.2rem;display:inline-block}
-
-  .filtri{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.2rem}
-  .filtro{font:inherit;font-size:.82rem;color:var(--tenue);background:var(--carta);
-          border:1px solid var(--linea);border-radius:999px;padding:.4rem .9rem;cursor:pointer}
+  /* filtri */
+  .filtri{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:1.6rem}
+  .filtro{font:inherit;font-size:.9rem;color:var(--tenue);background:var(--carta);
+          border:1px solid var(--linea);border-radius:999px;padding:.45rem 1rem;cursor:pointer}
   .filtro:hover{color:var(--testo)}
   .filtro[aria-pressed="true"]{background:var(--verde);color:#fff;border-color:var(--verde)}
-  .riga{display:grid;grid-template-columns:1fr 1.35fr;gap:1.5rem;padding:1.5rem 0;border-top:1px solid var(--linea)}
-  @media (max-width:54rem){ .riga{grid-template-columns:1fr;gap:.9rem} }
-  .riga.via{display:none}
-  .riga h3{font-family:var(--serif);font-size:1.18rem;font-weight:600;margin:0 0 .35rem;
-           letter-spacing:-.015em;line-height:1.3}
-  .riga .quando{margin:0}
-  .rd .pillola{margin-bottom:.85rem}
 
-  .persona{display:grid;grid-template-columns:1fr 1.5fr;gap:1.5rem;padding:1.6rem 0;border-top:1px solid var(--linea)}
-  @media (max-width:54rem){ .persona{grid-template-columns:1fr;gap:.9rem} }
-  .persona h3{font-family:var(--serif);font-size:1.22rem;font-weight:600;margin:0 0 .25rem;letter-spacing:-.015em}
-  .ruolo{margin:0 0 .8rem;font-size:.82rem;color:var(--tenue)}
-  .distinto{border-left:2px solid var(--linea);padding-left:.95rem}
+  /* voci detto/fatto */
+  .voce{padding:1.7rem 0;border-top:1px solid var(--linea)}
+  .voce:first-child{border-top:0;padding-top:0}
+  .voce.via{display:none}
+  .tema{font-size:.72rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+        color:var(--tenue);margin:0 0 .6rem}
+  .detto{font-family:var(--serif);font-size:1.42rem;font-weight:600;line-height:1.3;
+         letter-spacing:-.018em;margin:0 0 .4rem;text-wrap:balance}
+  .chi{margin:0;font-size:.85rem;color:var(--tenue)}
+  .risposta{display:flex;gap:.9rem;align-items:flex-start;margin:1.1rem 0 .8rem}
+  .fatto{margin:0;font-size:1.05rem;line-height:1.55}
+  .fatto b{font-weight:700}
+  .bollo{flex:0 0 auto;font-size:.78rem;font-weight:700;padding:.32rem .75rem;border-radius:999px;white-space:nowrap}
+  .bollo.non{background:rgba(219,98,89,.18);color:var(--rosso-c)}
+  .bollo.corso{background:rgba(224,169,76,.16);color:var(--oro-c)}
+  .bollo.parz{background:rgba(224,169,76,.16);color:var(--oro-c)}
+  .bollo.si{background:rgba(124,192,138,.16);color:var(--salvia)}
+  .fonte{font-size:.8rem;color:var(--tenue);text-decoration:none;border-bottom:1px solid var(--linea)}
+  .fonte:hover{color:var(--verde-c);border-color:var(--verde-c)}
 
-  .trucchi{display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1rem}
-  .trucco{background:var(--carta);border:1px solid var(--linea);border-radius:14px;padding:1.4rem}
-  .cifra{font-family:var(--serif);font-size:1.6rem;color:var(--verde-c);margin:0 0 .4rem;line-height:1}
-  .trucco h3{font-family:var(--serif);font-size:1.2rem;font-weight:600;margin:0 0 .7rem;
-             letter-spacing:-.015em;line-height:1.3}
-  .come{margin:0 0 1rem;font-size:.92rem;line-height:1.65}
-  .anche{margin:0;font-size:.86rem;color:var(--tenue);line-height:1.65;
-         border-left:2px solid var(--linea);padding-left:.95rem}
-  .anche span{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
-              color:var(--oro-c);margin-bottom:.3rem}
-  .anche b{color:var(--testo)}
+  /* persone */
+  .persona{padding:1.6rem 0;border-top:1px solid var(--linea)}
+  .persona:first-child{border-top:0;padding-top:0}
+  .persona h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;margin:0 0 .15rem;letter-spacing:-.015em}
+  .pcorpo{margin-top:.9rem}
+  .pcorpo .bollo{display:inline-block;margin-bottom:.8rem}
+  .fatto.due{margin-top:.6rem;color:var(--tenue)}
+  .pcorpo .fonte{display:inline-block;margin-top:.9rem}
 
-  .crema{background:var(--crema);color:var(--inchiostro);border:0;padding:3rem 0}
-  .griglia4{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:2rem}
-  .crema h4{font-size:.95rem;font-weight:700;margin:0 0 .4rem}
-  .crema p{margin:0;font-size:.86rem;line-height:1.6;color:#4A5560}
-  .ico{width:34px;height:34px;border-radius:50%;background:#fff;display:flex;align-items:center;
-       justify-content:center;margin-bottom:.8rem;border:1px solid var(--crema2)}
-  .ico svg{width:17px;height:17px;stroke:var(--inchiostro);fill:none;stroke-width:1.6}
+  /* trucchi */
+  .trucchi{display:grid;gap:.8rem}
+  .trucco{background:var(--carta);border:1px solid var(--linea);border-radius:16px;padding:1.4rem}
+  .cifra{font-family:var(--serif);font-size:1.5rem;color:var(--verde-c);margin:0 0 .3rem;line-height:1}
+  .trucco h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;margin:0 0 .7rem;
+             letter-spacing:-.015em;line-height:1.25}
+  .come{margin:0 0 .9rem;font-size:1.05rem;line-height:1.55}
+  .esempio{margin:0;font-size:.98rem;line-height:1.55;color:var(--tenue);
+           border-left:2px solid var(--linea);padding-left:.9rem}
 
-  footer{padding:2.5rem 0;color:var(--tenue);font-size:.82rem}
-  footer p{margin:0 0 .6rem;line-height:1.65;max-width:76ch}
+  /* crema */
+  .crema{background:var(--crema);color:var(--inchiostro);border:0;padding:2.8rem 0}
+  .crema h2{color:var(--inchiostro)}
+  .regole{display:grid;gap:1.1rem}
+  .regola{display:flex;gap:.9rem;align-items:flex-start}
+  .regola i{flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--verde);margin-top:.55rem}
+  .regola p{margin:0;font-size:1.05rem;line-height:1.5}
+
+  footer{padding:2.2rem 0;color:var(--tenue);font-size:.88rem}
+  footer p{margin:0 0 .5rem}
   footer a{color:var(--tenue)}
 </style>
 
 <div class="barra">
-  <div class="contenitore">
-    <a class="marca" href="#top"><svg class="marchio" viewBox="0 0 132 104" aria-hidden="true">
+  <div class="dentro">
+    <a class="marca" href="#su"><svg class="marchio" viewBox="0 0 132 104" aria-hidden="true">
   <g fill="none" stroke-linecap="round">
     <path d="M24 74 A42 42 0 0 1 62 24" stroke="currentColor" stroke-width="9"/>
     <path d="M70 24.6 A42 42 0 0 1 100 44" stroke="var(--verde-c)" stroke-width="9"/>
     <path d="M103.5 51 A42 42 0 0 1 107.4 66" stroke="var(--oro-c)" stroke-width="9"/>
     <path d="M107.8 73 A42 42 0 0 1 105 84" stroke="var(--rosso-c)" stroke-width="9"/>
     <path d="M24 74 L24 84 L36 84 L30 98 L46 84 L104 84" stroke="currentColor" stroke-width="9" stroke-linejoin="round"/>
-    <g stroke="currentColor" stroke-width="4" opacity=".85">
-      <path d="M39 63 h9"/><path d="M46 43 l6 6"/><path d="M66 35 v9"/><path d="M84 63 h9"/>
-    </g>
     <path d="M66 66 L94 42" stroke="currentColor" stroke-width="7"/>
   </g>
   <circle cx="66" cy="66" r="9" fill="currentColor"/>
   <circle cx="66" cy="66" r="3.4" fill="var(--fondo)"/>
 </svg><b>Politicometro</b></a>
     <nav>
-      <a href="#top" class="qui">Dashboard</a>
-      <a href="#caso">Il caso</a>
-      <a href="#dichiarazioni">Dichiarazioni</a>
+      <a href="#promesse">Promesse</a>
       <a href="#persone">Persone</a>
       <a href="#giro">Come funziona</a>
-      <a href="#metodo">Metodo</a>
     </nav>
   </div>
 </div>
 
-<div id="top"></div>
-<div class="contenitore">
+<div id="su"></div>
+<div class="dentro">
 
-  <header class="apertura">
+  <header class="apri">
     <h1>Dal dire al fare.<br>Noi tracciamo il percorso.</h1>
-    <p class="occhio">Seguiamo promesse, dichiarazioni e decisioni per mostrare gli sviluppi,
-      le fonti e le conseguenze. Ogni riga rimanda all&rsquo;atto o al dato da cui viene.</p>
-    <a class="cta" href="#dichiarazioni">Esplora le dichiarazioni</a>
-    <div class="scala">
-      <div class="grado d"><span></span><b>Dichiarazione</b></div>
-      <div class="grado d"><span></span><b>Impegni presi</b></div>
-      <div class="grado c"><span></span><b>In corso</b></div>
-      <div class="grado o"><span></span><b>Parzialmente</b></div>
-      <div class="grado r"><span></span><b>Non mantenuta</b></div>
+    <p>Quello che hanno promesso. Quello che &egrave; successo.</p>
+    <div class="conto">
+      <div class="box r"><b>10</b><span>non fatte</span></div>
+      <div class="box o"><b>2</b><span>a met&agrave;</span></div>
+      <div class="box v"><b>3</b><span>fatte</span></div>
     </div>
   </header>
 
   <section>
-    <h2 class="tit">In evidenza</h2>
-    <p class="sottotit">Tre impegni seguiti dal giorno in cui sono stati presi.</p>
-    <div class="griglia">
-      <article class="scheda">
-        <p class="tema non">Economia</p>
-        <h3>Aboliremo le accise sui carburanti</h3>
-        <p class="quando">Programma di governo, 2022</p>
-        <span class="pillola non">Non mantenuta</span>
-        <div class="avanz">
-          <span class="pista"><i class="non" style="width:3%"></i></span>
-          <b>&mdash;</b>
-        </div>
-        <p class="spiega">Dal 1&deg; gennaio 2026 benzina e gasolio sono allineati a 672,90 euro ogni mille litri: sul gasolio sono <b>4,05 centesimi al litro in pi&ugrave;</b> rispetto al 2025. Lo sconto &egrave; scaduto il 3 luglio 2026.</p>
-        <a class="fonti" href="https://www.ilfattoquotidiano.it/2026/07/27/taglio-accise-carburanti-gasolio-governo-notizie/8460248/" target="_blank" rel="noopener noreferrer">Fonti &nbsp;&bull;&nbsp; 2</a>
-      </article>
-      <article class="scheda">
-        <p class="tema non">Immigrazione</p>
-        <h3>In Albania centri per procedure rapide di asilo</h3>
-        <p class="quando">Accordo annunciato nel 2023</p>
-        <span class="pillola non">Non mantenuta</span>
-        <div class="avanz">
-          <span class="pista"><i class="non" style="width:15%"></i></span>
-          <b>15%</b>
-        </div>
-        <p class="spiega">I centri hanno aperto in ottobre 2024. Dal marzo 2025 un decreto ha reso Gjader un centro di rimpatrio. Al 14 luglio 2026 ci sono passate <b>685 persone</b> e i rimpatri collegati sono <b>101</b>: meno del 15 per cento.</p>
-        <a class="fonti" href="https://www.aduc.it/articolo/accoglienza+migranti+modello+albania+685+trasferiti_41606.php" target="_blank" rel="noopener noreferrer">Fonti &nbsp;&bull;&nbsp; 3</a>
-      </article>
-      <article class="scheda">
-        <p class="tema corso">Conti pubblici</p>
-        <h3>Spenderemo i fondi del PNRR nei tempi</h3>
-        <p class="quando">Impegni con l&rsquo;Unione europea</p>
-        <span class="pillola corso">In corso</span>
-        <div class="avanz">
-          <span class="pista"><i class="corso" style="width:58%"></i></span>
-          <b>58%</b>
-        </div>
-        <p class="spiega">A febbraio 2026 la spesa &egrave; a <b>113,5 miliardi</b> sui 194,4 del piano. Nella relazione del 27 maggio 2026 la Corte dei conti riporta le stime delle amministrazioni: <b>24,2 miliardi</b> su 66 misure slitteranno oltre il 2026.</p>
-        <a class="fonti" href="https://pagellapolitica.it/articoli/spesa-pnrr-ancora-ritardo-upb" target="_blank" rel="noopener noreferrer">Fonti &nbsp;&bull;&nbsp; 2</a>
-      </article>
-    </div>
-  </section>
-
-  <section id="caso">
-    <h2 class="tit">Percorso di un caso</h2>
-    <p class="sottotit">Cosa &egrave; successo, passo per passo, con le date degli atti.</p>
-    <div class="doppia">
-      <div class="pannello">
-        <h3>Le chat che il Parlamento non ha consegnato</h3>
-        <p class="quando">Richiesta della procura di Roma depositata il 25 maggio 2026</p>
-        <div class="linea">
-          <div class="tappa">
-            <span class="pallino d"></span>
-            <b>25 mag 2026</b>
-            <span>La richiesta</span>
-          </div>
-          <div class="tappa">
-            <span class="pallino o"></span>
-            <b>22 lug 2026</b>
-            <span>La Giunta</span>
-          </div>
-          <div class="tappa">
-            <span class="pallino c"></span>
-            <b>24 lug 2026</b>
-            <span>Arrivano lo stesso</span>
-          </div>
-          <div class="tappa">
-            <span class="pallino r"></span>
-            <b>5 ago 2026</b>
-            <span>L&rsquo;Aula decide</span>
-          </div>
-        </div>
-        <ul class="dettagli">
-          <li>La procura di Roma chiede alla Camera di poter acquisire le chat fra il deputato Andrea Delmastro e Mauro Caroccia.</li>
-          <li>La Giunta per le autorizzazioni vota contro e propone all&rsquo;Aula il diniego. La Giunta non ha l&rsquo;ultima parola.</li>
-          <li>L&rsquo;avvocato di Caroccia deposita le stesse chat in procura con una memoria difensiva. La procura decide di non utilizzarle in attesa del voto della Camera.</li>
-          <li>L&rsquo;Aula conferma il diniego: <b>206 voti a favore, 133 contrari</b>. Le chat restano inutilizzabili.</li>
-        </ul>
+    <h2>Il caso di adesso</h2>
+    <div class="caso">
+      <h3>Le chat che il Parlamento non ha dato ai giudici</h3>
+      <ul class="passi">
+        <li class="tappa d">
+          <b>25 maggio</b>
+          <span>I giudici chiedono di leggere le chat di un deputato.</span>
+        </li>
+        <li class="tappa o">
+          <b>22 luglio</b>
+          <span>Una commissione di deputati dice di no.</span>
+        </li>
+        <li class="tappa c">
+          <b>24 luglio</b>
+          <span>Le chat arrivano lo stesso: le porta un avvocato.</span>
+        </li>
+        <li class="tappa r">
+          <b>5 agosto</b>
+          <span>Tutti i deputati votano. No definitivo.</span>
+        </li>
+      </ul>
+      <div class="numerone">
+        <b>206</b><span>hanno votato per non darle. Contrari: 133.</span>
       </div>
-      <aside class="pannello lato">
-        <p class="et">Stato attuale</p>
-        <span class="pillola non">Diniego confermato</span>
-        <p class="voce">Impatto: <b>alto</b></p>
-        <p class="voce">Chi riguarda:<br><b>un deputato in carica, un&rsquo;inchiesta della procura di Roma</b></p>
-        <a class="fonti" href="https://www.ilpost.it/2026/08/05/storia-chat-andrea-delmastro-caroccia-procura/" target="_blank" rel="noopener noreferrer">Fonti &nbsp;&bull;&nbsp; 3</a>
-      </aside>
+      <p class="chiave">Le tue chat le prende un giudice e basta. Per un deputato serve il permesso degli altri deputati.</p>
+      <p style="margin:1.1rem 0 0"><a class="fonte" href="https://www.ilpost.it/2026/08/05/storia-chat-andrea-delmastro-caroccia-procura/" target="_blank" rel="noopener noreferrer">Il Post, 5 agosto 2026 &nearr;</a></p>
     </div>
   </section>
 
-  <section id="dichiarazioni">
-    <h2 class="tit">Tutte le dichiarazioni</h2>
-    <p class="sottotit">A sinistra quello che &egrave; stato detto. A destra quello che risulta, con la fonte.</p>
+  <section id="promesse">
+    <h2>Le promesse</h2>
     <div class="filtri" id="filtri">
       <button class="filtro" type="button" data-s="" aria-pressed="true">Tutte</button>
-      <button class="filtro" type="button" data-s="non" aria-pressed="false">Non mantenute</button>
-      <button class="filtro" type="button" data-s="corso" aria-pressed="false">In corso</button>
-      <button class="filtro" type="button" data-s="si" aria-pressed="false">Mantenute</button>
+      <button class="filtro" type="button" data-s="non" aria-pressed="false">Non fatte</button>
+      <button class="filtro" type="button" data-s="corso" aria-pressed="false">A met&agrave;</button>
+      <button class="filtro" type="button" data-s="si" aria-pressed="false">Fatte</button>
     </div>
     <div id="elenco">
-      <article class="riga" data-s="non">
-        <div class="rt">
-          <p class="tema non">Economia</p>
-          <h3>Meno tasse: abbasseremo la pressione fiscale</h3>
-          <p class="quando">Programma di governo, 2022</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Benzina</p>
+        <p class="detto">&ldquo;Toglieremo le tasse sulla benzina&rdquo;</p>
+        <p class="chi">Programma del centrodestra, 2022</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Il gasolio costa di pi&ugrave;. <b>4 centesimi in pi&ugrave; al litro</b> da gennaio 2026.</p>
         </div>
-        <div class="rd">
-          <span class="pillola non">Non mantenuta</span>
-          <p class="spiega">Nel 2022 era il <b>41,7%</b> del PIL, nel 2025 il <b>43,1%</b> certificato Istat: la pi&ugrave; alta degli ultimi undici anni.</p>
-          <a class="fonti" href="https://lespresso.it/c/economia/2026/4/3/pressione-fiscale-governo-meloni-dati-istat/61097" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso, dati Istat &nearr;</a>
-        </div>
+        <a class="fonte" href="https://www.ilfattoquotidiano.it/2026/07/27/taglio-accise-carburanti-gasolio-governo-notizie/8460248/" target="_blank" rel="noopener noreferrer">Il Fatto &nearr;</a>
       </article>
-      <article class="riga" data-s="non">
-        <div class="rt">
-          <p class="tema non">Economia</p>
-          <h3>Flat tax al 15% per tutti</h3>
-          <p class="quando">Lega, programma 2018 e 2022</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Tasse</p>
+        <p class="detto">&ldquo;Pagherete meno tasse&rdquo;</p>
+        <p class="chi">Programma del centrodestra, 2022</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Le tasse sono salite. Non erano cos&igrave; alte da <b>undici anni</b>.</p>
         </div>
-        <div class="rd">
-          <span class="pillola non">Non mantenuta</span>
-          <p class="spiega">Il regime al 15% per le partite IVA <b>esisteva gi&agrave; dal 2014</b>, introdotto dal governo Renzi. Quella per tutti costerebbe circa <b>60 miliardi l&rsquo;anno</b> e non &egrave; mai arrivata.</p>
-          <a class="fonti" href="https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
-        </div>
+        <a class="fonte" href="https://lespresso.it/c/economia/2026/4/3/pressione-fiscale-governo-meloni-dati-istat/61097" target="_blank" rel="noopener noreferrer">L&rsquo;Espresso, dati Istat &nearr;</a>
       </article>
-      <article class="riga" data-s="non">
-        <div class="rt">
-          <p class="tema non">Immigrazione</p>
-          <h3>La proposta pi&ugrave; seria &egrave; il blocco navale</h3>
-          <p class="quando">Giorgia Meloni, 2 maggio 2022</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Tasse</p>
+        <p class="detto">&ldquo;Tasse al 15% uguali per tutti&rdquo;</p>
+        <p class="chi">Lega, 2018 e 2022</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Non &egrave; mai arrivata. Costerebbe <b>60 miliardi l&rsquo;anno</b>. Quella che c&rsquo;&egrave; oggi l&rsquo;ha fatta Renzi nel 2014.</p>
         </div>
-        <div class="rd">
-          <span class="pillola non">Non mantenuta</span>
-          <p class="spiega">Mai attuato. Nei documenti del partito non era un blocco navale ma una missione europea concordata con la Libia: <b>l&rsquo;Unione europea non l&rsquo;ha mai proposta n&eacute; approvata</b>.</p>
-          <a class="fonti" href="https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
-        </div>
+        <a class="fonte" href="https://pagellapolitica.it/fact-checking/chi-ha-introdotto-flat-tax-partite-iva" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
       </article>
-      <article class="riga" data-s="non">
-        <div class="rt">
-          <p class="tema non">Lavoro</p>
-          <h3>Supereremo la legge Fornero</h3>
-          <p class="quando">Programma di governo, 2022</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Migranti</p>
+        <p class="detto">&ldquo;Fermeremo le barche con il blocco navale&rdquo;</p>
+        <p class="chi">Giorgia Meloni, maggio 2022</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Non &egrave; mai partito. L&rsquo;Europa non l&rsquo;ha mai approvato.</p>
         </div>
-        <div class="rd">
-          <span class="pillola non">Non mantenuta</span>
-          <p class="spiega">Non superata. Nella manovra 2026 <b>Quota 103 &egrave; stata cancellata</b> e <b>Opzione donna non prorogata</b>: per la pensione di vecchiaia restano 67 anni e 20 di contributi.</p>
-          <a class="fonti" href="https://fap.acli.it/pensione-di-vecchiaia-2026-i-requisiti-restano-67-anni-e-20-di-contributi/" target="_blank" rel="noopener noreferrer">Patronato Acli &nearr;</a>
-        </div>
+        <a class="fonte" href="https://pagellapolitica.it/articoli/promessa-fdi-blocco-navale" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
       </article>
-      <article class="riga" data-s="non">
-        <div class="rt">
-          <p class="tema non">Istituzioni</p>
-          <h3>Elezione diretta del Presidente della Repubblica</h3>
-          <p class="quando">Programma di governo, 2022</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Migranti</p>
+        <p class="detto">&ldquo;In Albania faremo controlli veloci sui migranti&rdquo;</p>
+        <p class="chi">Governo, 2023</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Sono diventati centri per rimandarli indietro. Ci sono passate <b>685 persone</b>. Rimandate indietro: <b>101</b>.</p>
         </div>
-        <div class="rd">
-          <span class="pillola non">Non mantenuta</span>
-          <p class="spiega">Lasciata cadere. Al suo posto &egrave; stata portata avanti l&rsquo;elezione diretta del <b>presidente del Consiglio</b>. La riforma della giustizia &egrave; stata <b>bocciata dal referendum</b> del 22-23 marzo 2026.</p>
-          <a class="fonti" href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
-        </div>
+        <a class="fonte" href="https://www.aduc.it/articolo/accoglienza+migranti+modello+albania+685+trasferiti_41606.php" target="_blank" rel="noopener noreferrer">Dati del ministero dell&rsquo;Interno &nearr;</a>
       </article>
-      <article class="riga" data-s="non">
-        <div class="rt">
-          <p class="tema non">Economia</p>
-          <h3>Difenderemo i balneari dalle gare europee</h3>
-          <p class="quando">Programma di governo, 2022</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Pensioni</p>
+        <p class="detto">&ldquo;Toglieremo la legge Fornero&rdquo;</p>
+        <p class="chi">Programma del centrodestra, 2022</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">&Egrave; ancora l&igrave;. Hanno tolto anche Quota 103. Si va in pensione a <b>67 anni</b>.</p>
         </div>
-        <div class="rd">
-          <span class="pillola non">Non mantenuta</span>
-          <p class="spiega">Le gare sono state ammesse. Stessa sorte per l&rsquo;IVA sui prodotti per la prima infanzia, prima abbassata e poi rialzata, e per l&rsquo;obiettivo di rimboschimento del PNRR, ridotto.</p>
-          <a class="fonti" href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
-        </div>
+        <a class="fonte" href="https://fap.acli.it/pensione-di-vecchiaia-2026-i-requisiti-restano-67-anni-e-20-di-contributi/" target="_blank" rel="noopener noreferrer">Patronato Acli &nearr;</a>
       </article>
-      <article class="riga" data-s="non">
-        <div class="rt">
-          <p class="tema non">Partiti</p>
-          <h3>Vietare ogni forma di alleanza. Due mandati e poi a casa</h3>
-          <p class="quando">M5S, regole fondative</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Politica</p>
+        <p class="detto">&ldquo;Il Presidente lo sceglieranno gli italiani&rdquo;</p>
+        <p class="chi">Programma del centrodestra, 2022</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Non si fa pi&ugrave;. Hanno provato a cambiare i giudici, ma nel 2026 gli italiani hanno votato no.</p>
         </div>
-        <div class="rd">
-          <span class="pillola non">Non mantenuta</span>
-          <p class="spiega">Cancellate dal voto degli iscritti nell&rsquo;assemblea costituente del novembre 2024: <b>72,08%</b> per modificare il limite dei due mandati; al quesito &laquo;sei d&rsquo;accordo a vietare ogni forma di alleanza?&raquo; <b>l&rsquo;81,20% ha risposto no</b>.</p>
-          <a class="fonti" href="https://www.today.it/politica/movimento-5-stelle-costituente-voto-contestazioni.html" target="_blank" rel="noopener noreferrer">Today &nearr;</a>
-        </div>
+        <a class="fonte" href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
       </article>
-      <article class="riga" data-s="non">
-        <div class="rt">
-          <p class="tema non">Partiti</p>
-          <h3>Vannacci &egrave; un valore aggiunto</h3>
-          <p class="quando">Matteo Salvini, alla nomina a vicesegretario</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Spiagge</p>
+        <p class="detto">&ldquo;Difenderemo i balneari dalle gare&rdquo;</p>
+        <p class="chi">Programma del centrodestra, 2022</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Le gare si faranno lo stesso.</p>
         </div>
-        <div class="rd">
-          <span class="pillola non">Non mantenuta</span>
-          <p class="spiega">Il <b>3 febbraio 2026</b> Vannacci ha lasciato la Lega annunciando il proprio partito, Futuro Nazionale, nato formalmente il 7 febbraio. Nel sondaggio SWG per TgLa7 diffuso il <b>29 giugno</b> lo dava per la prima volta davanti alla Lega: <b>5,6% contro 5,4%</b>.</p>
-          <a class="fonti" href="https://www.ilpost.it/2026/02/03/vannacci-lascia-lega/" target="_blank" rel="noopener noreferrer">Il Post &nearr;</a>
-        </div>
+        <a class="fonte" href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
       </article>
-      <article class="riga" data-s="corso">
-        <div class="rt">
-          <p class="tema corso">Infrastrutture</p>
-          <h3>Il ponte sullo Stretto si far&agrave;</h3>
-          <p class="quando">Governo, 2023</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Partiti</p>
+        <p class="detto">&ldquo;Mai alleanze. Due volte in Parlamento e poi a casa&rdquo;</p>
+        <p class="chi">Le due regole del M5S</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Cancellate col voto degli iscritti nel 2024. Ora fanno alleanze.</p>
         </div>
-        <div class="rd">
-          <span class="pillola corso">In corso</span>
-          <p class="spiega">I cantieri non sono partiti. La Corte dei conti ha rilevato che <b>manca la determinazione del costo definitivo</b> dell&rsquo;opera. Il nuovo decreto sposta i termini al <b>2032</b>.</p>
-          <a class="fonti" href="https://www.ilfattoquotidiano.it/2026/07/27/esposto-cgil-corte-conti-danno-erariale-ponte-stretto/8460493/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano &nearr;</a>
-        </div>
+        <a class="fonte" href="https://www.today.it/politica/movimento-5-stelle-costituente-voto-contestazioni.html" target="_blank" rel="noopener noreferrer">Today &nearr;</a>
       </article>
-      <article class="riga" data-s="si">
-        <div class="rt">
-          <p class="tema si">Lavoro</p>
-          <h3>Taglieremo il cuneo fiscale</h3>
-          <p class="quando">Programma di governo, 2022</p>
+      <article class="voce" data-s="non">
+        <p class="tema">Partiti</p>
+        <p class="detto">&ldquo;Vannacci &egrave; un valore aggiunto&rdquo;</p>
+        <p class="chi">Matteo Salvini, quando lo nomin&ograve;</p>
+        <div class="risposta">
+          <span class="bollo non">Non fatto</span>
+          <p class="fatto">Se n&rsquo;&egrave; andato. Ha fatto un partito suo. Nei sondaggi ora sta <b>sopra la Lega</b>.</p>
         </div>
-        <div class="rd">
-          <span class="pillola si">Mantenuta</span>
-          <p class="spiega">Fatto: il taglio &egrave; diventato <b>strutturale</b>, non pi&ugrave; da rinnovare ogni anno. Sulle cento promesse principali del programma, <b>22 risultano mantenute</b>.</p>
-          <a class="fonti" href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
-        </div>
+        <a class="fonte" href="https://www.ilpost.it/2026/02/03/vannacci-lascia-lega/" target="_blank" rel="noopener noreferrer">Il Post &nearr;</a>
       </article>
-      <article class="riga" data-s="si">
-        <div class="rt">
-          <p class="tema si">Economia</p>
-          <h3>Alzeremo il tetto ai pagamenti in contanti</h3>
-          <p class="quando">Programma di governo, 2022</p>
+      <article class="voce" data-s="corso">
+        <p class="tema">Ponte</p>
+        <p class="detto">&ldquo;Faremo il ponte sullo Stretto&rdquo;</p>
+        <p class="chi">Governo, 2023</p>
+        <div class="risposta">
+          <span class="bollo corso">A metà</span>
+          <p class="fatto">I lavori non sono partiti. Manca ancora il prezzo finale. Se ne riparla nel <b>2032</b>.</p>
         </div>
-        <div class="rd">
-          <span class="pillola si">Mantenuta</span>
-          <p class="spiega">Fatto: dal 1&deg; gennaio 2023 il limite &egrave; passato <b>da 1.000 a 5.000 euro</b>.</p>
-          <a class="fonti" href="https://www.confcommercio.it/-/tetto-contante" target="_blank" rel="noopener noreferrer">Confcommercio &nearr;</a>
-        </div>
+        <a class="fonte" href="https://www.ilfattoquotidiano.it/2026/07/27/esposto-cgil-corte-conti-danno-erariale-ponte-stretto/8460493/" target="_blank" rel="noopener noreferrer">Il Fatto &nearr;</a>
       </article>
-      <article class="riga" data-s="si">
-        <div class="rt">
-          <p class="tema si">Giustizia</p>
-          <h3>Cancelleremo il reato di abuso d&rsquo;ufficio</h3>
-          <p class="quando">Legge 114 del 9 agosto 2024</p>
+      <article class="voce" data-s="corso">
+        <p class="tema">Soldi UE</p>
+        <p class="detto">&ldquo;Spenderemo i soldi europei in tempo&rdquo;</p>
+        <p class="chi">Impegni con l&rsquo;Europa</p>
+        <div class="risposta">
+          <span class="bollo corso">A metà</span>
+          <p class="fatto">Spesi <b>113 miliardi su 194</b>. Altri 24 arriveranno in ritardo.</p>
         </div>
-        <div class="rd">
-          <span class="pillola si">Mantenuta</span>
-          <p class="spiega">Fatto: alla Camera <b>199 favorevoli, 102 contrari</b>. Era il reato pi&ugrave; contestato agli amministratori pubblici. Nei processi ancora aperti l&rsquo;imputato viene assolto <b>perch&eacute; il fatto non &egrave; previsto dalla legge come reato</b>; nelle indagini si archivia.</p>
-          <a class="fonti" href="https://www.altalex.com/documents/news/2024/07/16/abuso-ufficio-sguardo-insieme-nascita-abolizione" target="_blank" rel="noopener noreferrer">Altalex &nearr;</a>
+        <a class="fonte" href="https://pagellapolitica.it/articoli/spesa-pnrr-ancora-ritardo-upb" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
+      </article>
+      <article class="voce" data-s="si">
+        <p class="tema">Stipendi</p>
+        <p class="detto">&ldquo;Abbasseremo le tasse sullo stipendio&rdquo;</p>
+        <p class="chi">Programma del centrodestra, 2022</p>
+        <div class="risposta">
+          <span class="bollo si">Fatto</span>
+          <p class="fatto">Fatto. La busta paga &egrave; un po&rsquo; pi&ugrave; alta, e resta cos&igrave; ogni anno.</p>
         </div>
+        <a class="fonte" href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
+      </article>
+      <article class="voce" data-s="si">
+        <p class="tema">Contanti</p>
+        <p class="detto">&ldquo;Alzeremo il limite dei contanti&rdquo;</p>
+        <p class="chi">Programma del centrodestra, 2022</p>
+        <div class="risposta">
+          <span class="bollo si">Fatto</span>
+          <p class="fatto">Fatto. Prima potevi pagare in contanti fino a 1.000 euro. Ora fino a <b>5.000</b>.</p>
+        </div>
+        <a class="fonte" href="https://www.confcommercio.it/-/tetto-contante" target="_blank" rel="noopener noreferrer">Confcommercio &nearr;</a>
+      </article>
+      <article class="voce" data-s="si">
+        <p class="tema">Giustizia</p>
+        <p class="detto">&ldquo;Cancelleremo il reato di abuso d&rsquo;ufficio&rdquo;</p>
+        <p class="chi">Governo, 2024</p>
+        <div class="risposta">
+          <span class="bollo si">Fatto</span>
+          <p class="fatto">Fatto. Era il reato pi&ugrave; usato contro i sindaci. Ora non esiste pi&ugrave;.</p>
+        </div>
+        <a class="fonte" href="https://www.altalex.com/documents/news/2024/07/16/abuso-ufficio-sguardo-insieme-nascita-abolizione" target="_blank" rel="noopener noreferrer">Altalex &nearr;</a>
       </article>
     </div>
   </section>
 
   <section id="persone">
-    <h2 class="tit">Persone</h2>
-    <p class="sottotit">Una riga per persona, con lo stato esatto del procedimento alla data di oggi.
-      Indagato, imputato e condannato sono cose diverse, e qui vengono tenute distinte.</p>
+    <h2>Le persone</h2>
     <div>
       <article class="persona">
-        <div class="pt">
-          <h3>Andrea Delmastro Delle Vedove</h3>
-          <p class="ruolo">Fratelli d&rsquo;Italia &middot; deputato</p>
-          <span class="pillola non">Condanna non definitiva</span>
+        <div class="pnome">
+          <h3>Andrea Delmastro</h3>
+          <p class="chi">Fratelli d&rsquo;Italia</p>
         </div>
-        <div class="pd">
-          <p class="spiega">Il <b>20 maggio 2026</b> la terza sezione della Corte d&rsquo;appello di Roma ha confermato la condanna a <b>otto mesi</b>, pena sospesa, pi&ugrave; un anno di interdizione dai pubblici uffici, per rivelazione di segreto d&rsquo;ufficio nel caso Cospito. Nella requisitoria del 22 aprile il sostituto procuratore generale aveva chiesto l&rsquo;assoluzione perch&eacute; il fatto non costituisce reato. La sentenza <b>non &egrave; definitiva</b>: &egrave; stato annunciato ricorso in Cassazione e fino ad allora vale la presunzione di innocenza.</p>
-          <p class="spiega distinto">Fatto distinto: nell&rsquo;inchiesta della procura di Roma sul clan Senese <b>Delmastro non &egrave; indagato</b>. In quel procedimento &egrave; indagato per riciclaggio Mauro Caroccia, gi&agrave; condannato in via definitiva a quattro anni per intestazione fittizia di beni con l&rsquo;aggravante di aver agevolato il clan. I due sono stati soci in un ristorante; per quella vicenda Delmastro si &egrave; dimesso da sottosegretario alla Giustizia.</p>
-          <a class="fonti" href="https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html" target="_blank" rel="noopener noreferrer">ANSA &nearr;</a>
+        <div class="pcorpo">
+          <span class="bollo non">Condannato, ma non &egrave; finita</span>
+          <p class="fatto">Condannato a <b>8 mesi</b>. Aveva passato carte segrete a un collega.</p>
+          <p class="fatto due">Ha fatto ricorso: per la legge &egrave; ancora innocente. Nell&rsquo;altra inchiesta, quella sul clan, <b>non &egrave; indagato</b>.</p>
+          <a class="fonte" href="https://www.ansa.it/sito/notizie/politica/2026/05/20/confermata-in-appello-la-condanna-a-delmastro-per-il-caso-cospito_e032639e-e7cd-4a6e-8d94-f33f2f4665aa.html" target="_blank" rel="noopener noreferrer">ANSA &nearr;</a>
         </div>
       </article>
       <article class="persona">
-        <div class="pt">
+        <div class="pnome">
           <h3>Daniela Santanch&egrave;</h3>
-          <p class="ruolo">Fratelli d&rsquo;Italia &middot; senatrice</p>
-          <span class="pillola parz">Imputata &middot; processi in corso</span>
+          <p class="chi">Fratelli d&rsquo;Italia</p>
         </div>
-        <div class="pd">
-          <p class="spiega">&Egrave; imputata a Milano in due procedimenti: <b>falso in bilancio</b> nella vicenda Visibilia e <b>truffa aggravata ai danni dello Stato</b> per il ricorso alla cassa integrazione erogata dall&rsquo;Inps. Entrambi i processi sono in primo grado e in corso: <b>non ci sono condanne</b> e vale la presunzione di innocenza. Santanch&egrave; ha respinto le accuse.</p>
-          <p class="spiega distinto">Nel procedimento sulla cassa integrazione i pm avevano acquisito sue mail e registrazioni; il Senato ha sollevato conflitto e il <b>3 giugno 2026</b> la Corte costituzionale lo ha dichiarato ammissibile. Il processo resta fermo in attesa della decisione nel merito.</p>
-          <a class="fonti" href="https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano &nearr;</a>
+        <div class="pcorpo">
+          <span class="bollo parz">A processo</span>
+          <p class="fatto">&Egrave; a processo per due cose. I conti di una sua azienda. E i soldi presi dallo Stato.</p>
+          <p class="fatto due"><b>Non &egrave; condannata.</b> Dice di non aver fatto niente.</p>
+          <a class="fonte" href="https://www.ilfattoquotidiano.it/2026/06/03/caso-santanche-visibilia-consulta-conflitto-notizie/8407162/" target="_blank" rel="noopener noreferrer">Il Fatto &nearr;</a>
         </div>
       </article>
       <article class="persona">
-        <div class="pt">
+        <div class="pnome">
           <h3>Roberto Scarpinato</h3>
-          <p class="ruolo">Movimento 5 Stelle &middot; senatore</p>
-          <span class="pillola corso">Non indagato</span>
+          <p class="chi">Movimento 5 Stelle</p>
         </div>
-        <div class="pd">
-          <p class="spiega"><b>Non &egrave; indagato.</b> Alcune conversazioni che lo riguardano, captate in un procedimento a carico di altre persone, sono state acquisite dalla commissione parlamentare Antimafia. L&rsquo;articolo 68 della Costituzione subordina l&rsquo;utilizzo di intercettazioni che coinvolgono un parlamentare all&rsquo;autorizzazione della sua Camera.</p>
-          <p class="spiega distinto">Scarpinato ha chiesto al Senato di sollevare il conflitto davanti alla Corte costituzionale, come era stato fatto per Santanch&egrave;: la maggioranza in Giunta ha detto no. Ha allora ricorso da solo e il <b>16 giugno 2026</b> la Corte lo ha dichiarato inammissibile, perch&eacute; il ricorso spetta alla Camera di appartenenza e non al singolo parlamentare.</p>
-          <a class="fonti" href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio &nearr;</a>
+        <div class="pcorpo">
+          <span class="bollo corso">Non indagato</span>
+          <p class="fatto"><b>Non &egrave; indagato.</b> Sono uscite sue telefonate registrate in un&rsquo;altra indagine.</p>
+          <p class="fatto due">Per usarle serviva il permesso del Senato. Lui ha protestato, ma ha perso.</p>
+          <a class="fonte" href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio &nearr;</a>
         </div>
       </article>
       <article class="persona">
-        <div class="pt">
+        <div class="pnome">
           <h3>Giuseppe Sala</h3>
-          <p class="ruolo">Sindaco di Milano &middot; centrosinistra</p>
-          <span class="pillola parz">Indagato</span>
+          <p class="chi">Sindaco di Milano</p>
         </div>
-        <div class="pd">
-          <p class="spiega">&Egrave; indagato dalla procura di Milano nell&rsquo;inchiesta sull&rsquo;urbanistica milanese. Essere indagati significa che la procura sta svolgendo accertamenti: <b>non c&rsquo;&egrave; n&eacute; un&rsquo;accusa vagliata da un giudice n&eacute; una condanna</b>. &Egrave; rimasto in carica.</p>
-          <p class="spiega distinto">Sullo stesso principio si sono espressi da schieramenti opposti: Meloni ha detto che non c&rsquo;&egrave; automatismo fra avviso di garanzia e dimissioni, Schlein gli ha espresso solidariet&agrave;.</p>
-          <a class="fonti" href="https://www.ilpost.it/2025/07/17/inchieste-edilizia-milano-beppe-sala-indagato/" target="_blank" rel="noopener noreferrer">Il Post &nearr;</a>
+        <div class="pcorpo">
+          <span class="bollo parz">Indagato</span>
+          <p class="fatto">&Egrave; indagato per l&rsquo;inchiesta sui palazzi di Milano.</p>
+          <p class="fatto due">Indagato vuol dire che stanno controllando. <b>Non &egrave; condannato.</b> &Egrave; rimasto sindaco.</p>
+          <a class="fonte" href="https://www.ilpost.it/2025/07/17/inchieste-edilizia-milano-beppe-sala-indagato/" target="_blank" rel="noopener noreferrer">Il Post &nearr;</a>
         </div>
       </article>
       <article class="persona">
-        <div class="pt">
+        <div class="pnome">
           <h3>Luigi Brugnaro</h3>
-          <p class="ruolo">Sindaco di Venezia &middot; centrodestra</p>
-          <span class="pillola parz">Chiesto il rinvio a giudizio</span>
+          <p class="chi">Sindaco di Venezia</p>
         </div>
-        <div class="pd">
-          <p class="spiega">La procura di Venezia ha chiesto il rinvio a giudizio per <b>corruzione</b> nell&rsquo;inchiesta cosiddetta Palude, insieme ad altri indagati. <b>Non esiste alcuna condanna</b> e vale la presunzione di innocenza. Brugnaro nega gli addebiti ed &egrave; rimasto in carica.</p>
-          
-          <a class="fonti" href="https://en.ilsole24ore.com/art/venice-asked-for-trial-of-mayor-luigi-brugnaro-AHWuqYi" target="_blank" rel="noopener noreferrer">Il Sole 24 Ore &nearr;</a>
+        <div class="pcorpo">
+          <span class="bollo parz">I giudici vogliono processarlo</span>
+          <p class="fatto">I giudici hanno chiesto di processarlo per corruzione.</p>
+          <p class="fatto due"><b>Non &egrave; condannato.</b> Dice di non aver fatto niente. &Egrave; rimasto sindaco.</p>
+          <a class="fonte" href="https://en.ilsole24ore.com/art/venice-asked-for-trial-of-mayor-luigi-brugnaro-AHWuqYi" target="_blank" rel="noopener noreferrer">Il Sole 24 Ore &nearr;</a>
         </div>
       </article>
       <article class="persona">
-        <div class="pt">
+        <div class="pnome">
           <h3>Massimiliano Romeo</h3>
-          <p class="ruolo">Lega &middot; capogruppo al Senato</p>
-          <span class="pillola corso">Reato prescritto</span>
+          <p class="chi">Lega</p>
         </div>
-        <div class="pd">
-          <p class="spiega">Nel processo sulle spese dei gruppi del Consiglio regionale lombardo fu condannato per peculato in primo grado, il 18 gennaio 2019, e in appello, il 13 luglio 2021. Il <b>17 novembre 2022</b> la Cassazione ha annullato senza rinvio, riqualificando il fatto in indebita percezione di erogazioni pubbliche e <b>dichiarando il reato prescritto</b>.</p>
-          <p class="spiega distinto"><b>Non esiste quindi una condanna definitiva</b> a suo carico. &Egrave; il funzionamento della prescrizione, non un giudizio sulla persona: dopo un certo numero di anni il reato si estingue e il merito non viene pi&ugrave; deciso.</p>
-          <a class="fonti" href="https://www.ilfattoquotidiano.it/2019/01/18/spese-pazze-lombardia-condannati-per-peculato-renzo-bossi-nicole-minetti-e-capogruppo-lega-al-senato-romeo/4906564/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano &nearr;</a>
+        <div class="pcorpo">
+          <span class="bollo corso">Reato troppo vecchio</span>
+          <p class="fatto">Condannato due volte per i soldi della Regione Lombardia.</p>
+          <p class="fatto due">Poi la Cassazione ha annullato tutto: <b>il reato era troppo vecchio</b>. Alla fine nessuna condanna.</p>
+          <a class="fonte" href="https://www.ilfattoquotidiano.it/2019/01/18/spese-pazze-lombardia-condannati-per-peculato-renzo-bossi-nicole-minetti-e-capogruppo-lega-al-senato-romeo/4906564/" target="_blank" rel="noopener noreferrer">Il Fatto &nearr;</a>
         </div>
       </article>
       <article class="persona">
-        <div class="pt">
+        <div class="pnome">
           <h3>Giovanni Donzelli</h3>
-          <p class="ruolo">Fratelli d&rsquo;Italia &middot; deputato</p>
-          <span class="pillola corso">Non indagato</span>
+          <p class="chi">Fratelli d&rsquo;Italia</p>
         </div>
-        <div class="pd">
-          <p class="spiega">Il <b>31 gennaio 2023</b> lesse in Aula alla Camera il contenuto di documenti del Dap relativi a colloqui avvenuti in carcere. La sentenza d&rsquo;appello che ha condannato Andrea Delmastro &mdash; <b>non definitiva</b> &mdash; ha qualificato quei documenti come coperti da segreto d&rsquo;ufficio.</p>
-          <p class="spiega distinto">Donzelli <b>non &egrave; stato indagato</b>. L&rsquo;articolo 68, primo comma, della Costituzione stabilisce che i parlamentari non possono essere chiamati a rispondere delle opinioni espresse nell&rsquo;esercizio delle loro funzioni.</p>
-          <a class="fonti" href="https://www.ilfattoquotidiano.it/2026/05/20/caso-cospito-in-appello-confermata-la-condanna-a-8-mesi-per-andrea-delmastro/8393409/" target="_blank" rel="noopener noreferrer">Il Fatto Quotidiano &nearr;</a>
+        <div class="pcorpo">
+          <span class="bollo corso">Non indagato</span>
+          <p class="fatto">Nel 2023 lesse in Parlamento delle carte segrete sul carcere.</p>
+          <p class="fatto due">Chi gliele aveva date &egrave; stato condannato. Lui <b>non &egrave; indagato</b>: in Parlamento si pu&ograve; dire tutto.</p>
+          <a class="fonte" href="https://www.ilfattoquotidiano.it/2026/05/20/caso-cospito-in-appello-confermata-la-condanna-a-8-mesi-per-andrea-delmastro/8393409/" target="_blank" rel="noopener noreferrer">Il Fatto &nearr;</a>
         </div>
       </article>
       <article class="persona">
-        <div class="pt">
+        <div class="pnome">
           <h3>Matteo Salvini</h3>
-          <p class="ruolo">Lega &middot; vicepresidente del Consiglio</p>
-          <span class="pillola non">Candidatura non possibile</span>
+          <p class="chi">Lega</p>
         </div>
-        <div class="pd">
-          <p class="spiega">Dopo che il <b>15 luglio 2026</b> la Cassazione ha reso definitiva la condanna a 14 anni e 9 mesi del gioielliere Mario Roggero, si &egrave; espresso a favore della grazia, parlando di sentenza ingiusta. &Egrave; circolata anche l&rsquo;ipotesi di una sua candidatura.</p>
-          <p class="spiega distinto">L&rsquo;incandidabilit&agrave; prevista dal decreto legislativo 235 del 2012, la legge Severino, opera in presenza di una condanna definitiva superiore a due anni: <b>la condanna &egrave; definitiva dal 15 luglio</b>. Anche Vannacci, che gli ha promesso sostegno politico, ha escluso la candidatura nelle proprie liste.</p>
-          <a class="fonti" href="https://www.ottopagine.it/italia/attualita/433538/salvini-vuole-candidare-roggero-ma-la-legge-chiude-la-porta.shtml" target="_blank" rel="noopener noreferrer">Ottopagine &nearr;</a>
+        <div class="pcorpo">
+          <span class="bollo non">Quello che chiede non si pu&ograve;</span>
+          <p class="fatto">Ha chiesto il perdono per il gioielliere condannato a 14 anni e 9 mesi.</p>
+          <p class="fatto due">Si &egrave; parlato anche di candidarlo. <b>Non si pu&ograve;</b>: con quella condanna la legge lo vieta.</p>
+          <a class="fonte" href="https://www.ottopagine.it/italia/attualita/433538/salvini-vuole-candidare-roggero-ma-la-legge-chiude-la-porta.shtml" target="_blank" rel="noopener noreferrer">Ottopagine &nearr;</a>
         </div>
       </article>
     </div>
   </section>
 
   <section id="giro">
-    <h2 class="tit">Come funziona il giro</h2>
-    <p class="sottotit">I meccanismi che si ripetono, quale che sia il partito.</p>
+    <h2>Come funziona</h2>
     <div class="trucchi">
       <article class="trucco">
-        <p class="cifra">01</p>
-        <h3>Chi decide se consegnare le prove</h3>
-        <p class="come">Per le comunicazioni di un cittadino basta il decreto di un giudice. Per quelle di un parlamentare serve l&rsquo;autorizzazione della sua Camera: a votare sono gli altri parlamentari.</p>
-        <p class="anche"><span>Come si vede</span>Il <b>5 agosto 2026</b> l&rsquo;Aula ha negato l&rsquo;acquisizione delle chat di Delmastro con 206 voti contro 133. Lo stesso scudo &egrave; stato usato per Santanch&egrave; (FdI) e negato a Scarpinato (M5S).</p>
+        <p class="cifra">1</p>
+        <h3>Le prove le danno loro</h3>
+        <p class="come">Le tue chat le prende un giudice. Quelle di un deputato no.</p>
+        <p class="esempio">Decidono gli altri deputati. Il 5 agosto hanno detto no: 206 contro 133.</p>
       </article>
       <article class="trucco">
-        <p class="cifra">02</p>
-        <h3>Il reato pi&ugrave; contestato, cancellato</h3>
-        <p class="come">L&rsquo;abuso d&rsquo;ufficio era il reato pi&ugrave; contestato a sindaci, assessori e funzionari. Nel 2024 il Parlamento lo ha abrogato: 199 favorevoli, 102 contrari.</p>
-        <p class="anche"><span>Come si vede</span>Nei processi ancora aperti l&rsquo;imputato viene assolto perch&eacute; il fatto non &egrave; pi&ugrave; previsto come reato. L&rsquo;abrogazione era chiesta da amministratori di ogni schieramento.</p>
+        <p class="cifra">2</p>
+        <h3>Il reato scomodo, cancellato</h3>
+        <p class="come">C&rsquo;era un reato per i sindaci che sbagliavano. L&rsquo;hanno tolto.</p>
+        <p class="esempio">199 hanno detto s&igrave;, 102 no. Chi era sotto processo per quello, esce.</p>
       </article>
       <article class="trucco">
-        <p class="cifra">03</p>
-        <h3>Il tempo che estingue</h3>
-        <p class="come">Dopo dodici anni e mezzo la corruzione si prescrive: il reato si estingue e il merito non viene pi&ugrave; deciso. Sette processi su dieci che muoiono di prescrizione muoiono prima della prima sentenza.</p>
-        <p class="anche"><span>Come si vede</span>Le spese dei gruppi in Lombardia: condanne in primo grado e in appello, poi nel 2022 la Cassazione annulla e dichiara il reato prescritto. In Calabria, dieci anni di processo su 26 imputati: sei condanne, diciotto assoluzioni, due prescrizioni.</p>
+        <p class="cifra">3</p>
+        <h3>Basta far passare il tempo</h3>
+        <p class="come">I processi durano tanti anni. Poi il reato scade e finisce tutto.</p>
+        <p class="esempio">Succede spesso ancora prima del primo giudizio.</p>
       </article>
       <article class="trucco">
-        <p class="cifra">04</p>
-        <h3>La promessa che scade dopo il voto</h3>
-        <p class="come">Prima del voto viene annunciata la cosa che si vuole sentire. Dopo, o non si fa, o si fa il contrario. Alla campagna successiva viene ripromessa.</p>
-        <p class="anche"><span>Come si vede</span>Accise: oggi sul gasolio si paga di pi&ugrave;. Pressione fiscale: la pi&ugrave; alta da undici anni. Blocco navale: mai attuato. Sulle cento promesse principali del programma, ventidue risultano mantenute.</p>
+        <p class="cifra">4</p>
+        <h3>La promessa serve per il voto</h3>
+        <p class="come">Prima del voto promettono. Dopo il voto, tante cose non si fanno.</p>
+        <p class="esempio">Su 100 promesse del programma, 22 sono state fatte.</p>
       </article>
       <article class="trucco">
-        <p class="cifra">05</p>
-        <h3>Le regole interne durano finch&eacute; convengono</h3>
-        <p class="come">Anche le regole che un partito si d&agrave; da solo, e che presenta come identitarie, vengono cambiate quando smettono di essere utili.</p>
-        <p class="anche"><span>Come si vede</span>Il M5S era nato sul divieto di alleanze e sul limite dei due mandati. Nel novembre 2024 gli iscritti hanno votato per togliere entrambi: 81,20% contro il divieto di alleanze, 72,08% per modificare il limite dei mandati.</p>
+        <p class="cifra">5</p>
+        <h3>Anche le regole loro cambiano</h3>
+        <p class="come">Un partito si d&agrave; delle regole. Poi le cancella quando gli conviene.</p>
+        <p class="esempio">Il M5S aveva due regole grosse. Le hanno tolte tutte e due col voto.</p>
       </article>
       <article class="trucco">
-        <p class="cifra">06</p>
-        <h3>Litigano in pubblico, si accordano sulle regole loro</h3>
-        <p class="come">Nel dibattito pubblico sono avversari. Sulle norme che riguardano il Parlamento stesso l&rsquo;accordo si trova quasi sempre.</p>
-        <p class="anche"><span>Come si vede</span>Il taglio dei parlamentari fu votato da 553 deputati su 569. Pochi mesi dopo due partiti che avevano votato s&igrave; quattro volte raccolsero le firme per il referendum contro.</p>
+        <p class="cifra">6</p>
+        <h3>In TV litigano, poi si accordano</h3>
+        <p class="come">In televisione sono nemici. Sulle cose che li riguardano vanno d&rsquo;accordo.</p>
+        <p class="esempio">Sul taglio dei parlamentari votarono s&igrave; in 553 su 569.</p>
       </article>
     </div>
   </section>
 
 </div>
 
-<section class="crema" id="metodo">
-  <div class="contenitore">
-    <div class="griglia4">
-      <div>
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg></div>
-        <h4>Rigoroso e indipendente</h4>
-        <p>Metodologia trasparente, fonti verificabili, nessun conflitto di interesse.</p>
-      </div>
-      <div>
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg></div>
-        <h4>Fonti sempre in chiaro</h4>
-        <p>Ogni affermazione &egrave; collegata a un atto, a un dato ufficiale o a una dichiarazione originale.</p>
-      </div>
-      <div>
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 3 7-8"/><path d="M15 7h5v5"/></svg></div>
-        <h4>Dati che spiegano</h4>
-        <p>Le percentuali compaiono solo dove esiste un rapporto misurato: nessun avanzamento stimato a occhio.</p>
-      </div>
-      <div>
-        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5"/></svg></div>
-        <h4>Stesso metro per tutti</h4>
-        <p>Lo stesso criterio vale per governo, opposizione e amministrazioni locali, senza eccezioni.</p>
-      </div>
+<section class="crema">
+  <div class="dentro">
+    <h2>Le regole di questo sito</h2>
+    <div class="regole">
+      <div class="regola"><i></i><p><b>Indagato non vuol dire colpevole.</b> Vuol dire che stanno controllando.</p></div>
+      <div class="regola"><i></i><p><b>Una condanna pu&ograve; cambiare.</b> Finch&eacute; il processo non &egrave; finito, si pu&ograve; ribaltare.</p></div>
+      <div class="regola"><i></i><p><b>Ogni riga ha il link.</b> Clicca e vedi chi l&rsquo;ha scritto.</p></div>
+      <div class="regola"><i></i><p><b>Stesso metro per tutti.</b> Destra, sinistra e centro sono trattati uguale.</p></div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="contenitore">
-    <p><b>Le distinzioni che questo sito rispetta.</b> Essere indagati significa che una procura sta svolgendo
-      accertamenti: non c&rsquo;&egrave; n&eacute; un&rsquo;accusa vagliata da un giudice n&eacute; una condanna.
-      Una richiesta di rinvio a giudizio non &egrave; una sentenza. Una condanna non definitiva pu&ograve; essere
-      ribaltata e fino alla decisione definitiva vale la presunzione di innocenza. Un rapporto societario o
-      personale non &egrave; di per s&eacute; un illecito.</p>
-    <p>Aggiornato al 6 agosto 2026 &middot;
-      <a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">codice e fonti</a></p>
+  <div class="dentro">
+    <p>Aggiornato al 6 agosto 2026.</p>
+    <p><a href="https://github.com/Spidahh/Politicometro" target="_blank" rel="noopener noreferrer">Codice e fonti</a></p>
   </div>
 </footer>
 
 <script>
   const filtri = document.getElementById("filtri");
-  const righe = [...document.querySelectorAll(".riga")];
+  const voci = [...document.querySelectorAll(".voce")];
   filtri.addEventListener("click", e => {
     const b = e.target.closest(".filtro");
     if (!b) return;
     filtri.querySelectorAll(".filtro").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
-    righe.forEach(r => r.classList.toggle("via", !!b.dataset.s && r.dataset.s !== b.dataset.s));
+    voci.forEach(v => v.classList.toggle("via", !!b.dataset.s && v.dataset.s !== b.dataset.s));
   });
-
-  const voci = [...document.querySelectorAll("nav a")];
-  const spia = new IntersectionObserver(v => {
-    v.forEach(x => {
-      if (!x.isIntersecting) return;
-      voci.forEach(a => a.classList.toggle("qui", a.getAttribute("href") === "#" + x.target.id));
-    });
-  }, { rootMargin:"-45% 0px -50% 0px" });
-  document.querySelectorAll("section[id], #top").forEach(s => spia.observe(s));
 </script>
