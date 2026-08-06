@@ -50,6 +50,11 @@
   /* caso */
   .caso{background:var(--carta);border:1px solid var(--linea);border-radius:16px;padding:1.5rem 1.4rem}
   .caso h3{font-family:var(--serif);font-size:1.35rem;font-weight:600;margin:0 0 1.4rem;line-height:1.3}
+  .perche{background:rgba(255,255,255,.035);border-radius:12px;padding:1.1rem 1.2rem;margin:0 0 1.5rem}
+  .perche .et{font-size:.7rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+              color:var(--oro-c);margin:0 0 .7rem}
+  .perche p{margin:0 0 .45rem;font-size:1.02rem;line-height:1.5}
+  .perche p:last-child{margin-bottom:0}
   .passi{list-style:none;margin:0 0 1.5rem;padding:0}
   .tappa{position:relative;padding:0 0 1.3rem 1.9rem}
   .tappa:last-child{padding-bottom:0}
@@ -164,10 +169,14 @@
     <h2>Il caso di adesso</h2>
     <div class="caso">
       <h3>Le chat che il Parlamento non ha dato ai giudici</h3>
+      <div class="perche">
+        <p class="et">Di che si tratta</p>
+        <p>I giudici di Roma indagano su un uomo: <b>Mauro Caroccia</b>.</p><p>Ha gi&agrave; una condanna definitiva a <b>4 anni</b>: aiutava un clan della camorra.</p><p>Caroccia aveva un <b>ristorante insieme</b> al deputato Andrea Delmastro.</p><p><b>Delmastro non &egrave; indagato.</b> Ma per quella storia si &egrave; dimesso da sottosegretario alla Giustizia.</p><p>I giudici volevano leggere i messaggi tra i due.</p>
+      </div>
       <ul class="passi">
         <li class="tappa d">
           <b>25 maggio</b>
-          <span>I giudici di Roma chiedono le chat del deputato Andrea Delmastro.</span>
+          <span>I giudici chiedono alla Camera di poter leggere quei messaggi.</span>
         </li>
         <li class="tappa o">
           <b>22 luglio</b>
@@ -265,7 +274,7 @@
         <p class="chi">Programma del centrodestra, 2022</p>
         <div class="risposta">
           <span class="bollo non">Non fatto</span>
-          <p class="fatto">Non si fa pi&ugrave;. Hanno provato a cambiare i giudici. A marzo 2026 <b>54 italiani su 100</b> hanno detto no.</p>
+          <p class="fatto">Hanno lasciato perdere. Hanno provato a cambiare i giudici. A marzo 2026 <b>54 italiani su 100</b> hanno detto no.</p>
         </div>
         <a class="fonte" href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
       </article>
@@ -275,7 +284,7 @@
         <p class="chi">Programma del centrodestra, 2022</p>
         <div class="risposta">
           <span class="bollo non">Non fatto</span>
-          <p class="fatto">Le gare si faranno lo stesso. &Egrave; una delle <b>9 promesse</b> su cui hanno fatto il contrario.</p>
+          <p class="fatto">Alla fine le spiagge andranno a gara. &Egrave; una delle <b>9 promesse</b> su cui hanno fatto il contrario.</p>
         </div>
         <a class="fonte" href="https://pagellapolitica.it/articoli/promesse-mantenute-tradite-tre-anni-governo-meloni" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
       </article>
@@ -315,7 +324,7 @@
         <p class="chi">Impegni con l&rsquo;Europa</p>
         <div class="risposta">
           <span class="bollo corso">A metà</span>
-          <p class="fatto">Spesi <b>113 miliardi su 194</b>. Altri <b>24 miliardi</b> arriveranno dopo la scadenza.</p>
+          <p class="fatto">Spesi <b>113 miliardi su 194</b>. Altri <b>24 miliardi</b> sforano il termine. Sono soldi europei da rendicontare.</p>
         </div>
         <a class="fonte" href="https://pagellapolitica.it/articoli/spesa-pnrr-ancora-ritardo-upb" target="_blank" rel="noopener noreferrer">Pagella Politica &nearr;</a>
       </article>
@@ -386,8 +395,8 @@
         </div>
         <div class="pcorpo">
           <span class="bollo corso">Non indagato</span>
-          <p class="fatto"><b>Non &egrave; indagato.</b> Una commissione ha preso sue telefonate senza chiedere il permesso al Senato.</p>
-          <p class="fatto due">Ha protestato davanti alla Consulta. Il <b>16 giugno</b> ha perso: da solo non poteva farlo.</p>
+          <p class="fatto"><b>Non &egrave; indagato.</b> La commissione Antimafia ha preso sue telefonate, per un&rsquo;audizione della commissione.</p>
+          <p class="fatto due">Le ha prese <b>senza chiedere il permesso al Senato</b>. Lui ha protestato: il <b>16 giugno</b> ha perso.</p>
           <a class="fonte" href="https://www.ilfoglio.it/giustizia/2026/06/16/news/la-consulta-rigetta-il-ricorso-di-scarpinato-contro-la-commissione-antimafia--400700" target="_blank" rel="noopener noreferrer">Il Foglio &nearr;</a>
         </div>
       </article>
@@ -422,7 +431,7 @@
         </div>
         <div class="pcorpo">
           <span class="bollo corso">Reato troppo vecchio</span>
-          <p class="fatto">Condannato <b>due volte</b> per i soldi dei gruppi in Regione Lombardia.</p>
+          <p class="fatto">Condannato <b>due volte</b>: soldi dei gruppi della Regione Lombardia spesi per cose personali.</p>
           <p class="fatto due">Nel <b>2022</b> la Cassazione ha annullato: il reato era troppo vecchio. Oggi guida i senatori della Lega.</p>
           <a class="fonte" href="https://www.ilfattoquotidiano.it/2019/01/18/spese-pazze-lombardia-condannati-per-peculato-renzo-bossi-nicole-minetti-e-capogruppo-lega-al-senato-romeo/4906564/" target="_blank" rel="noopener noreferrer">Il Fatto &nearr;</a>
         </div>
@@ -446,7 +455,7 @@
         </div>
         <div class="pcorpo">
           <span class="bollo non">Quello che chiede non si pu&ograve;</span>
-          <p class="fatto">Ha chiesto il perdono per il gioielliere condannato a <b>14 anni e 9 mesi</b>.</p>
+          <p class="fatto">Ha chiesto il perdono per un gioielliere. Aveva ucciso due rapinatori: <b>14 anni e 9 mesi</b>.</p>
           <p class="fatto due">Si &egrave; parlato di candidarlo. <b>Non si pu&ograve;</b>: sopra i 2 anni di condanna la legge lo vieta.</p>
           <a class="fonte" href="https://www.ottopagine.it/italia/attualita/433538/salvini-vuole-candidare-roggero-ma-la-legge-chiude-la-porta.shtml" target="_blank" rel="noopener noreferrer">Ottopagine &nearr;</a>
         </div>
